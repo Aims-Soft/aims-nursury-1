@@ -1,0 +1,63 @@
+<div class="bg-dark-light">
+  <div class="container">
+    <div
+      class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+    >
+      <div class="CityIcon"></div>
+      <h3 class="ms-3 mt-2">Designation</h3>
+      <label class="ms-4 mt-3 me-lg-auto">Add designation here.</label>
+      <button mat-button class="resetBtn me-2" (click)="reset()">Reset</button>
+      <button mat-button class="saveBtn" (click)="save()">Save</button>
+    </div>
+  </div>
+</div>
+<div class="container mt-2">
+  <h4 class="txtClrLightGreen">Add or Modify</h4>
+  <div class="row pt-3">
+    <div class="col-md-6" *ngIf="roleID == 1">
+      <mat-form-field class="w-100">
+        <mat-label>Company</mat-label>
+        <mat-select
+          [(ngModel)]="formFields[2].value"
+          (ngModelChange)="getBusiness()"
+        >
+          <mat-option
+            *ngFor="let item of companyList"
+            [value]="item.companyID"
+            >{{ item.companyFullName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6" *ngIf="roleID == 1">
+      <mat-form-field class="w-100">
+        <mat-label>Business</mat-label>
+        <mat-select [(ngModel)]="formFields[3].value">
+          <mat-option
+            *ngFor="let item of businessList"
+            [value]="item.businessID"
+            >{{ item.businessFullName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="d-flex flex-row">
+      <mat-form-field class="w-100 pt-3 pe-4">
+        <input
+          matInput
+          [(ngModel)]="formFields[4].value"
+          placeholder="Enter designation name here"
+          (keypress)="getKeyPressed($event)"
+          autofocus
+        />
+      </mat-form-field>
+    </div>
+    <h4 class="txtClrLightGreen">Saved Records</h4>
+  </div>
+  <aims-pos-designation-table
+    (eventEmitter)="edit($event)"
+    (eventEmitterDelete)="delete($event)"
+  ></aims-pos-designation-table>
+</div>

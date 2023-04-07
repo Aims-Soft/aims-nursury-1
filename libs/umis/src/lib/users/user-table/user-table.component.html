@@ -1,0 +1,45 @@
+<div class="table-responsive ms-4 me-5">
+  <!-- <perfect-scrollbar class="bg-light-grey"> -->
+  <table class="table table-striped">
+    <thead class="ps-5 pe-5">
+      <tr>
+        <th class="col-3">Name</th>
+        <!-- <th class="grey-text col-2">Status</th> -->
+        <th class="col-3">Email</th>
+        <th class="col-3">Role</th>
+        <th class="col-1 text-end">Branch</th>
+        <th class="col-2 text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="align-middle">
+      <!-- <tr *ngFor="let item of tableData; let i = index"></tr> -->
+      <tr *ngFor="let item of tableData | filter: tblSearch; let i = index">
+        <td class="col-3">
+          <div class="d-flex flex-row ps-4">
+            <div class="align-self-center">
+              {{ item.empName }}
+            </div>
+          </div>
+        </td>
+        <td class="col-3">{{ item.loginName }}</td>
+        <td class="col-3">{{ item.roleTitle }}</td>
+        <td class="col-1 text-end">{{ item.branchName }}</td>
+        <td class="col-2 text-center">
+          <span
+            class="txtClrDarkGrey pe-2 cursorPointer border-right-dark"
+            (click)="edit(item)"
+          >
+            <mat-icon>edit</mat-icon>
+          </span>
+          <span
+            class="txtClrLightGreen cursorPointer ps-2 pe-2"
+            (click)="delete(item)"
+          >
+            <mat-icon>delete</mat-icon>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- </perfect-scrollbar> -->
+</div>

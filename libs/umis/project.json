@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/umis",
+  "sourceRoot": "libs/umis/src",
+  "prefix": "aims-pos",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/umis"],
+      "options": {
+        "jestConfig": "libs/umis/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/umis/src/**/*.ts", "libs/umis/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/bachat-online",
+  "sourceRoot": "libs/bachat-online/src",
+  "prefix": "aims-pos",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/bachat-online"],
+      "options": {
+        "jestConfig": "libs/bachat-online/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/bachat-online/src/**/*.ts",
+          "libs/bachat-online/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,25 @@
+<perfect-scrollbar class="bg-light-grey" style="height: 31em; max-width: 100%;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center col-1">Sr#</th>
+                <th>Route Name</th>
+                <th class="col-2 text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of tableData; let i=index">
+                <td class="text-center col-1">{{i+1}}</td>
+                <td>{{item.rootName}}</td>
+                <td class="col-2 text-center">
+                    <span class="txtClrDarkGrey pe-2 cursorPointer border-right-dark" (click)="edit(item)">
+                        <mat-icon>edit</mat-icon>
+                    </span>
+                    <span class="txtClrLightGreen cursorPointer ps-2 pe-2" (click)="delete(item)">
+                        <mat-icon>delete</mat-icon>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</perfect-scrollbar>

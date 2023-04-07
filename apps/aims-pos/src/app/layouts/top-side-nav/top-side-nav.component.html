@@ -1,0 +1,15 @@
+<mat-drawer-container class="layout-sideNav-container" autosize>
+    <div class="layout-sidenav-content">
+        <aims-pos-topnav (drawerToggle)="drawer.toggle()"></aims-pos-topnav>
+            <section class="main-content">
+                <perfect-scrollbar style="max-width: 100%; min-height: 100%; height: 100%; max-height: 100%;">
+                    <router-outlet></router-outlet>
+                </perfect-scrollbar>
+            </section>
+        <aims-pos-footer></aims-pos-footer>
+    </div>
+
+    <mat-drawer #drawer class="layout-sidenav-nav" mode="side">
+        <aims-pos-sidenav></aims-pos-sidenav>
+    </mat-drawer>
+</mat-drawer-container>

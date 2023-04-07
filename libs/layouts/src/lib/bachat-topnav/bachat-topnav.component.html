@@ -1,0 +1,24 @@
+<div class="bachatHeader">
+    <mat-toolbar class="mat-bachat-toolbar d-flex flex-column flex-md-row flex-sm-row">
+            <span class="bachatTitle me-5">POS Portal</span>
+            <div class="bachatProductIcon me-2"></div>
+            <label class="bachatItems me-5">Products</label>
+            <div class="input-group me-5">
+                <input type="text" class="form-control" placeholder="Search everything at POS portal online and in store">
+                <span class="input-group-text bg-dark-grey">
+                    <i class="fa fa-search text-white"></i>
+                </span>
+            </div>
+            <label class="bachatItemsCart me-3 ms-5">Your Cart</label>
+            <div class="d-flex flex-column align-items-center">
+                <div class="bachatCartIcon cursorPointer" [matBadge]="items" matBadgeColor="warn" (click)="openModal()"></div>
+                <label class="bachatItemsPrice">Pkr {{totalPrice}}</label>
+            </div>
+    </mat-toolbar>
+    <div class="bg-dark-grey">
+        <div class="d-flex flex-row pb-2 pt-2 align-items-center">
+            <div class="bachatLocationIcon me-2 ms-3"></div>
+            <label class="bachatItemsLocation">H-8, Islamabad</label>
+        </div>
+    </div>
+</div>

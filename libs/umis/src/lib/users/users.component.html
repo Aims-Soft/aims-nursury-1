@@ -1,0 +1,194 @@
+<div
+  class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 border-bottom ms-4 me-5"
+>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <input type="tel" matInput placeholder="Search" [(ngModel)]="txtSearch" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <div class="ms-4 border-3 border-dark border-start ps-2 text-gray">
+    {{ lblUserCount }} Members
+  </div>
+  <button
+    mat-button
+    class="saveBtn ms-lg-auto mat-elevation-z1"
+    data-bs-toggle="modal"
+    data-bs-target="#userModal"
+    (click)="reset()"
+  >
+    Add New
+  </button>
+</div>
+<!-- Modal -->
+<div id="userModal" class="modal fade" role="dialog" data-bs-backdrop="false">
+  <div class="modal-dialog modal-lg mat-elevation-z20">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-dark-grey">
+        <h4 class="modal-title align-self-center text-white">Add New User</h4>
+        <div class="cancelIcon cursorPointer" data-bs-dismiss="modal"></div>
+        <!-- <mat-icon class="text-white" data-bs-dismiss="modal">close</mat-icon> -->
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Full Name</mat-label>
+              <input
+                matInput
+                [(ngModel)]="formFields[2].value"
+                maxlength="20"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                placeholder="pat@example.com"
+                [(ngModel)]="formFields[3].value"
+                maxlength="50"
+                required
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                [(ngModel)]="formFields[4].value"
+                maxlength="10"
+                [type]="hide ? 'password' : 'text'"
+              />
+              <mat-icon
+                class="cursorPointer"
+                matSuffix
+                (click)="hide = !hide"
+                >{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon
+              >
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Confirm Password</mat-label>
+              <input
+                matInput
+                [(ngModel)]="txtConfirmPw"
+                maxlength="10"
+                [type]="hidecp ? 'password' : 'text'"
+              />
+              <mat-icon
+                class="cursorPointer"
+                matSuffix
+                (click)="hidecp = !hidecp"
+                >{{ hidecp ? 'visibility_off' : 'visibility' }}</mat-icon
+              >
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Role Name</mat-label>
+              <mat-select [(ngModel)]="formFields[5].value">
+                <mat-option
+                  *ngFor="let item of roleList"
+                  [value]="item.roleId"
+                  >{{ item.roleTitle }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6" *ngIf="roleID > 1">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Branch</mat-label>
+              <mat-select [(ngModel)]="formFields[10].value">
+                <mat-option
+                  *ngFor="let item of branchList"
+                  [value]="item.branchID"
+                  >{{ item.branchName }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6" *ngIf="roleID == 1">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Company</mat-label>
+              <mat-select
+                [(ngModel)]="formFields[6].value"
+                (ngModelChange)="getBusiness()"
+              >
+                <mat-option
+                  *ngFor="let item of companyList"
+                  [value]="item.companyID"
+                  >{{ item.companyFullName }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6" *ngIf="roleID == 1">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Business</mat-label>
+              <mat-select
+                [(ngModel)]="formFields[9].value"
+                (ngModelChange)="getBranch()"
+              >
+                <mat-option
+                  *ngFor="let item of businessList"
+                  [value]="item.businessID"
+                  >{{ item.businessFullName }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6" *ngIf="roleID == 1">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Branch</mat-label>
+              <mat-select [(ngModel)]="formFields[10].value">
+                <mat-option
+                  *ngFor="let item of branchList"
+                  [value]="item.branchID"
+                  >{{ item.branchName }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer bg-darktone1">
+        <div class="row">
+          <div class="col-6 text-center">
+            <button
+              mat-button
+              class="saveBtn mat-elevation-z1"
+              (click)="save()"
+            >
+              Save
+            </button>
+          </div>
+          <div class="col-6 text-center">
+            <button
+              mat-button
+              class="resetBtn mat-elevation-z1"
+              (click)="reset()"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<aims-pos-user-table
+  (eventEmitter)="edit($event)"
+  (eventEmitterDelete)="delete($event)"
+  [tblSearch]="txtSearch"
+></aims-pos-user-table>

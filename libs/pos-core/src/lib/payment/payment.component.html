@@ -1,0 +1,162 @@
+<mat-tab-group
+  mat-align-tabs="center"
+  [selectedIndex]="tabIndex"
+  (selectedIndexChange)="changeTabHeader($event)"
+>
+  <mat-tab label="Add Info">
+    <div class="bg-dark-light">
+      <div class="container">
+        <div
+          class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+        >
+          <div class="PaymentsIcon"></div>
+          <h3 class="ms-3 mt-2">Payments</h3>
+          <label class="ms-4 mt-3 me-lg-auto"></label>
+          <button mat-button class="resetBtn me-2" (click)="reset()">
+            Reset
+          </button>
+          <button mat-button class="saveBtn" (click)="save()">Save</button>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-md-2 d-flex align-items-center border-right-green mt-5 mb-4 ms-4"
+        >
+          <mat-radio-group
+            class="d-flex flex-column"
+            [(ngModel)]="formFields[2].value"
+            aria-label="Select an option"
+          >
+            <mat-radio-button class="fs-5" checked="true" value="1"
+              >Payment</mat-radio-button
+            >
+            <mat-radio-button class="fs-5" value="2">Receipt</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="col-md-6 mt-3 ms-4">
+          <mat-form-field class="w-100 pt-3 pe-4" *ngIf="roleID == 1">
+            <mat-label>Company</mat-label>
+            <mat-select
+              [(ngModel)]="formFields[10].value"
+              (ngModelChange)="getBusiness()"
+            >
+              <mat-option
+                *ngFor="let item of companyList"
+                [value]="item.companyID"
+                >{{ item.companyFullName }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100 pt-3 pe-4" *ngIf="roleID == 1">
+            <mat-label>Business</mat-label>
+            <mat-select
+              [(ngModel)]="formFields[11].value"
+              (ngModelChange)="getBranch()"
+            >
+              <mat-option
+                *ngFor="let item of businessList"
+                [value]="item.businessID"
+                >{{ item.businessFullName }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100 pt-3 pe-4" *ngIf="roleID == 1">
+            <mat-label>Branch</mat-label>
+            <mat-select [(ngModel)]="formFields[12].value">
+              <mat-option
+                *ngFor="let item of branchList"
+                [value]="item.branchID"
+                >{{ item.branchName }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100 pt-3 pe-4">
+            <mat-select
+              class="matInput"
+              [(ngModel)]="formFields[3].value"
+              placeholder="Select party name"
+              autofocus
+            >
+              <mat-option *ngFor="let item of partyList" [value]="item.partyID">
+                {{ item.partyName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100 pt-3 pe-4">
+            <mat-label>Select date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [(ngModel)]="formFields[4].value"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="w-100 pt-3 pe-4">
+            <mat-select
+              class="matInput"
+              [(ngModel)]="formFields[5].value"
+              placeholder="Select category"
+            >
+              <mat-option
+                *ngFor="let item of categoryList"
+                [value]="item.coaID"
+              >
+                {{ item.coaTitle }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100 pt-3 pe-4">
+            <mat-select
+              class="matInput"
+              [(ngModel)]="formFields[6].value"
+              placeholder="Select chart of account"
+            >
+              <mat-option *ngFor="let item of coaList" [value]="item.coaID">
+                {{ item.coaTitle }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100 pt-3 pe-4">
+            <input
+              matInput
+              [(ngModel)]="formFields[7].value"
+              type="number"
+              placeholder="Enter amount"
+            />
+          </mat-form-field>
+          <mat-form-field class="w-100 pt-3 pe-4">
+            <input
+              matInput
+              [(ngModel)]="formFields[8].value"
+              type="number"
+              placeholder="Enter discount"
+            />
+          </mat-form-field>
+          <mat-form-field class="w-100 pt-3 pe-4">
+            <textarea
+              matInput
+              [(ngModel)]="formFields[9].value"
+              placeholder="Enter remarks"
+              (keypress)="getKeyPressed($event)"
+            ></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3 d-flex align-items-center">
+          <img src="assets/ui/hero.png" height="350px" width="350px" />
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Saved Info">
+    <aims-pos-payment-table
+      (eventEmitter)="edit($event)"
+      (eventEmitterDelete)="delete($event)"
+    ></aims-pos-payment-table>
+  </mat-tab>
+</mat-tab-group>

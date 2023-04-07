@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/pos-core",
+  "sourceRoot": "libs/pos-core/src",
+  "prefix": "aims-pos",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/pos-core"],
+      "options": {
+        "jestConfig": "libs/pos-core/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/pos-core/src/**/*.ts",
+          "libs/pos-core/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

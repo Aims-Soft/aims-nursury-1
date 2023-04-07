@@ -1,0 +1,110 @@
+{
+  "projectType": "application",
+  "root": "apps/aims-pos",
+  "sourceRoot": "apps/aims-pos/src",
+  "prefix": "aims-pos",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/aims-pos",
+        "index": "apps/aims-pos/src/index.html",
+        "main": "apps/aims-pos/src/main.ts",
+        "polyfills": "apps/aims-pos/src/polyfills.ts",
+        "tsConfig": "apps/aims-pos/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/aims-pos/src/favicon.ico",
+          "apps/aims-pos/src/assets",
+          {
+            "input": "./libs/ui/src/lib/assets/images",
+            "glob": "**/*",
+            "output": "assets/ui"
+          }
+        ],
+        "styles": [
+          "apps/aims-pos/src/styles.scss",
+          "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+          "./node_modules/font-awesome/css/font-awesome.min.css"
+        ],
+        "scripts": [
+          "./node_modules/jquery/dist/jquery.min.js",
+          "./node_modules/popper.js/dist/umd/popper.min.js",
+          "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/ui/src/lib/styles"]
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500gb",
+              "maximumError": "1gb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2gb",
+              "maximumError": "4gb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/aims-pos/src/environments/environment.ts",
+              "with": "apps/aims-pos/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "aims-pos:build:production"
+        },
+        "development": {
+          "browserTarget": "aims-pos:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "aims-pos:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/aims-pos/src/**/*.ts",
+          "apps/aims-pos/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/aims-pos"],
+      "options": {
+        "jestConfig": "apps/aims-pos/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

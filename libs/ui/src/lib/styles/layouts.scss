@@ -1,0 +1,119 @@
+/**************************************/
+/************ Layouts *****************/
+:root{
+  // --dark : #484e4a;
+  --dark: #2a2829;
+  --dark-light: #e8e5e8;
+  --light-grey: #f4f2f5;
+  --lighttone1: #d9e2e6;
+  --light-green:#adbf35;
+  --white: #ffffff;
+  // --nha-blue: #af9b60;
+  --nha-blue: #9fa8a3;
+  // --nha-blue: #617c58;
+  // --nha-blue: #a9a9a9;
+  --nha-light-blue: #d9e2e6;
+}
+.layout-sideNav-container {
+  height: 100vh;
+  background-color: var(--dark-grey);
+  // border: 1px solid rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.layout-sidenav-content {
+  // background-color: #f8f9fa !important;
+  // background-image: linear-gradient(to right top, #f8f9fa, #f4f6f9, #f1f2f8, #f0eef6, #f1e9f3, #f0e9f3, #f0e8f3, #efe8f3, #edebf6, #ebeff7, #ebf1f8, #edf4f8);
+  height: 99.5vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.layout-sidenav-nav {
+  padding: 0px;
+  width: 15em;
+}
+.header{
+  background-color: var(--dark-grey);
+  
+}
+
+.bachatHeader{
+  background-color: var(--light-green) !important;
+}
+.main-content{
+  height: 100px;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: var(--light);
+  // background-image: linear-gradient(to right top, #f8f9fa, #f4f6f9, #f1f2f8, #f0eef6, #f1e9f3, #f0e9f3, #f0e8f3, #efe8f3, #edebf6, #ebeff7, #ebf1f8, #edf4f8);
+}
+.footer{
+  background-color: var(--dark-grey);
+  color: var(--dark-light);
+  height: 30px;
+  // border-top: 1px solid var(--white);
+  font-family: 'OpenSans';
+  font-size: 0.75em;
+  text-align: center;
+  padding-top: 5px;
+  border : 0 !important;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+.mat-toolbar{
+  background: var(--dark-grey) !important;
+  height: 50px;
+  // border: solid red 2px;
+}
+.mat-bachat-toolbar{
+  background: var(--light-green) !important;
+  height: 80px;
+  // border: solid red 2px;
+}
+.mat-toolbar-single-row{
+
+  // box-shadow: 0 20px 20px -1px black;
+  // box-shadow: inset 0 -5px 5px -5px black;
+}
+
+.mat-toolbar .title{
+  font-family: 'Montserrat' !important;
+  color: var(--white) !important;
+}
+
+.mat-toolbar .bachatTitle{
+  font-family: 'PoppinsBold' !important;
+  color: var(--white) !important;
+}
+
+.mat-toolbar .bachatItems{
+  font-family: 'PoppinsBold' !important;
+  font-size: medium;
+  color: var(--white) !important;
+}
+.mat-toolbar .bachatItemsCart{
+  font-family: 'PoppinsBold' !important;
+  font-size: large;
+  color: var(--white) !important;
+}
+.mat-toolbar .bachatItemsPrice{
+  font-family: 'PoppinsBold' !important;
+  font-size: small;
+  color: var(--white) !important;
+}
+.bachatItemsLocation{
+  font-family: 'PoppinsLight' !important;
+  font-size: 16px;
+  color: var(--light-grey) !important;
+}
+.usernameTxt{
+  font-family: Lato;
+  font-size: 0.7em !important;
+  color: var(--white) !important;
+}
+// .mat-menu-panel{
+//   background-color: var(--li);
+// }

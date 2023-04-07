@@ -1,0 +1,427 @@
+<!-- <perfect-scrollbar style="max-width: 100%; max-height: 100%;"> -->
+<mat-tab-group
+  mat-align-tabs="center"
+  [selectedIndex]="tabIndex"
+  (selectedIndexChange)="changeTabHeader($event)"
+>
+  <mat-tab label="Products">
+    <div class="bg-dark-light">
+      <div class="container">
+        <div
+          class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+        >
+          <div class="newProductIcon"></div>
+          <h3 class="ms-3 mt-2">New Product</h3>
+          <label class="ms-4 mt-3 me-lg-auto">Add your product here.</label>
+          <button mat-button class="resetBtn me-2" (click)="reset()">
+            Reset
+          </button>
+          <button mat-button class="saveBtn" (click)="save()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-2">
+      <div class="row" *ngIf="roleID == 1">
+        <div class="col-md-3 pe-4">
+          <h4 class="mb-3">Company</h4>
+          <h6 class="mb-4">
+            Add company and business information for this employee.
+          </h6>
+        </div>
+        <div class="col-md-9">
+          <div class="row pt-3">
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <mat-label>Company</mat-label>
+                <mat-select
+                  [(ngModel)]="formFields[32].value"
+                  (ngModelChange)="getBusiness()"
+                >
+                  <mat-option
+                    *ngFor="let item of companyList"
+                    [value]="item.companyID"
+                    >{{ item.companyFullName }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <mat-label>Business</mat-label>
+                <mat-select
+                  [(ngModel)]="formFields[33].value"
+                  (ngModelChange)="getBranch()"
+                >
+                  <mat-option
+                    *ngFor="let item of businessList"
+                    [value]="item.businessID"
+                    >{{ item.businessFullName }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <mat-label>Branch</mat-label>
+                <mat-select [(ngModel)]="formFields[34].value">
+                  <mat-option
+                    *ngFor="let item of businessList"
+                    [value]="item.businessID"
+                    >{{ item.businessFullName }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-2">
+      <div class="row">
+        <div class="col-md-3 pe-4">
+          <h4>General</h4>
+          <label class="mt-2">Add general information for this product.</label>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <mat-label>Category</mat-label>
+                <mat-select
+                  [(ngModel)]="cmbCategory"
+                  (ngModelChange)="getSubCategory(cmbCategory)"
+                >
+                  <mat-option
+                    *ngFor="let item of categoryList"
+                    [value]="item.categoryID"
+                  >
+                    {{ item.categoryName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <mat-label>Sub Category</mat-label>
+                <mat-select [(ngModel)]="cmbSubCategory">
+                  <mat-option
+                    *ngFor="let item of subCategoryList"
+                    [value]="item.categoryID"
+                  >
+                    {{ item.categoryName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-md-6">
+                                    <mat-form-field class="w-100">
+                                        <mat-label>Location</mat-label>
+                                        <mat-select [(ngModel)]="formFields[6].value">
+                                            <mat-option
+                                                *ngFor="let item of locationList"
+                                                [value]="item.locationID"
+                                                >
+                                                {{ item.locationName }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>                                
+                                </div> -->
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Product Name"
+                  [(ngModel)]="formFields[3].value"
+                  autofocus
+                />
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-md-6"> -->
+            <!-- <mat-form-field class="w-100">
+                                    <mat-label>Brand</mat-label>
+                                    <mat-select [(ngModel)]="formFields[5].value">
+                                        <mat-option
+                                            *ngFor="let item of brandList"
+                                            [value]="item.brandID"
+                                            >
+                                            {{ item.brandName }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>  -->
+            <!-- <mat-form-field class="w-100">
+                                    <input
+                                        matInput
+                                        placeholder="Name In Urdu"
+                                        [(ngModel)]="formFields[4].value"
+                                        [disabled]="true"
+                                    />
+                                </mat-form-field> -->
+            <!-- </div> -->
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="row">
+            <aims-pos-product-image-uploading
+              [imageUrl]="productPic"
+            ></aims-pos-product-image-uploading>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-3 pe-4">
+          <h4>Barcodes</h4>
+          <label class="mt-2"
+            >The first barcode will shown to staff and customers to help
+            identify this product. When you have multiple codes all the barcodes
+            will be scanable.</label
+          >
+        </div>
+        <div class="col-md-9">
+          <div class="row mt-4">
+            <div class="col-md-4">
+              <mat-form-field>
+                <mat-label>Barcode</mat-label>
+                <mat-select [(ngModel)]="cmbBarcode">
+                  <mat-option [value]="1"> Generate Auto </mat-option>
+                  <mat-option [value]="2"> Generate Manual </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Barcode 1"
+                  [(ngModel)]="formFields[7].value"
+                  [disabled]="cmbBarcode != '2'"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Barcode 2"
+                  [(ngModel)]="formFields[8].value"
+                  [disabled]="cmbBarcode != '2'"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Barcode 3"
+                  [(ngModel)]="formFields[9].value"
+                  [disabled]="cmbBarcode != '2'"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <!-- <mat-form-field class="w-100">
+                <mat-label>Quick Sale</mat-label>
+                <mat-select [(ngModel)]="formFields[10].value">
+                  <mat-option value="yes"> Yes </mat-option>
+                  <mat-option value="no"> No </mat-option>
+                </mat-select>
+              </mat-form-field> -->
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="d-none">
+                <mat-label>Color</mat-label>
+                <mat-select [(ngModel)]="formFields[11].value">
+                  <!-- <mat-option
+                                            *ngFor="let item of locationList"
+                                            [value]="item.locationID"
+                                            >
+                                            {{ item.locationName }}
+                                        </mat-option> -->
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="d-none">
+                <mat-label>Size</mat-label>
+                <mat-select [(ngModel)]="formFields[12].value">
+                  <!-- <mat-option
+                                            *ngFor="let item of locationList"
+                                            [value]="item.locationID"
+                                            >
+                                            {{ item.locationName }}
+                                        </mat-option> -->
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-3 pe-4">
+          <h4>Price</h4>
+          <!-- <label class="mt-2"></label> -->
+        </div>
+        <div class="col-md-9">
+          <div class="row mt-4">
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Cost Price"
+                  [(ngModel)]="formFields[13].value"
+                  type="number"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Sale Price"
+                  [(ngModel)]="formFields[14].value"
+                  type="number"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <!-- <mat-form-field class="w-100">
+                                    <input
+                                        matInput
+                                        placeholder="Retail Price"
+                                        [(ngModel)]="formFields[15].value"
+                                    />
+                                </mat-form-field>
+                                <mat-form-field class="w-100">
+                                    <input
+                                        matInput
+                                        placeholder="Whole Sale Price"
+                                        [(ngModel)]="formFields[16].value"
+                                    />
+                                </mat-form-field> -->
+              <!-- <mat-form-field class="w-100">
+                                    <input
+                                        matInput
+                                        placeholder="Reorder Level"
+                                        [(ngModel)]="formFields[17].value"
+                                        type="number"
+                                    />
+                                </mat-form-field>                                -->
+            </div>
+          </div>
+          <!-- <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field class="w-100">
+                                    <input
+                                        matInput
+                                        placeholder="Max Limit"
+                                        [(ngModel)]="formFields[18].value"
+                                        type="number"
+                                    />
+                                </mat-form-field>           
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="w-100">
+                                    <input
+                                        matInput
+                                        placeholder="GST"
+                                        [(ngModel)]="formFields[19].value"
+                                    />
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="w-100">
+                                    <input
+                                        matInput
+                                        placeholder="ET"
+                                        [(ngModel)]="formFields[20].value"
+                                        type="number"
+                                    />
+                                </mat-form-field>                               
+                            </div>
+                        </div> -->
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-3 pe-4">
+          <h4>Dates</h4>
+          <!-- <label class="mt-2"></label> -->
+        </div>
+        <div class="col-md-9">
+          <div class="row mt-4">
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <!-- <input
+                  matInput
+                  placeholder="Manufacture Date"
+                  [(ngModel)]="formFields[30].value"
+                /> -->
+
+                <mat-label>Manufacture Date</mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="formFields[35].value"
+                  [matDatepicker]="picker"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <!-- <mat-label>Expiry Date</mat-label>
+                <mat-select [(ngModel)]="formFields[31].value">
+                  <mat-option
+                    *ngFor="let item of potList"
+                    [value]="item.potName"
+                  >
+                    {{ item.potName }}
+                  </mat-option>
+                </mat-select> -->
+
+                <mat-label>Expiry Date</mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="formFields[36].value"
+                  [matDatepicker]="picker2"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker2"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field class="w-100">
+                                    <input
+                                        matInput
+                                        placeholder="PCT Code"
+                                        [(ngModel)]="formFields[24].value"
+                                        (keypress)="getKeyPressed($event)"
+                                    />
+                                </mat-form-field>          
+                            </div>
+                        </div> -->
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Saved Products">
+    <aims-pos-product-table
+      (eventEmitter)="edit($event)"
+      (eventEmitterDelete)="delete($event)"
+    ></aims-pos-product-table>
+  </mat-tab>
+  <!-- <mat-tab label="Update Picture">
+    <aims-pos-product-image-update></aims-pos-product-image-update>
+  </mat-tab> -->
+</mat-tab-group>
+<!-- </perfect-scrollbar> -->

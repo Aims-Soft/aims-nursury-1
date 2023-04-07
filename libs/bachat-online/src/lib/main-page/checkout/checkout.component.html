@@ -1,0 +1,93 @@
+<div class="bg-light-green">
+    <div class="d-flex flex-column pb-2 pt-2 align-items-center justify-content-center">
+        <div class="d-flex flex-row">
+            <div class="bachatCheckoutIcon me-2 ms-3"></div>
+            <label class="bachatLblTotal text-white">Checkout</label>
+        </div>
+        <div class="d-flex flex-row">
+            <div class="bachatHomeIcon me-2 ms-3 mt-1"></div>
+            <label class="me-2 text-white cursorPointer" (click)="returnToMain()">Home</label>
+            <label class="me-2 text-white fw-bold">></label>
+            <label class="me-2 text-white">Checkout</label>
+        </div>
+    </div>
+</div>
+<div class="row mt-3 ms-2 me-2">
+    <div class="col-md-6">
+        <h4 class="bachatLblCart">Billing Details</h4> 
+        <mat-form-field class="w-100">
+            <input
+                matInput
+                [(ngModel)]="formFields[0].value"
+                placeholder="User Name"
+                autofocus
+            />
+        </mat-form-field>
+        <mat-form-field class="w-100">
+            <input
+                matInput
+                [(ngModel)]="formFields[1].value"
+                placeholder="Email Address"
+            />
+        </mat-form-field>
+        <mat-form-field class="w-100">
+            <input
+                matInput
+                [(ngModel)]="formFields[2].value"
+                placeholder="Mobile Number"
+                [textMask]="{mask: mobileMask}"
+            />
+        </mat-form-field>
+        <mat-form-field class="w-100">
+            <textarea
+                matInput
+                [(ngModel)]="formFields[3].value"
+                placeholder="Address"
+            ></textarea>
+        </mat-form-field>
+        <div class="d-flex flex-row mt-2">
+            <div class="bachatCashIcon me-2 ms-2 mt-1"></div>
+            <label class="bachatLblCashDelivery">Cash on delivery</label> 
+        </div>
+        <label class="bachatLblTxt mt-2 ms-4 mb-3">Pay with cash upon delivery</label>
+        <div class="border-top-light"></div>
+        <p class="bachatLblTxt mt-4">Your response data will be used to process your order, support your experience throughout this website, and for other purposes described in our <label class="txtClrLightGreen">privacy policy</label>.</p>
+    </div>
+    <div class="offset-md-2 col-md-4">
+        <div class="bg-medium-grey ps-4 pe-4 pb-3">
+            <h4 class="bachatLblCart pt-3 pb-3">Your Order</h4>
+            <div class="bg-white mb-3">
+                <div class="d-flex flex-row justify-content-between p-3">
+                    <label class="bachatLblTxt fw-bold">Product</label>
+                    <label class="bachatLblTxt fw-bold">Subtotal</label>
+                </div>
+                <div class="border-top-light ms-3 me-3"></div>
+                <perfect-scrollbar style="max-width: 100%; height: 15em;">
+                    <div class="d-flex flex-row justify-content-between p-3" *ngFor="let item of checkOutList">
+                        <label class="bachatLblTxt">{{item.productName}} x {{item.qty}}</label>
+                        <label class="bachatLblTxt fw-bold">Rs {{item.salePrice | number}}</label>
+                    </div>
+                </perfect-scrollbar>
+                <div class="border-top-light ms-3 me-3"></div>
+                <div class="d-flex flex-row justify-content-between p-3 mb-2">
+                    <label class="fw-bold">Total</label>
+                    <label class="bachatLblCart txtClrLightGreen">Rs {{totalPrice}} </label>
+                </div>
+
+                <!-- <table class="ms-3 me-3 table table-striped">
+                    <tbody>
+                        <tr>
+                            <td class="col-9"></td>
+                            <td class="fw-bold col-2 text-right"></td>
+                        </tr>
+                        
+                    </tbody>
+                </table> -->
+            </div> 
+            <div class="d-flex">
+                <button mat-button class="placeOrderBtn flex-fill mb-2 mt-1" (click)="checkOut()">Place order</button>
+            </div>
+
+        </div>
+    </div>
+</div>

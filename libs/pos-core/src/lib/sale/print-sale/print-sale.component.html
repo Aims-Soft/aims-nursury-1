@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-md-12 text-center mb-2 mt-3">
+    <h1>Aims Medical System</h1>
+  </div>
+  <div class="col-md-12 text-center mb-3 borderBottom">
+    <h4>Ph # 03330698127-128</h4>
+  </div>
+</div>
+<div class="d-flex justify-content-between mt-2 mb-0 border-bottom border-dark">
+  <h5>Inv. #</h5>
+  <h5>Date</h5>
+  <h5>Time</h5>
+  <h5>Counter</h5>
+</div>
+<div class="d-flex justify-content-between mb-2 mt-2">
+  <h6 class="fw-bold">{{ lblInvoice }}</h6>
+  <h6 class="ms-4">{{ lblDate | date: 'MMM dd, YYYY' }}</h6>
+  <h6 class="ms-3">{{ lblDate | date: 'HH:mm a' }}</h6>
+  <h6>{{ lblName }}</h6>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th class="col-1 text-center">Sr</th>
+      <th class="col-6">Description</th>
+      <th class="col-1 text-center">Qty</th>
+      <th class="col-2 text-end">Price</th>
+      <th class="col-2 text-end">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of tableData; let i = index">
+      <td class="col-1 text-center">{{ i + 1 }}</td>
+      <td class="col-6">{{ item.productName }}</td>
+      <td class="col-1 text-center">{{ item.qty }}</td>
+      <td class="col-2 text-end">{{ item.salePrice }}</td>
+      <td class="col-2 text-end">{{ item.total }}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="d-flex justify-content-around border-bottom border-3">
+  <div class="d-flex flex-column flex-fill align-self-center">
+    <h1 class="text-center m-0">Thank</h1>
+    <h1 class="text-center m-0">You!</h1>
+    <h6 class="text-center">FOR VISITING US.</h6>
+  </div>
+  <div class="flex-fill">
+    <table class="table table-borderless">
+      <tbody>
+        <tr>
+          <td class="fw-bold col-8 text-end">Grand Total</td>
+          <td class="fw-bold col-4 text-end">{{ lblGTotal | number }}</td>
+        </tr>
+        <tr>
+          <td class="col-8 text-end">Discount</td>
+          <td class="col-4 text-end">{{ lblDiscount | number }}</td>
+        </tr>
+        <tr>
+          <td class="col-8 text-end">Cash</td>
+          <td class="col-4 text-end">{{ lblCash | number }}</td>
+        </tr>
+        <tr>
+          <td class="col-8 text-end">Change</td>
+          <td class="col-4 text-end">{{ lblChange | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="d-flex flex-column border-bottom border-3 mt-3">
+  <label class="fw-bold ms-2">Wish to Serve You Again.</label>
+  <!-- <label class="fw-bold ms-2">No Return Acceptable without Invoice.</label>
+  <label class="fw-bold ms-2 mb-3">Return is Acceptable within 3 Days.</label> -->
+</div>

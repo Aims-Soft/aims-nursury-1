@@ -1,0 +1,48 @@
+<div class="table-responsive">
+  <perfect-scrollbar
+    class="bg-light-grey"
+    style="height: 25em; max-width: 100%"
+  >
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="grey-text col-1 text-center">Sr#</th>
+          <th class="grey-text col-3">Role Name</th>
+          <th class="grey-text col-6">Role Description</th>
+          <!-- <th class="grey-text col-1">Status</th> -->
+          <th class="grey-text col-2 text-end">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tableData; let i = index">
+          <td class="grey-text col-1 text-center">
+            {{ i + 1 }}
+          </td>
+          <td class="col-3">
+            {{ item.roleTitle }}
+          </td>
+          <td class="grey-text col-6">
+            {{ item.roleDescription }}
+          </td>
+          <!-- <td class="col-1">
+                        <mat-slide-toggle></mat-slide-toggle>
+                    </td> -->
+          <td class="col-2 text-center">
+            <span
+              class="txtClrDarkGrey pe-2 cursorPointer border-right-secondary"
+              (click)="edit(item)"
+            >
+              <mat-icon>edit</mat-icon>
+            </span>
+            <span
+              class="txtClrLightGreen cursorPointer ps-2 pe-2"
+              (click)="delete(item)"
+            >
+              <mat-icon>delete</mat-icon>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </perfect-scrollbar>
+</div>

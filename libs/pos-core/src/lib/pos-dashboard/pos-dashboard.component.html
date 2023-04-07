@@ -1,0 +1,200 @@
+<div class="bg-dark-light">
+    <div class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center ps-4 pt-2 pb-2">
+        <div class="dashboardIcon"></div>
+        <h3 class="ms-3">Dashboard</h3>
+    </div>
+</div>
+<div class="ps-4 pe-4 mt-4 mb-4">
+    <div class="row d-none">
+        <div class="col-md-6">
+            <mat-form-field class="w-100">
+                <mat-label>From Date</mat-label>
+                <input
+                    matInput [(ngModel)]="dtpFromDate"
+                    [matDatepicker]="picker"
+                />
+                <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="w-100">
+                <mat-label>To Date</mat-label>
+                <input
+                    matInput [(ngModel)]="dtpToDate"
+                    [matDatepicker]="picker2"
+                />
+                <mat-datepicker-toggle
+                matSuffix
+                [for]="picker2"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="greenBox mat-elevation-z3">
+                <div class="d-flex flex-row justify-content-around pt-3">
+                    <div class="d-flex flex-column">
+                        <h3 class="text-white">PKR {{lblTodaySaleTransaction | number}}</h3>
+                        <label class="text-white pb-3 labelFont">Today's Sale Transactions</label>
+                    </div>
+                    <div class="todayTransactionIcon mt-1"></div>
+                </div>
+                <div class="darkGreenBox text-center">
+                    <label class="text-white labelFont">Overall count of today's transactions</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="lightBlueBox mat-elevation-z3">
+                <div class="d-flex flex-row justify-content-around pt-3">
+                    <div class="d-flex flex-column">
+                        <h3 class="text-white">PKR {{lblTodaySaleAmount | number}}</h3>
+                        <label class="text-white pb-3 labelFont">Today's Sale Amount</label>
+                    </div>
+                    <div class="todaySaleIcon mt-1"></div>
+                </div>
+                <div class="skyBlueBox text-center">
+                    <label class="text-white labelFont">Overall count of today's Sale</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="lightSkyBlueBox mat-elevation-z3">
+                <div class="d-flex flex-row justify-content-around pt-3">
+                    <div class="d-flex flex-column">
+                        <h3 class="text-white">PKR {{lblMonthlyIncome | number}}</h3>
+                        <label class="text-white pb-3 labelFont">Monthly Income</label>
+                    </div>
+                    <div class="incomeIcon mt-1"></div>
+                </div>
+                <div class="blueBox text-center">
+                    <label class="text-white labelFont">Overall count of monthly income</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mustardBox mat-elevation-z3">
+                <div class="d-flex flex-row justify-content-around pt-3">
+                    <div class="d-flex flex-column">
+                        <h3 class="text-white">PKR {{lblMonthlyExpense | number}}</h3>
+                        <label class="text-white pb-3 labelFont">Monthly Expenses</label>
+                    </div>
+                    <div class="expenseIcon mt-1"></div>
+                </div>
+                <div class="yellowBox text-center">
+                    <label class="text-white labelFont">Overall count of monthly expenses</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-7">
+            <div
+                class="mat-elevation-z2 h-100"
+                [chart]="sale_chart"
+            ></div>
+        </div>
+        <div class="col-md-5">
+            <div
+                class="mat-elevation-z2 h-100"
+                [chart]="monthly_sale_chart"
+            ></div>
+        </div>
+        <!-- <div class="col-md-4">
+            <div class="pt-5 pb-5 ps-4 pe-4 bg-white mat-elevation-z2">
+                <div class="d-flex flex-row justify-content-between mb-2">
+                    <h4>Sell Amount</h4>
+                    <h4>100,000</h4>
+                </div>
+                <div class="progress rounded-0" style="height: 2.5em;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 45%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="d-flex flex-row justify-content-between mt-4 mb-2">
+                    <h4>Discount Given</h4>
+                    <h4>100,000</h4>
+                </div>
+                <div class="progress rounded-0" style="height: 2.5em;">
+                    <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="d-flex flex-row justify-content-between mt-4 mb-2">
+                    <h4>Due Given</h4>
+                    <h4>100,000</h4>
+                </div>
+                <div class="progress rounded-0" style="height: 2.5em;">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="d-flex flex-row justify-content-between mt-4 mb-2">
+                    <h4>Received Amount</h4>
+                    <h4>100,000</h4>
+                </div>
+                <div class="progress rounded-0" style="height: 2.5em;">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="bg-white p-4 h-100 mat-elevation-z2">
+                <h4>TOP 5 SELLING ITEMS</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sr#</th>
+                            <th class="col-6">Items</th>
+                            <th class="text-center">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of topSaleList; let i=index">
+                            <td>{{i+1}}</td>
+                            <td class="col-6">{{item.productName}}</td>
+                            <td class="text-center">{{item.salePrice | number}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div
+                class="mat-elevation-z2"
+                [chart]="accountHead_pieChart"
+            ></div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div
+                class="mat-elevation-z2"
+                [chart]="incomeExpense_chart"
+            ></div>
+        </div>
+        <div class="col-md-6">
+            <div class="bg-white p-4 mat-elevation-z2 h-100">
+                <h4>TOP 5 UNDER STOCK ITEMS</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sr#</th>
+                            <th class="col-6">Items</th>
+                            <th class="text-center">Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of underStockList; let i=index">
+                            <td>{{i+1}}</td>
+                            <td class="col-6">{{item.productname}}</td>
+                            <td class="text-center">{{item.totalqty | number}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

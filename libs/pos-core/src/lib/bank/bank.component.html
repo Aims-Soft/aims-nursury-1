@@ -1,0 +1,138 @@
+<mat-tab-group
+  mat-align-tabs="center"
+  [selectedIndex]="tabIndex"
+  (selectedIndexChange)="changeTabHeader($event)"
+>
+  <mat-tab label="Add Info">
+    <div class="bg-dark-light">
+      <div class="container">
+        <div
+          class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+        >
+          <div class="BankDetailsIcon"></div>
+          <h3 class="ms-3 mt-2">Bank Details</h3>
+          <label class="ms-4 mt-3 me-lg-auto"></label>
+          <button mat-button class="resetBtn me-2" (click)="reset()">
+            Reset
+          </button>
+          <button mat-button class="saveBtn" (click)="save()">Save</button>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-md-2 d-flex align-items-center border-right-green mt-5 mb-4 ms-4"
+        >
+          <!-- <mat-radio-group
+                        class="d-flex flex-column"
+                        aria-label="Select an option"
+                        [(ngModel)]="formFields[2].value"
+                    >
+                        <mat-radio-button class="fs-5" checked="true" value="desposit"
+                        >Deposit</mat-radio-button
+                        >
+                        <mat-radio-button class="fs-5" value="withdraw">Withdraw</mat-radio-button>
+                    </mat-radio-group> -->
+          <div class="d-flex flex-column">
+            <mat-checkbox [(ngModel)]="chkDesposit">Deposit</mat-checkbox>
+            <mat-checkbox [(ngModel)]="chkWithdraw">Withdraw</mat-checkbox>
+          </div>
+        </div>
+        <div class="col-md-6 mt-3 ms-4">
+          <mat-form-field class="w-100" *ngIf="roleID == 1">
+            <mat-label>Company</mat-label>
+            <mat-select
+              [(ngModel)]="formFields[12].value"
+              (ngModelChange)="getBusiness()"
+            >
+              <mat-option
+                *ngFor="let item of companyList"
+                [value]="item.companyID"
+                >{{ item.companyFullName }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100" *ngIf="roleID == 1">
+            <mat-label>Business</mat-label>
+            <mat-select [(ngModel)]="formFields[13].value">
+              <mat-option
+                *ngFor="let item of businessList"
+                [value]="item.businessID"
+                >{{ item.businessFullName }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100 pe-4">
+            <input
+              matInput
+              [(ngModel)]="formFields[3].value"
+              placeholder="enter branch code"
+              maxlength="4"
+              autofocus
+            />
+          </mat-form-field>
+          <mat-form-field class="w-100 pe-4">
+            <input
+              matInput
+              [(ngModel)]="formFields[4].value"
+              placeholder="enter branch name"
+            />
+          </mat-form-field>
+          <mat-form-field class="w-100 pe-4">
+            <input
+              matInput
+              [(ngModel)]="formFields[5].value"
+              placeholder="enter bank name"
+            />
+          </mat-form-field>
+          <mat-form-field class="w-100 pe-4">
+            <input
+              matInput
+              [(ngModel)]="formFields[6].value"
+              placeholder="enter account no"
+            />
+          </mat-form-field>
+          <mat-form-field class="w-100 pe-4">
+            <input
+              matInput
+              [(ngModel)]="formFields[7].value"
+              placeholder="enter account title"
+            />
+          </mat-form-field>
+          <mat-form-field class="w-100 pe-4">
+            <input
+              matInput
+              [(ngModel)]="formFields[8].value"
+              placeholder="enter opening balance"
+            />
+          </mat-form-field>
+          <mat-form-field class="w-100 pe-4">
+            <textarea
+              matInput
+              [(ngModel)]="formFields[9].value"
+              placeholder="enter branch address"
+            ></textarea>
+          </mat-form-field>
+          <mat-form-field class="w-100 pe-4">
+            <textarea
+              matInput
+              [(ngModel)]="formFields[10].value"
+              placeholder="enter description"
+              (keypress)="getKeyPressed($event)"
+            ></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <img src="assets/ui/bank.png" height="530px" width="420px" />
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Saved Info">
+    <aims-pos-bank-table
+      (eventEmitter)="edit($event)"
+      (eventEmitterDelete)="delete($event)"
+    ></aims-pos-bank-table>
+  </mat-tab>
+</mat-tab-group>

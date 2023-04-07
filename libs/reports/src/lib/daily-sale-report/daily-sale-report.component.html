@@ -1,0 +1,303 @@
+<div class="bg-dark-light"> 
+    <div class="container">
+        <div class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2">
+            <div class="BankDetailsIcon"></div>
+            <h3 class="ms-3 mt-2">Daily Sales Report</h3>
+            <label class=" ms-4 mt-3 me-lg-auto"></label>
+            <button mat-button class="resetBtn" styleSheetFile="assets/printstyles.css" printSectionId="section" ngxPrint>Print</button>
+        </div>
+    </div>
+</div>
+<div class="container mt-5" id="section">
+
+    <div class="row d-none">
+        <div class="col-md-6 text-left">
+            <div class="h1Report">Daily Sales Report</div>
+            <div class="h3Report">Date: <b>{{currentDate | date: 'dd-mm-yyyy'}}</b></div>
+        </div>
+        <div class="col-md-6 text-right">
+            <img src="assets/ui/ReportPictures/Logo.svg" width="80px" />
+            <!-- <div class="posReportIcon"></div> -->
+            <div class="h1Report txtDarkGrey">Bachat Online</div>
+        </div>
+    </div>
+    <div class="row d-none">
+        <img src="assets/ui/ReportPictures/GradientBar.svg" height="20px" width="100%" />
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="">
+                        <th class="text-center border-bottom-green">Sr#</th>
+                        <th class="border-bottom-green">Category Name</th>
+                        <th class="text-center border-bottom-green">Quantity</th>
+                        <th class="text-center border-bottom-green">Total Sale Price</th>
+                        <th class="text-center border-bottom-green">Total Cost Price</th>
+                        <th class="text-center border-bottom-green">Margin Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>Oil and Ghee</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">1800</td>
+                        <td class="text-center">1,700</td>
+                        <td class="text-center">100</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>Milk</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">2100</td>
+                        <td class="text-center">1,800</td>
+                        <td class="text-center">300</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>Honey</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">1200</td>
+                        <td class="text-center">1,000</td>
+                        <td class="text-center">200</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>Oil and Ghee</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">1800</td>
+                        <td class="text-center">1,700</td>
+                        <td class="text-center">100</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>Milk</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">2100</td>
+                        <td class="text-center">1,800</td>
+                        <td class="text-center">300</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>Honey</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">1200</td>
+                        <td class="text-center">1,000</td>
+                        <td class="text-center">200</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>Oil and Ghee</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">1800</td>
+                        <td class="text-center">1,700</td>
+                        <td class="text-center">100</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>Milk</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">2100</td>
+                        <td class="text-center">1,800</td>
+                        <td class="text-center">300</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>Honey</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">1200</td>
+                        <td class="text-center">1,000</td>
+                        <td class="text-center">200</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>Oil and Ghee</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">1800</td>
+                        <td class="text-center">1,700</td>
+                        <td class="text-center">100</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>Milk</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">2100</td>
+                        <td class="text-center">1,800</td>
+                        <td class="text-center">300</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>Honey</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">1200</td>
+                        <td class="text-center">1,000</td>
+                        <td class="text-center">200</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>Oil and Ghee</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">1800</td>
+                        <td class="text-center">1,700</td>
+                        <td class="text-center">100</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>Milk</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">2100</td>
+                        <td class="text-center">1,800</td>
+                        <td class="text-center">300</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>Honey</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">1200</td>
+                        <td class="text-center">1,000</td>
+                        <td class="text-center">200</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">16</td>
+                        <td>Oil and Ghee</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">1800</td>
+                        <td class="text-center">1,700</td>
+                        <td class="text-center">100</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">17</td>
+                        <td>Milk</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">2100</td>
+                        <td class="text-center">1,800</td>
+                        <td class="text-center">300</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">18</td>
+                        <td>Honey</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">1200</td>
+                        <td class="text-center">1,000</td>
+                        <td class="text-center">200</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">19</td>
+                        <td>Oil and Ghee</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">1800</td>
+                        <td class="text-center">1,700</td>
+                        <td class="text-center">100</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20</td>
+                        <td>Milk</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">2100</td>
+                        <td class="text-center">1,800</td>
+                        <td class="text-center">300</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">21</td>
+                        <td>Honey</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">1200</td>
+                        <td class="text-center">1,000</td>
+                        <td class="text-center">200</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">22</td>
+                        <td>Oil and Ghee</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">1800</td>
+                        <td class="text-center">1,700</td>
+                        <td class="text-center">100</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">23</td>
+                        <td>Milk</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">2100</td>
+                        <td class="text-center">1,800</td>
+                        <td class="text-center">300</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">24</td>
+                        <td>Honey</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">1200</td>
+                        <td class="text-center">1,000</td>
+                        <td class="text-center">200</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">25</td>
+                        <td>Oil and Ghee</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">1800</td>
+                        <td class="text-center">1,700</td>
+                        <td class="text-center">100</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">26</td>
+                        <td>Milk</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">2100</td>
+                        <td class="text-center">1,800</td>
+                        <td class="text-center">300</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">27</td>
+                        <td>Honey</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">1200</td>
+                        <td class="text-center">1,000</td>
+                        <td class="text-center">200</td>
+                    </tr>
+                    <!-- <tr *ngFor="let item of tableData; let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{item.bankName}}</td>
+                        <td>{{item.branchCode}}</td>
+                        <td>{{item.accountNo}}</td>
+                        <td>{{item.amount}}</td>
+                        <td>
+                            <span class="txtClrDarkGrey pe-2 cursorPointer border-right-dark" (click)="edit(item)">
+                                <mat-icon>edit</mat-icon>
+                            </span>
+                            <span class="txtClrLightGreen cursorPointer ps-2 pe-2" (click)="delete(item)">
+                                <mat-icon>delete</mat-icon>
+                            </span>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+        
+    <div class="row mt-2 mb-2 d-none">
+        <div class="col-md-3">
+            <div class="borderTopGrey borderBottomGrey pb-01">
+                <div class="borderBottomGrey h2Report"><b>GRAND TOTAL</b></div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2 mb-2 d-none">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h3Report"><b>Total Sale Price: </b> 123,456</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h3Report"><b>Total Purchase Price: </b> 123,456</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="borderTopGrey borderBottomGrey pb-02">
+                <div class="borderBottomGrey h1Total"><b>Total Margin: </b> 123,456</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@aims-pos/auth": ["libs/auth/src/index.ts"],
+      "@aims-pos/bachat-online": ["libs/bachat-online/src/index.ts"],
+      "@aims-pos/cmis": ["libs/cmis/src/index.ts"],
+      "@aims-pos/layouts": ["libs/layouts/src/index.ts"],
+      "@aims-pos/material": ["libs/material/src/index.ts"],
+      "@aims-pos/pos-core": ["libs/pos-core/src/index.ts"],
+      "@aims-pos/reports": ["libs/reports/src/index.ts"],
+      "@aims-pos/shared/helpers/field-validations": [
+        "libs/shared/helpers/field-validations/src/index.ts"
+      ],
+      "@aims-pos/shared/helpers/guards": [
+        "libs/shared/helpers/guards/src/index.ts"
+      ],
+      "@aims-pos/shared/helpers/interceptors": [
+        "libs/shared/helpers/interceptors/src/index.ts"
+      ],
+      "@aims-pos/shared/helpers/jwt-interceptor": [
+        "libs/shared/helpers/jwt-interceptor/src/index.ts"
+      ],
+      "@aims-pos/shared/interface": ["libs/shared/interface/src/index.ts"],
+      "@aims-pos/shared/services/auth": [
+        "libs/shared/services/auth/src/index.ts"
+      ],
+      "@aims-pos/shared/services/data": [
+        "libs/shared/services/data/src/index.ts"
+      ],
+      "@aims-pos/shared/services/global-data": [
+        "libs/shared/services/global-data/src/index.ts"
+      ],
+      "@aims-pos/ui": ["libs/ui/src/index.ts"],
+      "@aims-pos/umis": ["libs/umis/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

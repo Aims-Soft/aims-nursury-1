@@ -1,0 +1,216 @@
+<mat-tab-group
+  mat-align-tabs="center"
+  [selectedIndex]="tabIndex"
+  (selectedIndexChange)="changeTabHeader($event)"
+>
+  <mat-tab label="Add Party">
+    <div class="bg-dark-light">
+      <div class="container">
+        <div
+          class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+        >
+          <div class="AddPartyIcon"></div>
+          <h3 class="ms-3 mt-2">New Party</h3>
+          <label class="ms-4 mt-3 me-lg-auto"></label>
+          <button mat-button class="resetBtn me-2" (click)="reset()">
+            Reset
+          </button>
+          <button mat-button class="saveBtn" (click)="save()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-2">
+      <div class="row" *ngIf="roleID == 1">
+        <div class="col-md-3 pe-4">
+          <h4 class="mb-3">Company</h4>
+          <h6 class="mb-4">
+            Add company and business information for this employee.
+          </h6>
+        </div>
+        <div class="col-md-9">
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <mat-label>Company</mat-label>
+                <mat-select
+                  [(ngModel)]="formFields[13].value"
+                  (ngModelChange)="getBusiness()"
+                >
+                  <mat-option
+                    *ngFor="let item of companyList"
+                    [value]="item.companyID"
+                    >{{ item.companyFullName }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <mat-label>Business</mat-label>
+                <mat-select [(ngModel)]="formFields[14].value">
+                  <mat-option
+                    *ngFor="let item of businessList"
+                    [value]="item.businessID"
+                    >{{ item.businessFullName }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-2">
+      <div class="row">
+        <div class="col-md-3 pe-4">
+          <h4 class="mb-3">General</h4>
+          <h6 class="mb-4">Add general information for this party.</h6>
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="w-100 pt-3 pe-4">
+                <mat-select
+                  class="matInput"
+                  placeholder="Enter party type"
+                  [(ngModel)]="formFields[2].value"
+                  autofocus
+                >
+                  <mat-option value="customer">Customer</mat-option>
+                  <mat-option value="supplier">Supplier</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100 pt-3 pe-4">
+                <input
+                  matInput
+                  [(ngModel)]="formFields[3].value"
+                  placeholder="Enter party name"
+                />
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-md-4">
+                            <mat-form-field class="w-100 pt-3 pe-4">
+                                <input matInput 
+                                [(ngModel)]="formFields[3].value" placeholder="Enter party name in Urdu" [disabled]="true">
+                            </mat-form-field>
+                        </div> -->
+            <div class="col-md-4">
+              <mat-form-field class="w-100 pt-3 pe-4">
+                <input
+                  matInput
+                  [(ngModel)]="formFields[5].value"
+                  placeholder="Enter CNIC number"
+                  [textMask]="{ mask: cnicMask }"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-2">
+      <div class="row">
+        <div class="col-md-3 pe-4">
+          <h4 class="mb-3">Contact</h4>
+          <h6 class="mb-4">Add party contact information here.</h6>
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-8">
+              <mat-form-field class="w-100 pt-3 pe-4">
+                <input
+                  matInput
+                  [(ngModel)]="formFields[6].value"
+                  placeholder="Enter party address"
+                />
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-md-4">
+                            <mat-form-field class="w-100 pt-3 pe-4">
+                                <input matInput
+                                [(ngModel)]="formFields[8].value" placeholder="Enter party address in Urdu" [disabled]="true">
+                            </mat-form-field>
+                        </div> -->
+            <div class="col-md-4">
+              <mat-form-field class="w-100 pt-3 pe-4">
+                <mat-select
+                  class="matInput"
+                  [(ngModel)]="formFields[8].value"
+                  placeholder="Enter City"
+                >
+                  <mat-option
+                    *ngFor="let item of cityList"
+                    [value]="item.cityID"
+                  >
+                    {{ item.cityName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="w-100 pt-3 pe-4">
+                <input
+                  matInput
+                  [(ngModel)]="formFields[9].value"
+                  placeholder="Enter phone number"
+                  [textMask]="{ mask: phoneMask }"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100 pt-3 pe-4">
+                <input
+                  matInput
+                  [(ngModel)]="formFields[10].value"
+                  placeholder="Enter  mobile number"
+                  [textMask]="{ mask: mobileMask }"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100 pt-3 pe-4">
+                <input
+                  matInput
+                  [(ngModel)]="formFields[11].value"
+                  placeholder="Enter  person to contact"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-2">
+      <div class="row">
+        <div class="col-md-3 pe-4">
+          <h4 class="mb-3">Remarks</h4>
+          <h6 class="mb-4">Add party remarks here if any.</h6>
+        </div>
+        <div class="col-md-9">
+          <mat-form-field class="w-100 pt-3 pe-4">
+            <input
+              matInput
+              [(ngModel)]="formFields[12].value"
+              placeholder="Enter remarks here"
+              (keypress)="getKeyPressed($event)"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Saved Parties">
+    <aims-pos-party-table
+      (eventEmitter)="edit($event)"
+      (eventEmitterDelete)="delete($event)"
+    ></aims-pos-party-table>
+  </mat-tab>
+</mat-tab-group>

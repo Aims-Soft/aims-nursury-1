@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "projects": {
+    "aims-pos": "apps/aims-pos",
+    "aims-pos-e2e": "apps/aims-pos-e2e",
+    "auth": "libs/auth",
+    "bachat-online": "libs/bachat-online",
+    "cmis": "libs/cmis",
+    "layouts": "libs/layouts",
+    "material": "libs/material",
+    "pos-core": "libs/pos-core",
+    "reports": "libs/reports",
+    "shared-helpers-field-validations": "libs/shared/helpers/field-validations",
+    "shared-helpers-guards": "libs/shared/helpers/guards",
+    "shared-helpers-interceptors": "libs/shared/helpers/interceptors",
+    "shared-helpers-jwt-interceptor": "libs/shared/helpers/jwt-interceptor",
+    "shared-interface": "libs/shared/interface",
+    "shared-services-auth": "libs/shared/services/auth",
+    "shared-services-data": "libs/shared/services/data",
+    "shared-services-global-data": "libs/shared/services/global-data",
+    "ui": "libs/ui",
+    "umis": "libs/umis"
+  }
+}

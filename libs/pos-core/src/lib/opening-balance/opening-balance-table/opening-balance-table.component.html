@@ -1,0 +1,22 @@
+<div class="table-responsive">
+    <perfect-scrollbar class="bg-light-grey" style="height: 20em; max-width: 100%;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">Sr#</th>
+                    <th>Barcode</th>
+                    <th>Product Name</th>
+                    <th class="text-center">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of tableData; let i=index">
+                    <td class="text-center">{{i+1}}</td>
+                    <td>{{item.barcode1}}</td>
+                    <td>{{item.productName}}</td>
+                    <td class="text-center">{{item.qty}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </perfect-scrollbar>
+</div>

@@ -1,0 +1,38 @@
+<div class="bg-dark-light">
+  <div class="container">
+      <div class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2">
+          <div class="LocationIcon"></div>
+          <h3 class="ms-3 mt-2">Product Location</h3>
+          <label class=" ms-4 mt-3 me-lg-auto">Add location of your products to find them easily.</label>
+          <button mat-button class="resetBtn me-2" >Reset</button>
+          <button mat-button class="saveBtn" >Save</button>
+      </div>
+  </div>
+</div>
+<div class="container mt-2">
+  <h4 class="txtClrLightGreen">Add or Modify</h4>
+  <div class="row">
+      <div class="d-flex flex-row">
+          <mat-form-field class="w-100 pt-3 pe-4">
+              <input
+          matInput
+          placeholder="Enter branch name here"
+          />
+          </mat-form-field>
+          <mat-form-field class="w-100 pt-3 pe-4">
+              <input
+          matInput
+          placeholder="Enter location name here"
+          />
+          </mat-form-field>
+        <mat-form-field class="w-100 pt-3 pe-4">
+            <input
+        matInput
+        placeholder="Enter sub location/rack number here"
+        />
+        </mat-form-field>
+      </div>
+      <h4 class="txtClrLightGreen">Saved Records</h4>
+  </div>
+  <aims-pos-location-table></aims-pos-location-table>
+</div>

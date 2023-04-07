@@ -1,0 +1,58 @@
+:root{
+  // --dark : #484e4a;
+  --green: #33C799;
+  --dark-green: #00b980;
+  --blue: #197efc;
+  --light-blue: #32CAE5;
+  --sky-blue: #00bedf;
+  --light-sky-blue: #4697FC;
+  --yellow: #ffc419;
+  --mustard: #FFCF46;
+  // --nha-light-blue: green;
+}
+
+/*********************************** boxes ********************************************/
+.greenBox{
+	background-color: var(--green) !important;
+}
+.greenBox .darkGreenBox{
+	background-color: var(--dark-green) !important;
+	-webkit-box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+	-moz-box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+	box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+}
+.lightBlueBox{
+	background-color: var(--light-blue) !important;
+}
+.lightBlueBox .skyBlueBox{
+	background-color: var(--sky-blue) !important;
+	-webkit-box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+	-moz-box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+	box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+}
+.lightSkyBlueBox{
+	background-color: var(--light-sky-blue) !important;
+}
+.lightSkyBlueBox .blueBox{
+	background-color: var(--blue) !important;
+	-webkit-box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+	-moz-box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+	box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+}
+.mustardBox{
+	background-color: var(--mustard) !important;
+}
+.mustardBox .yellowBox{
+	background-color: var(--yellow) !important;
+	-webkit-box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+	-moz-box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+	box-shadow: 0px -2px 10px rgba(128, 128, 128, 0.50);
+}
+
+/********************************************************************************/
+
+.labelFont{
+	font-family: 'SegeoUI';
+	font-size: 0.8em;
+	font-weight: 100;
+}

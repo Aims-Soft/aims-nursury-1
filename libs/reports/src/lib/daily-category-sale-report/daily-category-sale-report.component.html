@@ -1,0 +1,97 @@
+<div class="bg-dark-light"> 
+    <div class="container">
+        <div class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2">
+            <div class="BankDetailsIcon"></div>
+            <h3 class="ms-3 mt-2">Daily Category Wise Sale Report</h3>
+            <label class=" ms-4 mt-3 me-lg-auto"></label>
+            <!-- <button mat-button class="resetBtn me-2" styleSheetFile="assets/printstyles.css" printSectionId="section" ngxPrint [disabled]="reportList.length == 0">Print</button> -->
+            <button mat-button class="resetBtn me-2" styleSheetFile="assets/printstyles.css" printSectionId="section" ngxPrint>Print</button>
+            <button mat-button class="saveBtn">Show</button>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5" id="section">
+
+    <div class="row d-none">
+        <div class="col-md-6 text-left">
+            <div class="h1Report">Daily Category Wise Sale Report</div>
+            <div class="h4Report"><b>{{dtpCurrentDate | date:'dd-MM-yyyy'}}</b></div>
+        </div>
+        <div class="col-md-6 text-right">
+            <img src="assets/ui/ReportPictures/Logo.svg" width="80px" />
+            <!-- <div class="posReportIcon"></div> -->
+            <div class="h1Report txtDarkGrey">Bachat Online</div>
+        </div>
+    </div>
+    <!-- <div class="row d-none">
+        <div class="col-md-3">
+            <div class="h4Report"><b>{{cmbCOA}}</b></div>
+        </div>
+        <div class="col-md-3">
+            <div class="h4Report"><b>{{lblAccountHead}}</b></div>
+        </div>
+    </div> -->
+    <div class="row d-none">
+        <img src="assets/ui/ReportPictures/GradientBar.svg" height="20px" width="100%" />
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center border-bottom-green">Item Code</th>
+                        <th class="text-center border-bottom-green">Description</th>
+                        <th class="text-center border-bottom-green">In Hand</th>
+                        <th class="text-center border-bottom-green">Cost Price</th>
+                        <th class="text-center border-bottom-green">Sale Price</th>
+                        <th class="text-center border-bottom-green">Total On Cost</th>
+                        <th class="text-center border-bottom-green">Total On Sale</th>
+                        <th class="text-center border-bottom-green">Last Debit</th>
+                        <th class="text-center border-bottom-green">Last Credit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr *ngFor="let item of reportList; let i=index">
+                        <td class="text-center">{{item.invoiceno}}</td>
+                        <td class="text-center">{{item.invoicetype}}</td>
+                        <td class="text-center">{{item.description}}</td>
+                        <td class="text-center">{{item.debit | number}}</td>
+                        <td class="text-center">{{item.credit | number}}</td>
+                        <td class="text-center">{{item.credit | number}}</td>
+                        <td class="text-center">{{item.credit | number}}</td>
+                        <td class="text-center">{{item.credit | number}}</td>
+                        <td class="text-center">{{item.credit | number}}</td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+        
+    <!--<div class="row mt-2 mb-2 d-none">
+        <div class="col-md-3">
+            <div class="borderTopGrey borderBottomGrey pb-01">
+                <div class="borderBottomGrey h2Report"><b>GRAND TOTAL</b></div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2 mb-2 d-none">
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h3Report"><b>Total Debit: </b> {{lblTotalDebit | number}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h3Report"><b>Total Credit: </b> {{lblTotalCredit | number}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="borderTopGrey borderBottomGrey pb-02">
+                <div class="borderBottomGrey h1Total text-center"><b>Total Balance: </b> {{lblTotalBalance | number}}</div>
+            </div>
+        </div>
+    </div> -->
+</div>

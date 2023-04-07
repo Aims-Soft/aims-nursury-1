@@ -1,0 +1,80 @@
+.login-page {
+  background-color: var(--light-green);
+  height: 100vh;
+  width: 100vw;
+}
+
+.bgLoginImg{
+  background:url(../assets/images/login-img.png);
+  background-position: center;
+  background-size: cover;
+  height: 35em;
+  width: 80em;
+}
+
+.cardLogin {
+  height: 35em;
+  width: 80em;
+  background-color: white;
+}
+
+.box{
+  background-color: var(--dark-grey);
+  height: 25em;
+  width: 35em;
+  position: absolute;
+  top: 24%;
+  display: flex;
+  align-items: center;
+}
+
+.lblForgot{
+  color: var(--dark-grey);
+  font-size: 1em;
+}
+.lblloginH2{
+  font-family: 'Segoe UI';
+  font-size: 1.5em;
+  font-weight: 600;
+}
+.borderBtm{
+  border-bottom: 3px solid white;
+  width: 6.5em;
+}
+
+.lblloginH3{
+  font-family: 'Segoe UI';
+  font-size: 2em;
+  font-weight: 600;
+}
+.lblloginH4{
+  font-family: 'Segoe UI';
+  font-size: 1em;
+}
+
+.btnLogin{
+  background-color: var(--dark-grey);
+  width: 10em;
+  height: 3em;
+  color: white;
+  font-size: large;
+  border-radius: 0 !important;
+}
+
+.btnLogin:hover{
+  background-color: #888a7c;
+  width: 10em;
+  height: 3em;
+  color: white;
+  font-size: large;
+  border-radius: 0 !important;
+  transition: all .5s ease-in-out;
+}
+
+.font-style {
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  color: #333333;
+  line-height: 1.2;
+}

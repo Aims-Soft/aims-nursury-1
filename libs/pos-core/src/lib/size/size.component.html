@@ -1,0 +1,33 @@
+<div class="saveUpdateBar border mat-elevation-z2">
+    <button mat-button class="save cursorPointer">
+      <mat-icon>save</mat-icon>
+      <span class="ps-2">Save</span>
+    </button>
+    <button mat-button class="save cursorPointer">
+      <mat-icon>cached</mat-icon>
+      <span class="ps-2">Reset</span>
+    </button>
+  </div>
+  <div class="row vh-100 no-scroll">
+    <!-- Add / update -->
+    <div class="col-md-4 bg-white border">
+      <h2 class="pt-2 pb-2 ps-3 border-bottom">Add / Modify</h2>
+      <div class="d-flex flex-column ps-3 pe-3">
+        <mat-form-field class="w-100">
+            <input
+                matInput
+                placeholder="Size"
+            />
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <!-- saved record -->
+    <div class="col-md-8 p-0">
+      <h2 class="pt-2 pb-2 ps-2 border-bottom">Saved Records</h2>
+      <div class="d-flex flex-column">
+        <aims-pos-size-table></aims-pos-size-table>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,246 @@
+<!-- <div class="saveUpdateBar border mat-elevation-z2">
+    <button mat-button class="save cursorPointer" (click)="save('#print-data')">
+        <mat-icon>save</mat-icon>
+        <span class="ps-2">Save</span>
+    </button>
+    <button mat-button class="save cursorPointer" (click)="reset()">
+        <mat-icon>cached</mat-icon>
+        <span class="ps-2">Reset</span>
+    </button>
+</div> -->
+
+<!-- Add / update -->
+<div class="bg-dark-light">
+  <div class="container">
+    <div
+      class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+    >
+      <div class="productSaleIcon"></div>
+      <h3 class="ms-3 mt-2">Product Sale</h3>
+      <label class="ms-4 mt-3 me-lg-auto"
+        >View, edit and manage your sales here.</label
+      >
+      <button mat-button class="saleReturnBtn me-2" (click)="checkSaleReturn()">
+        Sale Return
+      </button>
+      <button mat-button class="resetBtn me-2" (click)="reset()">Reset</button>
+      <button mat-button class="saveBtn" (click)="save('#print-data')">
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+<div class="container overflow-hidden pb-3">
+  <div class="row" *ngIf="roleID == 1">
+    <div class="col-md-4">
+      <mat-form-field class="w-100">
+        <mat-label>Company</mat-label>
+        <mat-select
+          [(ngModel)]="formFields[11].value"
+          (ngModelChange)="getBusiness()"
+        >
+          <mat-option
+            *ngFor="let item of companyList"
+            [value]="item.companyID"
+            >{{ item.companyFullName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field class="w-100">
+        <mat-label>Business</mat-label>
+        <mat-select
+          [(ngModel)]="formFields[12].value"
+          (ngModelChange)="getBranch()"
+        >
+          <mat-option
+            *ngFor="let item of businessList"
+            [value]="item.businessID"
+            >{{ item.businessFullName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field class="w-100">
+        <mat-label>Branch</mat-label>
+        <mat-select [(ngModel)]="formFields[13].value">
+          <mat-option
+            *ngFor="let item of businessList"
+            [value]="item.businessID"
+            >{{ item.businessFullName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-form-field class="w-100">
+        <mat-label>Customer Name</mat-label>
+        <mat-select [(ngModel)]="formFields[3].value">
+          <mat-option *ngFor="let item of partyList" [value]="item.partyID">
+            <table class="table">
+              <td class="col-6">
+                {{ item.partyName }}
+              </td>
+              <td class="col-6">
+                {{ item.type }}
+              </td>
+            </table>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-8">
+      <mat-form-field class="w-100">
+        <input
+          matInput
+          [(ngModel)]="formFields[9].value"
+          placeholder="Remarks"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-form-field class="w-100">
+        <input
+          matInput
+          placeholder="Search By Code"
+          [(ngModel)]="txtCode"
+          (keyup)="pushProductByCode(txtCode, $event)"
+          (keydown.Tab)="testFunc($event)"
+          autofocus
+          #txtFocusCode
+        />
+      </mat-form-field>
+    </div>
+    <div class="col-md-8">
+      <mat-form-field class="w-100">
+        <mat-label>Search By Name</mat-label>
+        <mat-select
+          [(ngModel)]="cmbProduct"
+          (ngModelChange)="pushProduct(cmbProduct)"
+        >
+          <mat-option>
+            <ngx-mat-select-search
+              [(ngModel)]="searchProduct"
+              [noEntriesFoundLabel]="'Not found'"
+              placeholderLabel="Search..."
+              name="search"
+            >
+            </ngx-mat-select-search>
+          </mat-option>
+          <mat-option
+            *ngFor="
+              let item of productList | search: 'productName':searchProduct
+            "
+            [value]="item.productID"
+          >
+            {{ item.productName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row bg-light-grey pt-2">
+    <aims-pos-product-sale-table
+      (eventEmitter)="totalBill()"
+    ></aims-pos-product-sale-table>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row mt-2">
+        <div class="col-md-3">
+          <div
+            class="bg-light d-flex flex-column align-items-center mat-elevation-z5"
+          >
+            <label class="h2-sale-discount pt-3">DISCOUNT</label>
+            <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-2">
+              <input
+                matInput
+                class="blue-text"
+                [(ngModel)]="formFields[6].value"
+                (keyup)="changeValue()"
+                type="number"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div
+            class="bg-light d-flex flex-column align-items-center mat-elevation-z5"
+          >
+            <label class="h3-sale-cash pt-3">CASH</label>
+            <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-1">
+              <input
+                matInput
+                class="blue-text"
+                [(ngModel)]="formFields[7].value"
+                (keyup)="changeValue(); getKeyPressed($event, '#print-data')"
+                type="number"
+                #txtCash
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div
+            class="bg-light-green d-flex flex-column align-items-center mat-elevation-z5"
+          >
+            <label class="h2-sale-discount pt-4 text-white">CHANGE</label>
+            <label class="h1-digit text-center mt-1 mb-2 pb-1">{{
+              formFields[8].value
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div
+            class="bg-light-green d-flex flex-column align-items-center mat-elevation-z5"
+          >
+            <label class="h3-sale-cash pt-4 text-white">TOTAL AMOUNT</label>
+            <label class="text-center mt-1 mb-2 h1-digit">{{ lblTotal }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<aims-pos-print-sale class="d-none" id="print-data"></aims-pos-print-sale>
+
+<!-- Modal -->
+<div
+  id="saleReturnModal"
+  class="modal fade"
+  role="dialog"
+  data-bs-backdrop="false"
+>
+  <div class="modal-dialog modal-md mat-elevation-z20">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-dark-grey">
+        <h4 class="modal-title align-self-center text-white">Sale Return</h4>
+        <div class="cancelIcon cursorPointer" data-bs-dismiss="modal"></div>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-column align-items-center">
+          <div class="saleReturnIcon mb-3"></div>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Enter Invoice Number"
+              [(ngModel)]="lblInvoiceNo"
+            />
+          </mat-form-field>
+          <button mat-button class="resetBtn ps-5 pe-5" (click)="saleReturn()">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

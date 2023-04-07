@@ -1,0 +1,28 @@
+{
+  "root": "apps/aims-pos-e2e",
+  "sourceRoot": "apps/aims-pos-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/aims-pos-e2e/cypress.json",
+        "devServerTarget": "aims-pos:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "aims-pos:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/aims-pos-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["aims-pos"]
+}

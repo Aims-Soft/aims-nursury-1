@@ -1,0 +1,85 @@
+<div class="bg-dark-light">
+  <div class="container">
+    <div
+      class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+    >
+      <div class="d-flex flex-row align-items-center">
+        <div class="ChartofAccountIcon"></div>
+        <h3 class="ms-3 mt-2">Chart Of Account</h3>
+      </div>
+      <label class="ms-4 mt-3 me-lg-auto"
+        >Add Chart of Account details here.</label
+      >
+
+      <button mat-button class="resetBtn me-2 d-inline-block" (click)="reset()">
+        Reset
+      </button>
+      <button mat-button class="saveBtn d-inline" (click)="save()">Save</button>
+    </div>
+  </div>
+</div>
+<div class="container mt-2">
+  <h4 class="txtClrLightGreen">Add or Modify</h4>
+  <div class="row pt-3">
+    <div class="col-md-6" *ngIf="roleID == 1">
+      <mat-form-field class="w-100">
+        <mat-label>Company</mat-label>
+        <mat-select
+          [(ngModel)]="formFields[4].value"
+          (ngModelChange)="getBusiness()"
+        >
+          <mat-option
+            *ngFor="let item of companyList"
+            [value]="item.companyID"
+            >{{ item.companyFullName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6" *ngIf="roleID == 1">
+      <mat-form-field class="w-100">
+        <mat-label>Business</mat-label>
+        <mat-select [(ngModel)]="formFields[5].value">
+          <mat-option
+            *ngFor="let item of businessList"
+            [value]="item.businessID"
+            >{{ item.businessFullName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <mat-form-field class="w-100 pt-3 pe-4">
+        <input
+          matInput
+          [(ngModel)]="formFields[2].value"
+          placeholder="Enter title of chart of account"
+          maxlength="50"
+          autofocus
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-4">
+      <mat-form-field class="w-100 pt-3 pe-4">
+        <mat-select
+          class="matInput"
+          [(ngModel)]="formFields[3].value"
+          placeholder="Enter type of chart of account"
+          (keypress)="getKeyPressed($event)"
+        >
+          <mat-option *ngFor="let item of coaTypeList" [value]="item.coaTypeID">
+            {{ item.coaTypeName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <h4 class="txtClrLightGreen">Saved Records</h4>
+  <aims-pos-chart-of-account-table
+    (eventEmitter)="edit($event)"
+    (eventEmitterDelete)="delete($event)"
+  ></aims-pos-chart-of-account-table>
+</div>

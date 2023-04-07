@@ -1,0 +1,149 @@
+<!-- <perfect-scrollbar style="max-width: 100%; max-height: 100%;"> -->
+<mat-tab-group
+  mat-align-tabs="center"
+  [selectedIndex]="tabIndex"
+  (selectedIndexChange)="changeTabHeader($event)"
+>
+  <mat-tab label="Companies">
+    <div class="bg-dark-light">
+      <div class="container">
+        <div
+          class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+        >
+          <div class="newCompanyIcon"></div>
+          <h3 class="ms-3 mt-2">New Company</h3>
+          <label class="ms-4 mt-3 me-lg-auto">Add your Company here.</label>
+          <button mat-button class="resetBtn me-2" (click)="reset()">
+            Reset
+          </button>
+          <button mat-button class="saveBtn" (click)="save()">Save</button>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-2">
+      <div class="row">
+        <div class="col-md-3 pe-4">
+          <h4>General</h4>
+          <label class="mt-2">Add general information for this company.</label>
+        </div>
+        <div class="col-md-6">
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Company Name"
+                  [(ngModel)]="formFields[2].value"
+                  autofocus
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Company Short Name"
+                  [(ngModel)]="formFields[3].value"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="NTN"
+                  [(ngModel)]="formFields[4].value"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="STRN"
+                  [(ngModel)]="formFields[5].value"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Company Registration No"
+                  [(ngModel)]="formFields[6].value"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="row">
+            <aims-pos-company-image-uploading
+              [imageUrl]="productPic"
+            ></aims-pos-company-image-uploading>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-3 pe-4">
+          <h4>Contact Info</h4>
+          <label class="mt-2">Add contact information for this company.</label>
+        </div>
+        <div class="col-md-9">
+          <div class="row mt-4">
+            <div class="col-md-8">
+              <mat-form-field class="w-100">
+                <textarea
+                  matInput
+                  placeholder="Address"
+                  [(ngModel)]="formFields[7].value"
+                ></textarea>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100 pt-3">
+                <input
+                  matInput
+                  placeholder="Email"
+                  [(ngModel)]="formFields[8].value"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Mobile"
+                  [(ngModel)]="formFields[9].value"
+                  [textMask]="{ mask: mobileMask }"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Phone"
+                  [(ngModel)]="formFields[10].value"
+                  [textMask]="{ mask: phoneMask }"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Saved Companies">
+    <aims-pos-company-table
+      (eventEmitter)="edit($event)"
+    ></aims-pos-company-table>
+  </mat-tab>
+</mat-tab-group>
+<!-- </perfect-scrollbar> -->

@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/reports",
+  "sourceRoot": "libs/reports/src",
+  "prefix": "aims-pos",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/reports"],
+      "options": {
+        "jestConfig": "libs/reports/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/reports/src/**/*.ts",
+          "libs/reports/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

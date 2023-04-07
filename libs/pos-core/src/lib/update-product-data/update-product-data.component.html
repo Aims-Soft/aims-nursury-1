@@ -1,0 +1,91 @@
+<div class="bg-dark-light">
+    <div class="container">
+        <div class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2">
+            <div class="bachatOnlineIcon"></div>
+            <!-- <h3 class="ms-3 mt-2">Bachat Online Stock</h3> -->
+            <h3 class="ms-3 mt-2">Update Product Data</h3>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field class="w-100">
+                <mat-label>Sub Category</mat-label>
+                <mat-select [(ngModel)]="cmbCategory" (ngModelChange)="onCategoryChange(cmbCategory)">
+                    <mat-option>
+                        <ngx-mat-select-search [(ngModel)]="searchCategory" 
+                            [noEntriesFoundLabel]="'Not found'" placeholderLabel="Search..." name="search">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option
+                        *ngFor="let item of categoryList | search: 'categoryName': searchCategory"
+                        [value]="item.categoryID"
+                        >
+                        {{ item.categoryName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-7">
+            <mat-form-field class="w-100">
+                <mat-label>Search</mat-label>
+                <input
+                    matInput [(ngModel)]="tblSearch"
+                />
+            </mat-form-field>
+        </div>
+        <div class="col-md-1">
+            <button mat-button class="resetBtn mt-3" (click)="reset()">
+                Clear All
+            </button>
+        </div>
+    </div>
+    <!-- <div class="d-flex flex-row">
+
+        
+        
+        
+    </div> -->
+    <perfect-scrollbar class="bg-light-grey" style="height: 31em; max-width: 100%;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-1 text-center">Sr#</th>
+                    <th class="col-4">Product Name</th>
+                    <th class="col-2">Brand Name</th>
+                    <th class="col-2">Cost Price</th>
+                    <th class="col-2">Sale Price</th>
+                    <!-- <th class="col-1">Discount</th> -->
+                    <th class="col-1 text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of tableData | filter: tblSearch; let i=index">
+                    <td class="col-1 text-center">{{i+1}}</td>
+                    <td class="col-4">{{item.productName}}</td>
+                    <!-- <td class="col-2">{{item.brandName}}</td> -->
+                    <td class="col-2">
+                        <select class="form-control" [(ngModel)]="item.brandID">
+                            <option *ngFor="let item of brandList"
+                            [value]="item.brandID">{{item.brandName}}</option>
+                        </select>
+                    </td>
+                    <!-- <td class="col-2">{{item.costPrice}}</td> -->
+                    <td class="col-2">
+                        <input class="form-control" placeholder="Cost Price" [(ngModel)]="item.costPrice" type="number">
+                    </td>
+                    <!-- <td class="col-2">{{item.salePrice}}</td> -->
+                    <td class="col-2">
+                        <input class="form-control" placeholder="Sale Price" [(ngModel)]="item.salePrice" type="number">
+                    </td>
+                    <td class="col-1 text-center">
+                        <span class="txtClrDarkGrey pe-2 cursorPointer" (click)="edit(item)">
+                            <mat-icon>edit</mat-icon>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </perfect-scrollbar>
+</div>

@@ -1,0 +1,44 @@
+<div class="bg-dark-light">
+    <div class="container">
+        <div class="d-flex flex-row pt-2 pb-2 align-items-center">
+            <div class="SavedPartiesIcon"></div>
+            <h3 class="ms-3 mt-2">Saved Party</h3>
+        </div>
+    </div>
+</div>
+
+<div class="container">    
+    <perfect-scrollbar class="bg-light-grey" style="height: 31em; max-width: 100%;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sr#</th>
+                    <th>Party Name</th>
+                    <th>City</th>
+                    <th>Mobile no</th>
+                    <th>CNIC</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of tableData; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{item.partyName}}</td>
+                    <td>{{item.cityName}}</td>
+                    <td>{{item.mobile}}</td>
+                    <td>{{item.cnic}}</td>
+                    <td>{{item.type}}</td>
+                    <td>
+                        <span class="txtClrDarkGrey pe-2 cursorPointer border-right-dark" (click)="edit(item)">
+                            <mat-icon>edit</mat-icon>
+                        </span>
+                        <span class="txtClrLightGreen cursorPointer ps-2 pe-2" (click)="delete(item)">
+                            <mat-icon>delete</mat-icon>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </perfect-scrollbar>
+</div>
