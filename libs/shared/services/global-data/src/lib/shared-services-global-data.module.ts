@@ -191,7 +191,7 @@ export class SharedServicesGlobalDataModule {
 
     //Append the external CSS file. <link rel="stylesheet" href="../../../styles.scss" /> <link rel="stylesheet" href="../../../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
     frameDoc.document.write(
-      '<style type="text/css" media="print">@page { size: landscape; }</style>'
+      '<style type="text/css" media="print">@page { size: potrait; }</style>'
     );
     frameDoc.document.write(
       // '<link rel="stylesheet" href="../../../../../../apps/aims-pos/src/assets/apps/society/src/styles.scss" type="text/scss"  media="print"/>'
