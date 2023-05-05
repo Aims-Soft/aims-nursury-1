@@ -45,7 +45,7 @@ export class DailySaleReportComponent implements OnInit {
           const cost = this.reportList.reduce((sum: any, total: any) => {
             return sum + total.costPrice;
           }, 0);
-          this.lblTotalSale = cost;
+          this.lblTotalCost = cost;
 
           const margin = this.reportList.reduce((sum: any, total: any) => {
             return sum + total.margin;
