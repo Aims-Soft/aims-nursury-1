@@ -11,7 +11,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DailySaleReportComponent implements OnInit {
   // currentDate: any = '';
-  saleDate: any = '';
+  startDate: any = '';
+  endDate: any = '';
   reportList: any = [];
   lblTotalSale: any = '';
   lblTotalCost: any = '';
@@ -28,35 +29,52 @@ export class DailySaleReportComponent implements OnInit {
   ngOnInit(): void {
     // this.currentDate = new Date();
   }
-  getDailySale() {
-    var date;
-    date = this.datePipe.transform(this.saleDate, 'yyyy-MM-dd');
-    this.dataService
-      .getHttp('report-api/FMISReport/getDailySales?invoiceDate=' + date, '')
-      .subscribe(
-        (response: any) => {
-          // this.deductionList = response;
-          this.reportList = response;
-          const sale = this.reportList.reduce((sum: any, total: any) => {
-            return sum + total.salePrice;
-          }, 0);
-          this.lblTotalSale = sale;
+  getDailySale(start: any, end: any) {
+    console.log(start);
+    console.log(end);
+    if (start == '') {
+      // console.log('enter start date');
+      this.valid.apiInfoResponse('enter start date');
+    }
 
-          const cost = this.reportList.reduce((sum: any, total: any) => {
-            return sum + total.costPrice;
-          }, 0);
-          this.lblTotalCost = cost;
+    // debugger;
+    if (start !== '' && end !== '') {
+      var startdate, enddate;
+      startdate = this.datePipe.transform(start, 'yyyy-MM-dd');
+      enddate = this.datePipe.transform(end, 'yyyy-MM-dd');
+      this.dataService
+        .getHttp(
+          'report-api/FMISReport/getDailySales?startDate=' +
+            startdate +
+            '&endDate=' +
+            enddate,
+          ''
+        )
+        .subscribe(
+          (response: any) => {
+            // this.deductionList = response;
+            this.reportList = response;
+            const sale = this.reportList.reduce((sum: any, total: any) => {
+              return sum + total.salePrice;
+            }, 0);
+            this.lblTotalSale = sale;
 
-          const margin = this.reportList.reduce((sum: any, total: any) => {
-            return sum + total.margin;
-          }, 0);
-          this.lblTotalMargin = margin;
-          // console.log(this.lblTotalSale);
-          // console.log(response);
-        },
-        (error: any) => {
-          console.log(error);
-        }
-      );
+            const cost = this.reportList.reduce((sum: any, total: any) => {
+              return sum + total.costPrice;
+            }, 0);
+            this.lblTotalCost = cost;
+
+            const margin = this.reportList.reduce((sum: any, total: any) => {
+              return sum + total.margin;
+            }, 0);
+            this.lblTotalMargin = margin;
+            // console.log(this.lblTotalSale);
+            console.log(response);
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        );
+    }
   }
 }

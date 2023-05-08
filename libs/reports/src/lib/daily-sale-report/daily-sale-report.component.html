@@ -27,11 +27,22 @@
     <div class="row mt-2">
         <div class="col-md-3">
             <mat-form-field class="w-100" appearance="fill">
-                <mat-label>Select Date</mat-label>
+                <mat-label>Start Date</mat-label>
                 <!-- [(ngModel)]="formFields[11].value" -->
-                <input matInput [matDatepicker]="picker1" [(ngModel)]="saleDate" (ngModelChange)="getDailySale()">
+                <input matInput [matDatepicker]="picker1" [(ngModel)]="startDate"
+                    (ngModelChange)="getDailySale(startDate,endDate)">
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>End Date</mat-label>
+                <!-- [(ngModel)]="formFields[11].value" -->
+                <input matInput [matDatepicker]="picker2" [(ngModel)]="endDate"
+                    (ngModelChange)="getDailySale(startDate,endDate)">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
         </div>
         <!-- <div class="col-md-3">
