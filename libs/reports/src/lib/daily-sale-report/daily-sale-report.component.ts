@@ -67,7 +67,6 @@ export class DailySaleReportComponent implements OnInit {
             }, 0);
             this.lblTotalMargin = margin;
             // console.log(this.lblTotalSale);
-            console.log(response);
           },
           (error: any) => {
             console.log(error);
