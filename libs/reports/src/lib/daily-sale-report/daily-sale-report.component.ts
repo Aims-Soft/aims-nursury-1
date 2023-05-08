@@ -30,8 +30,6 @@ export class DailySaleReportComponent implements OnInit {
     // this.currentDate = new Date();
   }
   getDailySale(start: any, end: any) {
-    console.log(start);
-    console.log(end);
     if (start == '') {
       // console.log('enter start date');
       this.valid.apiInfoResponse('enter start date');
