@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   envName: 'prod',
   // apiUrl: 'http://localhost:7000/',
+  // http://localhost:8506
   apiUrl: 'http://135.181.62.34:8500/',
   // imageUrl: 'C:/inetpub/wwwroot/aims-pos/assets/ui/',
   imageUrl: 'E:/projects/aims-pos/libs/ui/src/lib/assets/images/',

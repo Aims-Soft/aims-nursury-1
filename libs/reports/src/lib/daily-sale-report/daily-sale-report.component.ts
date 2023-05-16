@@ -53,7 +53,7 @@ export class DailySaleReportComponent implements OnInit {
           (response: any) => {
             // this.deductionList = response;
             this.reportList = response;
-            // console.log(response);
+            console.log(response);
             const sale = this.reportList.reduce((sum: any, total: any) => {
               return sum + total.salePrice;
             }, 0);

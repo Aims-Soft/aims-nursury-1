@@ -9,21 +9,8 @@
         </div>
     </div>
 </div>
-<div class="container mt-5" id="section">
+<div class="container">
 
-    <div class="row d-none">
-        <div class="col-md-6 text-left">
-            <div class="h1Report">Daily Sales Report</div>
-            <!-- <div class="h3Report">Date: <b>{{currentDate | date: 'dd-mm-yyyy'}}</b></div> -->
-        </div>
-        <div class="col-md-6 text-right">
-            <!-- <img src="assets/ui/ReportPictures/Logo.svg" width="80px" /> -->
-            <div class="h1Report txtDarkGrey">AIMS Matab</div>
-        </div>
-    </div>
-    <div class="row d-none">
-        <img src="assets/ui/ReportPictures/GradientBar.svg" height="20px" width="100%" />
-    </div>
     <div class="row mt-2">
         <div class="col-md-3">
             <mat-form-field class="w-100" appearance="fill">
@@ -53,6 +40,31 @@
                 <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
         </div> -->
+    </div>
+</div>
+<div class="container mt-5" id="section">
+
+    <div class="row d-none">
+        <div class="col-md-6 text-left">
+            <div class="h1Report">Daily Sales Report</div>
+            <!-- <div class="h3Report">Date: <b>{{currentDate | date: 'dd-mm-yyyy'}}</b></div> -->
+        </div>
+        <div class="col-md-6 text-right">
+            <!-- <img src="assets/ui/ReportPictures/Logo.svg" width="80px" /> -->
+            <div class="h1Report txtDarkGrey">AIMS Matab</div>
+        </div>
+    </div>
+
+    <div class="row d-none">
+        <img src="assets/ui/ReportPictures/GradientBar.svg" height="20px" width="100%" />
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            Start Date: {{startDate | date}}
+        </div>
+        <div class="col-md-4">
+            End Date: {{endDate | date}}
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">
