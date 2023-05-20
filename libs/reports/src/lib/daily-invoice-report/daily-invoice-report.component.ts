@@ -1,16 +1,15 @@
 import { SharedHelpersFieldValidationsModule } from '@aims-pos/shared/helpers/field-validations';
-import { DatePipe } from '@angular/common';
 import { SharedServicesDataModule } from '@aims-pos/shared/services/data';
 import { SharedServicesGlobalDataModule } from '@aims-pos/shared/services/global-data';
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'aims-pos-daily-sale-report',
-  templateUrl: './daily-sale-report.component.html',
-  styleUrls: ['./daily-sale-report.component.scss'],
+  selector: 'aims-pos-daily-invoice-report',
+  templateUrl: './daily-invoice-report.component.html',
+  styleUrls: ['./daily-invoice-report.component.scss'],
 })
-export class DailySaleReportComponent implements OnInit {
-  // currentDate: any = '';
+export class DailyInvoiceReportComponent implements OnInit {
   startDate: any = '';
   endDate: any = '';
   reportList: any = [];
@@ -18,8 +17,6 @@ export class DailySaleReportComponent implements OnInit {
   lblTotalCost: any = '';
   lblTotalMargin: any = '';
   lblTotalDiscoount: any = '';
-
-  // rptImg: any = 'assets/ui/ReportPictures/Logo.svg'
   constructor(
     private global: SharedServicesGlobalDataModule,
     private dataService: SharedServicesDataModule,
@@ -27,10 +24,8 @@ export class DailySaleReportComponent implements OnInit {
     private datePipe: DatePipe
   ) {}
 
-  ngOnInit(): void {
-    // this.currentDate = new Date();
-  }
-  getDailySale(start: any, end: any) {
+  ngOnInit(): void {}
+  getDailyInvoice(start: any, end: any) {
     if (start == '') {
       // console.log('enter start date');
       this.valid.apiInfoResponse('enter start date');
@@ -43,7 +38,7 @@ export class DailySaleReportComponent implements OnInit {
       enddate = this.datePipe.transform(end, 'yyyy-MM-dd');
       this.dataService
         .getHttp(
-          'report-api/FMISReport/getDailySales?startDate=' +
+          'report-api/FMISReport/getDailySalesByOrder?startDate=' +
             startdate +
             '&endDate=' +
             enddate,
@@ -51,7 +46,6 @@ export class DailySaleReportComponent implements OnInit {
         )
         .subscribe(
           (response: any) => {
-            // this.deductionList = response;
             this.reportList = response;
             const sale = this.reportList.reduce((sum: any, total: any) => {
               return sum + total.salePrice;
@@ -71,7 +65,6 @@ export class DailySaleReportComponent implements OnInit {
               return sum + total.discount;
             }, 0);
             this.lblTotalDiscoount = disc;
-            // console.log(this.lblTotalSale);
           },
           (error: any) => {
             console.log(error);

@@ -1,14 +1,8 @@
-<mat-tab-group
-  mat-align-tabs="center"
-  [selectedIndex]="tabIndex"
-  (selectedIndexChange)="changeTabHeader($event)"
->
+<mat-tab-group mat-align-tabs="center" [selectedIndex]="tabIndex" (selectedIndexChange)="changeTabHeader($event)">
   <mat-tab label="Add Employee">
     <div class="bg-dark-light">
       <div class="container">
-        <div
-          class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
-        >
+        <div class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2">
           <div class="AddEmployeeIcon"></div>
           <h3 class="ms-3 mt-2">New Employee</h3>
           <label class="ms-4 mt-3 me-lg-auto"></label>
@@ -33,15 +27,9 @@
             <div class="col-md-6">
               <mat-form-field class="w-100">
                 <mat-label>Company</mat-label>
-                <mat-select
-                  [(ngModel)]="formFields[13].value"
-                  (ngModelChange)="getBusiness()"
-                >
-                  <mat-option
-                    *ngFor="let item of companyList"
-                    [value]="item.companyID"
-                    >{{ item.companyFullName }}</mat-option
-                  >
+                <mat-select [(ngModel)]="formFields[13].value" (ngModelChange)="getBusiness()">
+                  <mat-option *ngFor="let item of companyList" [value]="item.companyID">{{ item.companyFullName
+                    }}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -49,11 +37,8 @@
               <mat-form-field class="w-100">
                 <mat-label>Business</mat-label>
                 <mat-select [(ngModel)]="formFields[14].value">
-                  <mat-option
-                    *ngFor="let item of businessList"
-                    [value]="item.businessID"
-                    >{{ item.businessFullName }}</mat-option
-                  >
+                  <mat-option *ngFor="let item of businessList" [value]="item.businessID">{{ item.businessFullName
+                    }}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -70,49 +55,34 @@
         </div>
         <div class="col-md-9">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
               <mat-form-field class="w-100 pt-3 pe-4">
-                <input
-                  matInput
-                  [(ngModel)]="formFields[2].value"
-                  placeholder="Enter employee name"
-                  autofocus
-                />
+                <input matInput [(ngModel)]="formFields[16].value" placeholder="Enter employee no." autofocus />
               </mat-form-field>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <mat-form-field class="w-100 pt-3 pe-4">
-                <input
-                  matInput
-                  [(ngModel)]="formFields[3].value"
-                  placeholder="Enter party name in Urdu"
-                  [disabled]="true"
-                />
+                <input matInput [(ngModel)]="formFields[2].value" placeholder="Enter employee name" autofocus />
               </mat-form-field>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <mat-form-field class="w-100 pt-3 pe-4">
-                <input
-                  matInput
-                  [(ngModel)]="formFields[4].value"
-                  placeholder="Enter CNIC number"
-                  [textMask]="{ mask: cnicMask }"
-                />
+                <input matInput [(ngModel)]="formFields[3].value" placeholder="Enter party name in Urdu"
+                  [disabled]="true" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="w-100 pt-3 pe-4">
+                <input matInput [(ngModel)]="formFields[4].value" placeholder="Enter CNIC number"
+                  [textMask]="{ mask: cnicMask }" />
               </mat-form-field>
             </div>
           </div>
           <div class="row">
             <div class="col-md-4">
               <mat-form-field class="w-100 pt-3 pe-4">
-                <mat-select
-                  class="matInput"
-                  [(ngModel)]="formFields[5].value"
-                  placeholder="Select designation"
-                >
-                  <mat-option
-                    *ngFor="let item of designationList"
-                    [value]="item.designationID"
-                  >
+                <mat-select class="matInput" [(ngModel)]="formFields[5].value" placeholder="Select designation">
+                  <mat-option *ngFor="let item of designationList" [value]="item.designationID">
                     {{ item.desginationName }}
                   </mat-option>
                 </mat-select>
@@ -120,18 +90,16 @@
             </div>
             <div class="col-md-4">
               <mat-form-field class="w-100 pt-3 pe-4">
-                <mat-select
-                  class="matInput"
-                  [(ngModel)]="formFields[6].value"
-                  placeholder="Select branch"
-                >
-                  <mat-option
-                    *ngFor="let item of branchList"
-                    [value]="item.branchID"
-                  >
+                <mat-select class="matInput" [(ngModel)]="formFields[6].value" placeholder="Select branch">
+                  <mat-option *ngFor="let item of branchList" [value]="item.branchID">
                     {{ item.branchName }}
                   </mat-option>
                 </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="w-100 pt-3 pe-4">
+                <input matInput [(ngModel)]="formFields[15].value" placeholder="Enter next of Kin" />
               </mat-form-field>
             </div>
           </div>
@@ -149,15 +117,8 @@
           <div class="row">
             <div class="col-md-4">
               <mat-form-field class="w-100 pt-3 pe-4">
-                <mat-select
-                  class="matInput"
-                  [(ngModel)]="formFields[8].value"
-                  placeholder="Enter City"
-                >
-                  <mat-option
-                    *ngFor="let item of cityList"
-                    [value]="item.cityID"
-                  >
+                <mat-select class="matInput" [(ngModel)]="formFields[8].value" placeholder="Enter City">
+                  <mat-option *ngFor="let item of cityList" [value]="item.cityID">
                     {{ item.cityName }}
                   </mat-option>
                 </mat-select>
@@ -165,33 +126,21 @@
             </div>
             <div class="col-md-8">
               <mat-form-field class="w-100 pt-3 pe-4">
-                <input
-                  matInput
-                  [(ngModel)]="formFields[9].value"
-                  placeholder="Enter employee address "
-                />
+                <input matInput [(ngModel)]="formFields[9].value" placeholder="Enter employee address " />
               </mat-form-field>
             </div>
           </div>
           <div class="row">
             <div class="col-md-8">
               <mat-form-field class="w-100 pt-3 pe-4">
-                <input
-                  matInput
-                  [(ngModel)]="formFields[10].value"
-                  placeholder="Enter employee address in urdu"
-                  [disabled]="true"
-                />
+                <input matInput [(ngModel)]="formFields[10].value" placeholder="Enter employee address in urdu"
+                  [disabled]="true" />
               </mat-form-field>
             </div>
             <div class="col-md-4">
               <mat-form-field class="w-100 pt-3 pe-4">
-                <input
-                  matInput
-                  [(ngModel)]="formFields[11].value"
-                  placeholder="Enter  mobile number"
-                  [textMask]="{ mask: mobileMask }"
-                />
+                <input matInput [(ngModel)]="formFields[11].value" placeholder="Enter  mobile number"
+                  [textMask]="{ mask: mobileMask }" />
               </mat-form-field>
             </div>
           </div>
@@ -207,21 +156,15 @@
         </div>
         <div class="col-md-9">
           <mat-form-field class="w-100 pt-3 pe-4">
-            <input
-              matInput
-              [(ngModel)]="formFields[12].value"
-              placeholder="Enter remarks here"
-              (keypress)="getKeyPressed($event)"
-            />
+            <input matInput [(ngModel)]="formFields[12].value" placeholder="Enter remarks here"
+              (keypress)="getKeyPressed($event)" />
           </mat-form-field>
         </div>
       </div>
     </div>
   </mat-tab>
   <mat-tab label="Saved Employees">
-    <aims-pos-employee-profile-table
-      (eventEmitter)="edit($event)"
-      (eventEmitterDelete)="delete($event)"
-    ></aims-pos-employee-profile-table>
+    <aims-pos-employee-profile-table (eventEmitter)="edit($event)"
+      (eventEmitterDelete)="delete($event)"></aims-pos-employee-profile-table>
   </mat-tab>
 </mat-tab-group>

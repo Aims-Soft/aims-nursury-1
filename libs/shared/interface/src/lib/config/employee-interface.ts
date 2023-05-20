@@ -16,4 +16,6 @@ export interface EmployeeInterface {
   userID: '';
   companyid: '';
   businessid: '';
+  nextOfKin: '';
+  EmployeeNo: '';
 }

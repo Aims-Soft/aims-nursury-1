@@ -31,6 +31,8 @@ export class EmployeeProfileComponent implements OnInit {
     description: '', //12
     companyid: '', //13
     businessid: '', //14
+    nextOfKin: '',
+    EmployeeNo: '',
   };
 
   formFields: MyFormField[] = [
@@ -123,6 +125,18 @@ export class EmployeeProfileComponent implements OnInit {
       msg: '',
       type: 'selectbox',
       required: false,
+    },
+    {
+      value: this.pageFields.nextOfKin,
+      msg: 'enter next of Kin',
+      type: 'textbox',
+      required: true,
+    },
+    {
+      value: this.pageFields.EmployeeNo,
+      msg: 'enter employee No',
+      type: 'textbox',
+      required: true,
     },
   ];
 
@@ -311,6 +325,8 @@ export class EmployeeProfileComponent implements OnInit {
     this.formFields[11].value = item.mobile;
     this.formFields[12].value = item.description;
     this.formFields[14].value = item.businessid;
+    this.formFields[15].value = item.nextOfKin;
+    this.formFields[16].value = item.employeeNo;
   }
 
   changeTabHeader(tabNum: any) {
