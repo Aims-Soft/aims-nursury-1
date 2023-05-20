@@ -43,7 +43,7 @@ export const reportsRoutes: Route[] = [
   { path: 'trialbalrpt', component: TrialBalanceComponent },
   { path: 'balsheetrpt', component: BalanceSheetComponent },
   { path: 'jourvoucherrpt', component: JournalVoucherComponent },
-  { path: 'saleproductrpt', component: DailyInvoiceReportComponent },
+  { path: 'dailyinvoiverpt', component: DailyInvoiceReportComponent },
 ];
 
 @NgModule({
