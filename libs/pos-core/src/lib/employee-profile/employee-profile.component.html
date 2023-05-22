@@ -57,7 +57,8 @@
           <div class="row">
             <div class="col-md-3">
               <mat-form-field class="w-100 pt-3 pe-4">
-                <input matInput [(ngModel)]="formFields[16].value" placeholder="Enter employee no." autofocus />
+                <input pattern="[0-9]" title="Please enter a number" matInput [(ngModel)]="formFields[16].value"
+                  type="number" placeholder="Enter employee no." autofocus />
               </mat-form-field>
             </div>
             <div class="col-md-3">
