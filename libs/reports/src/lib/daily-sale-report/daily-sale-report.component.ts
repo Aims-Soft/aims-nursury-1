@@ -14,6 +14,7 @@ export class DailySaleReportComponent implements OnInit {
   startDate: any = '';
   endDate: any = '';
   reportList: any = [];
+  discountList: any = [];
   lblTotalSale: any = '';
   lblTotalCost: any = '';
   lblTotalMargin: any = '';
@@ -67,11 +68,44 @@ export class DailySaleReportComponent implements OnInit {
               return sum + total.margin;
             }, 0);
             this.lblTotalMargin = margin;
-            const disc = this.reportList.reduce((sum: any, total: any) => {
+            // const disc = this.reportList.reduce((sum: any, total: any) => {
+            //   return sum + total.discount;
+            // }, 0);
+            // this.lblTotalDiscoount = disc;
+            // console.log(this.lblTotalSale);
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        );
+    }
+  }
+  getDailyInvoice(start: any, end: any) {
+    if (start == '') {
+      // console.log('enter start date');
+      this.valid.apiInfoResponse('enter start date');
+    }
+
+    // debugger;
+    if (start !== '' && end !== '') {
+      var startdate, enddate;
+      startdate = this.datePipe.transform(start, 'yyyy-MM-dd');
+      enddate = this.datePipe.transform(end, 'yyyy-MM-dd');
+      this.dataService
+        .getHttp(
+          'report-api/FMISReport/getDailySalesByOrder?startDate=' +
+            startdate +
+            '&endDate=' +
+            enddate,
+          ''
+        )
+        .subscribe(
+          (response: any) => {
+            this.discountList = response;
+            const disc = this.discountList.reduce((sum: any, total: any) => {
               return sum + total.discount;
             }, 0);
             this.lblTotalDiscoount = disc;
-            // console.log(this.lblTotalSale);
           },
           (error: any) => {
             console.log(error);
