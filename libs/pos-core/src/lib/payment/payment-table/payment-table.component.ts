@@ -15,7 +15,7 @@ export class PaymentTableComponent implements OnInit {
 
   error: any;
   tableData: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -24,6 +24,7 @@ export class PaymentTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPayment();
+    this.moduleId = localStorage.getItem('moduleId');
   }
 
   getPayment() {
@@ -32,7 +33,11 @@ export class PaymentTableComponent implements OnInit {
         'core-api/Payment/getPayments?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -55,6 +60,7 @@ export class PaymentTableComponent implements OnInit {
     var pageFields = {
       invoiceNo: '0',
       userID: '',
+      moduleId: '',
     };
 
     var formFields: MyFormField[] = [
@@ -70,11 +76,17 @@ export class PaymentTableComponent implements OnInit {
         type: 'hidden',
         required: false,
       },
+      {
+        value: pageFields.moduleId,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
     ];
 
     formFields[0].value = item.invoiceNo;
     formFields[1].value = this.globalService.getUserId().toString();
-
+    formFields[2].value = localStorage.getItem('moduleId');
     this.dataService
       .deleteHttp(pageFields, formFields, 'core-api/Payment/deletePayment')
       .subscribe(

@@ -44,6 +44,7 @@ export class SaleComponent implements OnInit {
     companyid: '', //11
     businessid: '', //12
     branchid: '', //13
+    moduleId: '',
   };
 
   formFields: MyFormField[] = [
@@ -131,6 +132,12 @@ export class SaleComponent implements OnInit {
       type: '',
       required: false,
     },
+    {
+      value: this.pageFields.moduleId,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   error: any;
@@ -140,7 +147,7 @@ export class SaleComponent implements OnInit {
   branchList: any = [];
   productList: any = [];
   partyList: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -148,6 +155,8 @@ export class SaleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
+    this.formFields[14].value = localStorage.getItem('moduleId');
     // this.globalService.setHeaderTitle("Sale");
     this.formFields[1].value = this.globalService.getUserId().toString();
 
@@ -227,7 +236,11 @@ export class SaleComponent implements OnInit {
         'core-api/Product/getProduct?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -240,18 +253,16 @@ export class SaleComponent implements OnInit {
         }
       );
   }
-
   getParty() {
     this.dataService
       .getHttp(
-        'core-api/Party/getParty?companyID=' +
-          this.globalService.getCompanyID() +
-          '&businessID=' +
-          this.globalService.getBusinessID(),
+        'core-api/Party/getAllCustomer?userID=' +
+          this.globalService.getUserId(),
         ''
       )
       .subscribe(
         (response: any) => {
+          // this.bpsTable.tableData = response;
           this.partyList = response;
         },
         (error: any) => {
@@ -259,6 +270,24 @@ export class SaleComponent implements OnInit {
         }
       );
   }
+  // getParty() {
+  //   this.dataService
+  //     .getHttp(
+  //       'core-api/Party/getParty?companyID=' +
+  //         this.globalService.getCompanyID() +
+  //         '&businessID=' +
+  //         this.globalService.getBusinessID(),
+  //       ''
+  //     )
+  //     .subscribe(
+  //       (response: any) => {
+  //         this.partyList = response;
+  //       },
+  //       (error: any) => {
+  //         console.log(error);
+  //       }
+  //     );
+  // }
 
   testFunc(e: any) {
     // alert(e.key)
@@ -570,7 +599,15 @@ export class SaleComponent implements OnInit {
 
   saleReturn() {
     this.dataService
-      .getHttp('core-api/Sale/getSaleReturn?invoiceNo=' + this.lblInvoiceNo, '')
+      .getHttp(
+        'core-api/Sale/getSaleReturn?invoiceNo=' +
+          this.lblInvoiceNo +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
       .subscribe(
         (response: any) => {
           if (response.length == 0) {
@@ -599,7 +636,10 @@ export class SaleComponent implements OnInit {
                 .savetHttp(
                   this.pageFields,
                   this.formFields,
-                  'core-api/Sale/saveSaleReturn'
+                  'core-api/Sale/saveSaleReturn?userID=' +
+                    this.globalService.getUserId() +
+                    '&moduleId=' +
+                    this.moduleId
                 )
                 .subscribe(
                   (response: any) => {

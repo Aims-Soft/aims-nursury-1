@@ -4,4 +4,5 @@ export interface CategoryInterface {
   userID: '';
   businessID: '';
   companyID: '';
+  moduleId: '';
 }

@@ -60,6 +60,7 @@ export class ProductComponent implements OnInit {
     branchid: '', //34
     mfgDate: '', //35
     expDate: '', //36
+    moduleId: '', //37
   };
 
   formFields: MyFormField[] = [
@@ -285,12 +286,18 @@ export class ProductComponent implements OnInit {
       type: 'datePicker',
       required: false,
     },
+    {
+      value: this.pageFields.moduleId,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   productPic: any;
   tabIndex = 0;
   error: any;
-
+  moduleId: string | null;
   companyList: any = [];
   businessList: any = [];
   branchList: any = [];
@@ -321,6 +328,8 @@ export class ProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
+    this.formFields[37].value = localStorage.getItem('moduleId');
     // this.globalService.setHeaderTitle("Product");
     this.formFields[1].value = this.globalService.getUserId().toString();
     this.productPic =
@@ -423,7 +432,11 @@ export class ProductComponent implements OnInit {
         'core-api/Category/getCategory?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -468,7 +481,11 @@ export class ProductComponent implements OnInit {
           '&businessID=' +
           this.globalService.getBusinessID() +
           '&catID=' +
-          item,
+          item +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -587,7 +604,10 @@ export class ProductComponent implements OnInit {
         .savetHttp(
           this.pageFields,
           this.formFields,
-          'core-api/Product/updateProduct'
+          'core-api/Product/updateProduct?userID=' +
+            this.globalService.getUserId() +
+            '&moduleId=' +
+            this.moduleId
         )
         .subscribe(
           (response: any) => {

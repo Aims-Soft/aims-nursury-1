@@ -19,6 +19,7 @@ export class DailySaleReportComponent implements OnInit {
   lblTotalCost: any = '';
   lblTotalMargin: any = '';
   lblTotalDiscoount: any = '';
+  lblGrandTotal: any = '';
 
   // rptImg: any = 'assets/ui/ReportPictures/Logo.svg'
   constructor(
@@ -106,6 +107,10 @@ export class DailySaleReportComponent implements OnInit {
               return sum + total.discount;
             }, 0);
             this.lblTotalDiscoount = disc;
+
+            // this.lblGrandTotal = parseInt(
+            //   this.lblTotalMargin - this.lblTotalDiscoount
+            // );
           },
           (error: any) => {
             console.log(error);

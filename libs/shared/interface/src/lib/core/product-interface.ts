@@ -36,4 +36,5 @@ export interface ProductInterface {
   branchid: '';
   mfgDate: '';
   expDate: '';
+  moduleId: '';
 }

@@ -15,7 +15,7 @@ export class SubCategoryTableComponent implements OnInit {
 
   error: any;
   tableData: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -23,6 +23,7 @@ export class SubCategoryTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
     this.getSubCategory();
   }
 
@@ -32,7 +33,11 @@ export class SubCategoryTableComponent implements OnInit {
         'core-api/Category/getSubCategory?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -55,6 +60,7 @@ export class SubCategoryTableComponent implements OnInit {
     var pageFields = {
       categoryID: '0',
       userID: '',
+      moduleId: '',
     };
 
     var formFields: MyFormField[] = [
@@ -70,11 +76,17 @@ export class SubCategoryTableComponent implements OnInit {
         type: 'hidden',
         required: false,
       },
+      {
+        value: pageFields.moduleId,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
     ];
 
     formFields[0].value = item.categoryID;
     formFields[1].value = this.globalService.getUserId().toString();
-
+    formFields[2].value = localStorage.getItem('moduleId');
     this.dataService
       .deleteHttp(pageFields, formFields, 'core-api/Category/deleteCategory')
       .subscribe(

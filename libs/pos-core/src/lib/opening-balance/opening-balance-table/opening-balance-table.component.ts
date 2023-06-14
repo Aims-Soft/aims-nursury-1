@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OpeningBalanceTableComponent implements OnInit {
   tableData: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule
@@ -17,6 +17,7 @@ export class OpeningBalanceTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBalance();
+    this.moduleId = localStorage.getItem('moduleId');
   }
 
   getBalance() {
@@ -27,7 +28,11 @@ export class OpeningBalanceTableComponent implements OnInit {
           '&businessID=' +
           this.globalService.getBusinessID() +
           '&branchID=' +
-          this.globalService.getBranchID(),
+          this.globalService.getBranchID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(

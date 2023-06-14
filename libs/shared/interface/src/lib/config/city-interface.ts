@@ -1,5 +1,6 @@
 export interface CityInterface {
-    cityID: '0';
-    cityName: '';
-    userID: '';
+  cityID: '0';
+  cityName: '';
+  userID: '';
+  moduleId: '';
 }

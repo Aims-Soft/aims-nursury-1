@@ -18,4 +18,5 @@ export interface EmployeeInterface {
   businessid: '';
   nextOfKin: '';
   EmployeeNo: '';
+  moduleId: '';
 }

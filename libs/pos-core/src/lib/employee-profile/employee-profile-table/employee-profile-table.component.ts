@@ -15,7 +15,7 @@ export class EmployeeProfileTableComponent implements OnInit {
 
   error: any;
   tableData: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -24,6 +24,7 @@ export class EmployeeProfileTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployee();
+    this.moduleId = localStorage.getItem('moduleId');
   }
 
   getEmployee() {
@@ -32,7 +33,11 @@ export class EmployeeProfileTableComponent implements OnInit {
         'core-api/Employee/getEmployee?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -56,6 +61,7 @@ export class EmployeeProfileTableComponent implements OnInit {
     var pageFields = {
       partyID: '0',
       userID: '',
+      moduleId: '',
     };
 
     var formFields: MyFormField[] = [
@@ -71,11 +77,17 @@ export class EmployeeProfileTableComponent implements OnInit {
         type: 'hidden',
         required: false,
       },
+      {
+        value: pageFields.moduleId,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
     ];
 
     formFields[0].value = item.partyID;
     formFields[1].value = this.globalService.getUserId().toString();
-
+    formFields[2].value = localStorage.getItem('moduleId');
     this.dataService
       .deleteHttp(pageFields, formFields, 'core-api/Party/deleteParty')
       .subscribe(

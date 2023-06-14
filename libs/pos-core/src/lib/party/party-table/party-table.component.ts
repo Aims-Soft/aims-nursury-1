@@ -32,7 +32,9 @@ export class PartyTableComponent implements OnInit {
         'core-api/Party/getParty?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId(),
         ''
       )
       .subscribe(
@@ -55,6 +57,7 @@ export class PartyTableComponent implements OnInit {
     var pageFields = {
       partyID: '0',
       userID: '',
+      moduleId: '',
     };
 
     var formFields: MyFormField[] = [
@@ -70,11 +73,17 @@ export class PartyTableComponent implements OnInit {
         type: 'hidden',
         required: false,
       },
+      {
+        value: pageFields.moduleId,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
     ];
 
     formFields[0].value = item.partyID;
     formFields[1].value = this.globalService.getUserId().toString();
-
+    formFields[2].value = localStorage.getItem('moduleId');
     this.dataService
       .deleteHttp(pageFields, formFields, 'core-api/Party/deleteParty')
       .subscribe(

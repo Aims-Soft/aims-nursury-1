@@ -64,6 +64,7 @@ import { ProductImageUploadingComponent } from './product/product-image-uploadin
 import { PosDashboardComponent } from './pos-dashboard/pos-dashboard.component';
 import { UpdateProductDataComponent } from './update-product-data/update-product-data.component';
 import { ProductImageUpdateComponent } from './product/product-image-update/product-image-update.component';
+import { AddCustoomerComponent } from './sale/add-custoomer/add-custoomer.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -180,6 +181,7 @@ export const posCoreRoutes: Route[] = [
     PosDashboardComponent,
     UpdateProductDataComponent,
     ProductImageUpdateComponent,
+    AddCustoomerComponent,
   ],
   providers: [
     {

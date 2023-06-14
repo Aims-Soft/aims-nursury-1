@@ -8,17 +8,17 @@ import { BrandTableComponent } from './brand-table/brand-table.component';
 @Component({
   selector: 'aims-pos-brand',
   templateUrl: './brand.component.html',
-  styleUrls: ['./brand.component.scss']
+  styleUrls: ['./brand.component.scss'],
 })
 export class BrandComponent implements OnInit {
-
   @ViewChild(BrandTableComponent) brandTable: any;
-  
+
   pageFields: BrandInterface = {
     brandID: '0',
     userID: '',
     brandName: '',
     description: '',
+    moduleId: '',
   };
 
   formFields: MyFormField[] = [
@@ -45,9 +45,15 @@ export class BrandComponent implements OnInit {
       msg: '',
       type: 'textbox',
       required: false,
-    }
+    },
+    {
+      value: this.pageFields.moduleId,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
-  
+
   error: any;
 
   constructor(
@@ -58,58 +64,55 @@ export class BrandComponent implements OnInit {
 
   ngOnInit(): void {
     this.formFields[1].value = this.globalService.getUserId().toString();
+    this.formFields[4].value = localStorage.getItem('moduleId');
   }
 
   save() {
     this.dataService
-    .savetHttp(
-      this.pageFields,
-      this.formFields,
-      'core-api/Brand/saveBrand'
-    )
-    .subscribe(
-      (response: any) => {
-        console.log(response);
-        if(response.message == 'Success'){
-          if(this.formFields[0].value == '0'){
-            this.valid.apiInfoResponse('Record saved successfully');
-          }else{
-            this.valid.apiInfoResponse('Record updated successfully');
-          }
+      .savetHttp(this.pageFields, this.formFields, 'core-api/Brand/saveBrand')
+      .subscribe(
+        (response: any) => {
+          console.log(response);
+          if (response.message == 'Success') {
+            if (this.formFields[0].value == '0') {
+              this.valid.apiInfoResponse('Record saved successfully');
+            } else {
+              this.valid.apiInfoResponse('Record updated successfully');
+            }
 
-          this.brandTable.getBrand();
-          this.reset();
-        }else{
-          this.valid.apiErrorResponse(response.message.toString());
+            this.brandTable.getBrand();
+            this.reset();
+          } else {
+            this.valid.apiErrorResponse(response.message.toString());
+          }
+        },
+        (error: any) => {
+          this.error = error;
+          this.valid.apiErrorResponse(this.error);
         }
-      },
-      (error: any) => {
-        this.error = error;
-        this.valid.apiErrorResponse(this.error);
-      }
-    );
+      );
   }
 
   reset() {
     this.formFields = this.valid.resetFormFields(this.formFields);
-    
+
     this.formFields[0].value = '0';
     this.formFields[3].value = '';
   }
 
-  edit(item: any){
+  edit(item: any) {
     this.formFields[0].value = item.brandID;
     this.formFields[2].value = item.brandName;
     this.formFields[3].value = item.description;
   }
 
-  getKeyPressed(e: any){
-    if(e.keyCode == 13){
+  getKeyPressed(e: any) {
+    if (e.keyCode == 13) {
       this.save();
     }
   }
 
-  delete(item: any){
+  delete(item: any) {
     this.reset();
   }
 }

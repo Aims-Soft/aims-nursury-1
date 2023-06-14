@@ -15,7 +15,7 @@ export class DesignationTableComponent implements OnInit {
 
   error: any;
   tableData: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -24,6 +24,7 @@ export class DesignationTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDesignation();
+    this.moduleId = localStorage.getItem('moduleId');
   }
 
   getDesignation() {
@@ -32,7 +33,11 @@ export class DesignationTableComponent implements OnInit {
         'core-api/Designation/getDesignation?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -55,6 +60,7 @@ export class DesignationTableComponent implements OnInit {
     var pageFields = {
       designationID: '0',
       userID: '',
+      moduleId: '',
     };
 
     var formFields: MyFormField[] = [
@@ -70,11 +76,17 @@ export class DesignationTableComponent implements OnInit {
         type: 'hidden',
         required: false,
       },
+      {
+        value: pageFields.moduleId,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
     ];
 
     formFields[0].value = item.designationID;
     formFields[1].value = this.globalService.getUserId().toString();
-
+    formFields[2].value = localStorage.getItem('moduleId');
     this.dataService
       .deleteHttp(
         pageFields,

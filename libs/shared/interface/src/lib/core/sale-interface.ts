@@ -13,4 +13,5 @@ export interface SaleInterface {
   companyid: '';
   businessid: '';
   branchid: '';
+  moduleId: '';
 }

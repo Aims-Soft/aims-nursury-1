@@ -29,6 +29,7 @@ export class PaymentComponent implements OnInit {
     companyid: '', //10
     businessid: '', //11
     branchid: '', //12
+    moduleId: '', //13
   };
 
   formFields: MyFormField[] = [
@@ -110,6 +111,12 @@ export class PaymentComponent implements OnInit {
       type: '',
       required: false,
     },
+    {
+      value: this.pageFields.moduleId,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   tabIndex = 0;
@@ -121,7 +128,7 @@ export class PaymentComponent implements OnInit {
   partyList: any = [];
   coaList: any = [];
   categoryList: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -130,7 +137,8 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.formFields[1].value = this.globalService.getUserId().toString();
-
+    this.moduleId = localStorage.getItem('moduleId');
+    this.formFields[13].value = localStorage.getItem('moduleId');
     this.formFields[2].value = '1';
 
     this.roleID = this.globalService.getRoleId();
@@ -229,7 +237,9 @@ export class PaymentComponent implements OnInit {
         'core-api/Party/getParty?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId(),
         ''
       )
       .subscribe(
@@ -263,7 +273,15 @@ export class PaymentComponent implements OnInit {
 
   getPaymentDetail(invoiceNo: any, type: any) {
     this.dataService
-      .getHttp('core-api/Payment/getPaymentDetail?invoiceNo=' + invoiceNo, '')
+      .getHttp(
+        'core-api/Payment/getPaymentDetail?invoiceNo=' +
+          invoiceNo +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
       .subscribe(
         (response: any) => {
           if (response.length == 3) {
@@ -328,7 +346,10 @@ export class PaymentComponent implements OnInit {
         .savetHttp(
           this.pageFields,
           this.formFields,
-          'core-api/Payment/updatePayment'
+          'core-api/Payment/updatePayment?userID=' +
+            this.globalService.getUserId() +
+            '&moduleId=' +
+            this.moduleId
         )
         .subscribe(
           (response: any) => {

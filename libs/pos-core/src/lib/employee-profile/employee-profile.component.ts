@@ -31,8 +31,9 @@ export class EmployeeProfileComponent implements OnInit {
     description: '', //12
     companyid: '', //13
     businessid: '', //14
-    nextOfKin: '',
-    EmployeeNo: '',
+    nextOfKin: '', //15
+    EmployeeNo: '', //16
+    moduleId: '', //17
   };
 
   formFields: MyFormField[] = [
@@ -138,6 +139,12 @@ export class EmployeeProfileComponent implements OnInit {
       type: 'textbox',
       required: true,
     },
+    {
+      value: this.pageFields.moduleId,
+      msg: '',
+      type: '',
+      required: false,
+    },
   ];
 
   companyList: any = [];
@@ -151,7 +158,7 @@ export class EmployeeProfileComponent implements OnInit {
 
   cnicMask = this.globalService.cnicMask();
   mobileMask = this.globalService.mobileMask();
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -159,8 +166,9 @@ export class EmployeeProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
     this.formFields[1].value = this.globalService.getUserId().toString();
-
+    this.formFields[17].value = localStorage.getItem('moduleId');
     this.roleID = this.globalService.getRoleId();
     this.getCompany();
     this.getDesignation();
@@ -211,7 +219,11 @@ export class EmployeeProfileComponent implements OnInit {
         'core-api/Designation/getDesignation?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -244,14 +256,22 @@ export class EmployeeProfileComponent implements OnInit {
   }
 
   getCity() {
-    this.dataService.getHttp('core-api/City/getCity', '').subscribe(
-      (response: any) => {
-        this.cityList = response;
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    this.dataService
+      .getHttp(
+        'core-api/City/getCity?userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.cityList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
   save() {

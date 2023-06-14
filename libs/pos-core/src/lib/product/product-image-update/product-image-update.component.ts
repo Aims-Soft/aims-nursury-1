@@ -9,26 +9,25 @@ import { environment } from 'apps/aims-pos/src/environments/environment';
 @Component({
   selector: 'aims-pos-product-image-update',
   templateUrl: './product-image-update.component.html',
-  styleUrls: ['./product-image-update.component.scss']
+  styleUrls: ['./product-image-update.component.scss'],
 })
 export class ProductImageUpdateComponent implements OnInit {
+  cmbCategory: any = '';
 
-  cmbCategory: any = "";
-  
-  searchCategory: any = "";
-  tblSearch: any = "";
+  searchCategory: any = '';
+  tblSearch: any = '';
 
   categoryList: any = [];
   tableData: any = [];
 
   error: any;
 
-  imgPath: any = "C:/inetpub/wwwroot/FAR/FAR_Project/assets/assetEntryImg";
-  imageUrl: string = "../../../../../assets/assetEntryImg/dropHereImg.png";
+  imgPath: any = 'C:/inetpub/wwwroot/FAR/FAR_Project/assets/assetEntryImg';
+  imageUrl: string = '../../../../../assets/assetEntryImg/dropHereImg.png';
   image: any = '';
   selectedFile: File = null;
   imgExtension: any = '';
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -38,54 +37,76 @@ export class ProductImageUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCategory();
+    this.moduleId = localStorage.getItem('moduleId');
   }
 
-  getCategory(){
-    this.dataService.getHttp('core-api/Category/getSubCategory?catID=1', '').subscribe(
-      (response: any) => {
-        this.categoryList = response;
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+  getCategory() {
+    this.dataService
+      .getHttp(
+        'core-api/Category/getSubCategory?catID=1' +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.categoryList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
-  
-  onCategoryChange(item: any){
+
+  onCategoryChange(item: any) {
     this.tblSearch = '';
 
     this.tableData = [];
 
-    this.dataService.getHttp('core-api/Product/getProductByCategory?categoryID=' + item, '').subscribe((response: any) => {
-      // this.tableData = response;
+    this.dataService
+      .getHttp(
+        'core-api/Product/getProductByCategory?categoryID=' +
+          item +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          // this.tableData = response;
 
-      for(var i = 0; i < response.length; i++){
-        var imgUrl = '';
-        if(response[i].applicationedoc != null){
-          imgUrl = 'assets/ui/productPictures/' + response[i].productID + '.png';
-        }else{
-          imgUrl = 'assets/ui/productPictures/noImage.png';
+          for (var i = 0; i < response.length; i++) {
+            var imgUrl = '';
+            if (response[i].applicationedoc != null) {
+              imgUrl =
+                'assets/ui/productPictures/' + response[i].productID + '.png';
+            } else {
+              imgUrl = 'assets/ui/productPictures/noImage.png';
+            }
+
+            this.tableData.push({
+              productID: response[i].productID,
+              productName: response[i].productName,
+              imgFile: '',
+              imageUrl: imgUrl,
+            });
+          }
+        },
+        (error: any) => {
+          console.log(error);
         }
-
-        this.tableData.push({
-          productID: response[i].productID,
-          productName: response[i].productName,
-          imgFile: '',
-          imageUrl: imgUrl,
-        })
-      }
-    }, (error: any) => {
-      console.log(error);
-    });
+      );
   }
 
   onFileSelected(event: any, item: any) {
-    if (
-      event.target.files[0].type == "image/png"
-    ) {
+    if (event.target.files[0].type == 'image/png') {
       var fileName: any;
       this.selectedFile = event.target.files[0];
-      fileName = this.selectedFile["name"];
+      fileName = this.selectedFile['name'];
 
       let reader = new FileReader();
 
@@ -94,7 +115,7 @@ export class ProductImageUpdateComponent implements OnInit {
       reader.onloadend = (e: any) => {
         item.imageUrl = e.target.result;
         this.image = reader.result;
-        var splitImg = this.image.split(",")[1];
+        var splitImg = this.image.split(',')[1];
 
         this.image = splitImg;
         item.imageUrl = e.target.result;
@@ -102,22 +123,20 @@ export class ProductImageUpdateComponent implements OnInit {
 
       reader.readAsDataURL(this.selectedFile);
     } else {
-      this.valid.apiErrorResponse("Please select PNG image");
+      this.valid.apiErrorResponse('Please select PNG image');
 
       this.image = undefined;
       item = undefined;
       this.selectedFile = null;
-      item.imageUrl = "assets/ui/productPictures/noImage.png";
+      item.imageUrl = 'assets/ui/productPictures/noImage.png';
     }
   }
 
-  save(item: any){
-
-    if(item.imgFile == ''){
+  save(item: any) {
+    if (item.imgFile == '') {
       this.valid.apiInfoResponse('Please select image');
       return;
-    }else{
-
+    } else {
       var pageFields = {
         productID: '0',
         userID: '',
@@ -158,37 +177,39 @@ export class ProductImageUpdateComponent implements OnInit {
           required: false,
         },
       ];
-    
+
       formFields[0].value = item.productID;
       formFields[1].value = this.globalService.getUserId().toString();
       formFields[2].value = this.image;
       formFields[3].value = environment.imageUrl + 'productPictures';
       formFields[4].value = this.imgExtension;
-    
+
       this.dataService
-      .savetHttp(
-        pageFields,
-        formFields,
-        'core-api/Product/updateProductImage'
-      )
-      .subscribe(
-        (response: any) => {
-          if(response.message == 'Success'){
+        .savetHttp(
+          pageFields,
+          formFields,
+          'core-api/Product/updateProductImage?userID=' +
+            this.globalService.getUserId() +
+            '&moduleId=' +
+            this.moduleId
+        )
+        .subscribe(
+          (response: any) => {
+            if (response.message == 'Success') {
+              this.valid.apiInfoResponse('Record saved successfully');
 
-            this.valid.apiInfoResponse('Record saved successfully');
-
-            this.onCategoryChange(this.cmbCategory);
-          }else{
-            this.valid.apiErrorResponse(response.message.toString());
+              this.onCategoryChange(this.cmbCategory);
+            } else {
+              this.valid.apiErrorResponse(response.message.toString());
+            }
+          },
+          (error: any) => {
+            this.error = error;
+            this.valid.apiErrorResponse(this.error);
           }
-        },
-        (error: any) => {
-          this.error = error;
-          this.valid.apiErrorResponse(this.error);
-        }
-      );
+        );
     }
   }
 
-  reset(){}
+  reset() {}
 }

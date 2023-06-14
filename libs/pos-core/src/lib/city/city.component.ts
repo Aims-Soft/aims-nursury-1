@@ -8,16 +8,16 @@ import { CityTableComponent } from './city-table/city-table.component';
 @Component({
   selector: 'aims-pos-city',
   templateUrl: './city.component.html',
-  styleUrls: ['./city.component.scss']
+  styleUrls: ['./city.component.scss'],
 })
 export class CityComponent implements OnInit {
-
   @ViewChild(CityTableComponent) cityTable: any;
-  
+
   pageFields: CityInterface = {
     cityID: '0',
     userID: '',
     cityName: '',
+    moduleId: '',
   };
 
   formFields: MyFormField[] = [
@@ -39,8 +39,14 @@ export class CityComponent implements OnInit {
       type: 'name',
       required: true,
     },
+    {
+      value: this.pageFields.moduleId,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
-  
+
   error: any;
 
   constructor(
@@ -51,56 +57,53 @@ export class CityComponent implements OnInit {
 
   ngOnInit(): void {
     this.formFields[1].value = this.globalService.getUserId().toString();
+    this.formFields[3].value = localStorage.getItem('moduleId');
   }
 
   save() {
     this.dataService
-    .savetHttp(
-      this.pageFields,
-      this.formFields,
-      'core-api/City/saveCity'
-    )
-    .subscribe(
-      (response: any) => {
-        console.log(response);
-        if(response.message == 'Success'){
-          if(this.formFields[0].value == '0'){
-            this.valid.apiInfoResponse('Record saved successfully');
-          }else{
-            this.valid.apiInfoResponse('Record updated successfully');
-          }
+      .savetHttp(this.pageFields, this.formFields, 'core-api/City/saveCity')
+      .subscribe(
+        (response: any) => {
+          console.log(response);
+          if (response.message == 'Success') {
+            if (this.formFields[0].value == '0') {
+              this.valid.apiInfoResponse('Record saved successfully');
+            } else {
+              this.valid.apiInfoResponse('Record updated successfully');
+            }
 
-          this.cityTable.getCity();
-          this.reset();
-        }else{
-          this.valid.apiErrorResponse(response.message.toString());
+            this.cityTable.getCity();
+            this.reset();
+          } else {
+            this.valid.apiErrorResponse(response.message.toString());
+          }
+        },
+        (error: any) => {
+          this.error = error;
+          this.valid.apiErrorResponse(this.error);
         }
-      },
-      (error: any) => {
-        this.error = error;
-        this.valid.apiErrorResponse(this.error);
-      }
-    );
+      );
   }
 
   reset() {
     this.formFields = this.valid.resetFormFields(this.formFields);
-    
+
     this.formFields[0].value = '0';
   }
 
-  edit(item: any){
+  edit(item: any) {
     this.formFields[0].value = item.cityID;
     this.formFields[2].value = item.cityName;
   }
 
-  getKeyPressed(e: any){
-    if(e.keyCode == 13){
+  getKeyPressed(e: any) {
+    if (e.keyCode == 13) {
       this.save();
     }
   }
 
-  delete(item: any){
+  delete(item: any) {
     this.reset();
   }
 }

@@ -8,10 +8,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'aims-pos-update-product-data',
   templateUrl: './update-product-data.component.html',
-  styleUrls: ['./update-product-data.component.scss']
+  styleUrls: ['./update-product-data.component.scss'],
 })
 export class UpdateProductDataComponent implements OnInit {
-
   tblSearch: any = '';
   cmbCategory: any = '';
   searchCategory: any = '';
@@ -21,7 +20,7 @@ export class UpdateProductDataComponent implements OnInit {
   tempList: any = [];
   brandList: any = [];
   categoryList: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -30,9 +29,10 @@ export class UpdateProductDataComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
     this.getBrand();
     this.getCategory();
-    
+
     // this.getTopFKProducts();
     // this.getTopTKProducts();
     // this.getTopOKProducts();
@@ -41,27 +41,44 @@ export class UpdateProductDataComponent implements OnInit {
   }
 
   getBrand() {
-    this.dataService.getHttp('core-api/Brand/getBrand', '').subscribe(
-      (response: any) => {
-        this.brandList = response;
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    this.dataService
+      .getHttp(
+        'core-api/Brand/getBrand?userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.brandList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
-  getCategory(){
-    this.dataService.getHttp('core-api/Category/getSubCategory?catID=1', '').subscribe(
-      (response: any) => {
-        this.categoryList = response;
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+  getCategory() {
+    this.dataService
+      .getHttp(
+        'core-api/Category/getSubCategory?catID=1' +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.categoryList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
-  
+
   // getTopFKProducts(){
   //   this.dataService.getHttp('core-api/Product/getTopFKProducts', '').subscribe((response: any) => {
   //     this.tableData = this.tableData.concat(response);
@@ -70,14 +87,27 @@ export class UpdateProductDataComponent implements OnInit {
   //   });
   // }
 
-  onCategoryChange(item: any){
+  onCategoryChange(item: any) {
     this.tblSearch = '';
 
-    this.dataService.getHttp('core-api/Product/getProductByCategory?categoryID=' + item, '').subscribe((response: any) => {
-      this.tableData = response;
-    }, (error: any) => {
-      console.log(error);
-    });
+    this.dataService
+      .getHttp(
+        'core-api/Product/getProductByCategory?categoryID=' +
+          item +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.tableData = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
   // getTopProducts(){
@@ -88,7 +118,7 @@ export class UpdateProductDataComponent implements OnInit {
   //     console.log(error);
   //   });
   // }
-  
+
   // getTopFHProducts(){
   //   this.dataService.getHttp('core-api/Product/getTopFHProducts', '').subscribe((response: any) => {
   //     this.tableData = this.tableData.concat(response);
@@ -97,7 +127,7 @@ export class UpdateProductDataComponent implements OnInit {
   //     console.log(error);
   //   });
   // }
-  
+
   // getTopTKProducts(){
   //   this.dataService.getHttp('core-api/Product/getTopTKProducts', '').subscribe((response: any) => {
   //     this.tableData = this.tableData.concat(response);
@@ -116,7 +146,7 @@ export class UpdateProductDataComponent implements OnInit {
   //   });
   // }
 
-  edit(item: any){
+  edit(item: any) {
     var pageFields = {
       productID: '0',
       brandID: '0',
@@ -168,29 +198,30 @@ export class UpdateProductDataComponent implements OnInit {
       .deleteHttp(
         pageFields,
         formFields,
-        'core-api/Product/updateProductPrice'
+        'core-api/Product/updateProductPrice?userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId
       )
       .subscribe(
         (response: any) => {
-          if(response.message == "Success"){
+          if (response.message == 'Success') {
             this.valid.apiInfoResponse('Record updated successfully');
             // this.getTopProducts();
-          }else{
+          } else {
             this.valid.apiErrorResponse(response[0]);
           }
-          
         },
         (error: any) => {
           this.error = error;
           this.valid.apiErrorResponse(this.error);
         }
       );
-
   }
 
-  reset(){
-    this.tblSearch = ''; 
+  reset() {
+    this.tblSearch = '';
     this.cmbCategory = '';
-    this.tableData = []; 
+    this.tableData = [];
   }
 }

@@ -15,7 +15,7 @@ export class CategoryTableComponent implements OnInit {
 
   error: any;
   tableData: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -24,6 +24,7 @@ export class CategoryTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCategory();
+    this.moduleId = localStorage.getItem('moduleId');
   }
 
   getCategory() {
@@ -32,7 +33,11 @@ export class CategoryTableComponent implements OnInit {
         'core-api/Category/getCategory?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -55,6 +60,7 @@ export class CategoryTableComponent implements OnInit {
     var pageFields = {
       categoryID: '0',
       userID: '',
+      moduleId: '',
     };
 
     var formFields: MyFormField[] = [
@@ -70,11 +76,17 @@ export class CategoryTableComponent implements OnInit {
         type: 'hidden',
         required: false,
       },
+      {
+        value: pageFields.moduleId,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
     ];
 
     formFields[0].value = item.categoryID;
     formFields[1].value = this.globalService.getUserId().toString();
-
+    formFields[2].value = localStorage.getItem('moduleId');
     this.dataService
       .deleteHttp(pageFields, formFields, 'core-api/Category/deleteCategory')
       .subscribe(

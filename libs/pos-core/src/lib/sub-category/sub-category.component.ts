@@ -22,6 +22,7 @@ export class SubCategoryComponent implements OnInit {
     businessID: '', //3
     parentCategoryID: '0', //4
     categoryName: '', //5
+    moduleId: '',
   };
 
   formFields: MyFormField[] = [
@@ -61,13 +62,19 @@ export class SubCategoryComponent implements OnInit {
       type: 'name',
       required: true,
     },
+    {
+      value: this.pageFields.moduleId,
+      msg: '',
+      type: '',
+      required: false,
+    },
   ];
 
   companyList: any = [];
   businessList: any = [];
   categoryList: any = [];
   error: any;
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -75,6 +82,8 @@ export class SubCategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
+    this.formFields[6].value = localStorage.getItem('moduleId');
     this.formFields[1].value = this.globalService.getUserId().toString();
 
     this.roleID = this.globalService.getRoleId();
@@ -125,7 +134,11 @@ export class SubCategoryComponent implements OnInit {
         'core-api/Category/getCategory?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(

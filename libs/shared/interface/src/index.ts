@@ -1,3 +1,5 @@
+import { from } from 'rxjs';
+
 export * from './lib/shared-interface.module';
 
 // pipe filter classes
@@ -25,6 +27,7 @@ export * from './lib/core/product-interface';
 export * from './lib/core/sale-interface';
 export * from './lib/core/opening-balance-interface';
 export * from './lib/core/bachat-product-interface';
+export * from './lib/core/newsaleparty-interface';
 
 //export config classes
 export * from './lib/config/category-interface';

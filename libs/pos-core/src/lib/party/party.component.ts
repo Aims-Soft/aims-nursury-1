@@ -31,6 +31,7 @@ export class PartyComponent implements OnInit {
     description: '', //12
     companyid: '', //13
     businessid: '', //14
+    moduleId: '', //15
   };
 
   formFields: MyFormField[] = [
@@ -124,6 +125,12 @@ export class PartyComponent implements OnInit {
       type: 'selectbox',
       required: false,
     },
+    {
+      value: this.pageFields.moduleId,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   companyList: any = [];
@@ -136,7 +143,7 @@ export class PartyComponent implements OnInit {
   cnicMask = this.globalService.cnicMask();
   mobileMask = this.globalService.mobileMask();
   phoneMask = this.globalService.phoneMask();
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -145,7 +152,8 @@ export class PartyComponent implements OnInit {
 
   ngOnInit(): void {
     this.formFields[1].value = this.globalService.getUserId().toString();
-
+    this.moduleId = localStorage.getItem('moduleId');
+    this.formFields[15].value = localStorage.getItem('moduleId');
     this.roleID = this.globalService.getRoleId();
     this.getCompany();
     this.getCity();
@@ -189,14 +197,22 @@ export class PartyComponent implements OnInit {
   }
 
   getCity() {
-    this.dataService.getHttp('core-api/City/getCity', '').subscribe(
-      (response: any) => {
-        this.cityList = response;
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    this.dataService
+      .getHttp(
+        'core-api/City/getCity?userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.cityList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
   save() {

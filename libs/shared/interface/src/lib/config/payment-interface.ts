@@ -12,4 +12,5 @@ export interface PaymentInterface {
   companyid: '';
   businessid: '';
   branchid: '';
+  moduleId: '';
 }

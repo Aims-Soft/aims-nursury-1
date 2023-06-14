@@ -38,6 +38,7 @@ export class PurchaseComponent implements OnInit {
     companyid: '', //11
     businessid: '', //12
     branchid: '', //13
+    moduleId: '',
   };
 
   formFields: MyFormField[] = [
@@ -125,6 +126,12 @@ export class PurchaseComponent implements OnInit {
       type: '',
       required: false,
     },
+    {
+      value: this.pageFields.moduleId,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   companyList: any = [];
@@ -135,7 +142,7 @@ export class PurchaseComponent implements OnInit {
 
   productList: any = [];
   partyList: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -143,8 +150,9 @@ export class PurchaseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
     this.formFields[1].value = this.globalService.getUserId().toString();
-
+    this.formFields[14].value = localStorage.getItem('moduleId');
     var curDate = new Date();
     this.formFields[2].value = curDate;
 
@@ -226,7 +234,11 @@ export class PurchaseComponent implements OnInit {
         'core-api/Product/getProduct?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -245,7 +257,9 @@ export class PurchaseComponent implements OnInit {
         'core-api/Party/getParty?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId(),
         ''
       )
       .subscribe(
@@ -422,7 +436,12 @@ export class PurchaseComponent implements OnInit {
   purchaseReturn() {
     this.dataService
       .getHttp(
-        'core-api/Purchase/getPurchaseReturn?invoiceNo=' + this.lblInvoiceNo,
+        'core-api/Purchase/getPurchaseReturn?invoiceNo=' +
+          this.lblInvoiceNo +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -453,7 +472,10 @@ export class PurchaseComponent implements OnInit {
                 .savetHttp(
                   this.pageFields,
                   this.formFields,
-                  'core-api/Purchase/savePurchaseReturn'
+                  'core-api/Purchase/savePurchaseReturn?userID=' +
+                    this.globalService.getUserId() +
+                    '&moduleId=' +
+                    this.moduleId
                 )
                 .subscribe(
                   (response: any) => {

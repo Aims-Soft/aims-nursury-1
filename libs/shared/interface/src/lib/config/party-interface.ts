@@ -16,4 +16,5 @@ export interface PartyInterface {
   userID: '';
   companyid: '';
   businessid: '';
+  moduleId: '';
 }

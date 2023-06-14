@@ -107,7 +107,7 @@ export class OpeningBalanceComponent implements OnInit {
   productList: any = [];
   categoryList: any = [];
   tableData: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -119,7 +119,7 @@ export class OpeningBalanceComponent implements OnInit {
     // this.formFields[2].value = this.globalService.getUserId().toString();
 
     // this.getProduct();
-
+    this.moduleId = localStorage.getItem('moduleId');
     this.roleID = this.globalService.getRoleId();
     this.getCompany();
     this.getCategory();
@@ -195,7 +195,11 @@ export class OpeningBalanceComponent implements OnInit {
         'core-api/Category/getCategory?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -217,7 +221,11 @@ export class OpeningBalanceComponent implements OnInit {
           '&businessID=' +
           this.globalService.getBusinessID() +
           '&catID=' +
-          item,
+          item +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -250,7 +258,11 @@ export class OpeningBalanceComponent implements OnInit {
           '&branchID=' +
           this.globalService.getBranchID() +
           '&categoryID=' +
-          item,
+          item +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -294,6 +306,7 @@ export class OpeningBalanceComponent implements OnInit {
       companyid: '', //10
       businessid: '', //11
       branchid: '', //12
+      moduleId: '', //13
     };
 
     var formFields: MyFormField[] = [
@@ -375,6 +388,12 @@ export class OpeningBalanceComponent implements OnInit {
         type: '',
         required: false,
       },
+      {
+        value: pageFields.moduleId,
+        msg: '',
+        type: '',
+        required: false,
+      },
     ];
 
     formFields[0].value = item.invoiceNo;
@@ -390,6 +409,7 @@ export class OpeningBalanceComponent implements OnInit {
     formFields[10].value = this.cmbCompany;
     formFields[11].value = this.cmbBusiness;
     formFields[12].value = this.cmbBranch;
+    formFields[13].value = localStorage.getItem('moduleId');
 
     this.dataService
       .savetHttp(pageFields, formFields, 'core-api/OpeningBalance/saveBalance')
