@@ -235,8 +235,8 @@ export class SaleComponent implements OnInit {
       .getHttp(
         'core-api/Product/getProduct?companyID=' +
           this.globalService.getCompanyID() +
-          '&businessID=' +
-          this.globalService.getBusinessID() +
+          '&branchID=' +
+          this.globalService.getBranchID() +
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
@@ -246,7 +246,6 @@ export class SaleComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.productList = response;
-          // console.log(response)
         },
         (error: any) => {
           console.log(error);
@@ -257,7 +256,11 @@ export class SaleComponent implements OnInit {
     this.dataService
       .getHttp(
         'core-api/Party/getAllCustomer?userID=' +
-          this.globalService.getUserId(),
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId +
+          '&branchID=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(
@@ -605,7 +608,9 @@ export class SaleComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchId=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(

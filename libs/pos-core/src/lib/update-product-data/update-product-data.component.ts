@@ -46,7 +46,9 @@ export class UpdateProductDataComponent implements OnInit {
         'core-api/Brand/getBrand?userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&businessid=' +
+          this.globalService.getBusinessID(),
         ''
       )
       .subscribe(
@@ -66,7 +68,9 @@ export class UpdateProductDataComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchID=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(
@@ -97,7 +101,9 @@ export class UpdateProductDataComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchID=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(

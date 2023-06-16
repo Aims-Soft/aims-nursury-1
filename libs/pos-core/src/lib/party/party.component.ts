@@ -32,6 +32,7 @@ export class PartyComponent implements OnInit {
     companyid: '', //13
     businessid: '', //14
     moduleId: '', //15
+    branchID: '', //16
   };
 
   formFields: MyFormField[] = [
@@ -131,6 +132,12 @@ export class PartyComponent implements OnInit {
       type: 'hidden',
       required: false,
     },
+    {
+      value: this.pageFields.branchID,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   companyList: any = [];
@@ -154,6 +161,7 @@ export class PartyComponent implements OnInit {
     this.formFields[1].value = this.globalService.getUserId().toString();
     this.moduleId = localStorage.getItem('moduleId');
     this.formFields[15].value = localStorage.getItem('moduleId');
+    this.formFields[16].value = this.globalService.getBranchID();
     this.roleID = this.globalService.getRoleId();
     this.getCompany();
     this.getCity();

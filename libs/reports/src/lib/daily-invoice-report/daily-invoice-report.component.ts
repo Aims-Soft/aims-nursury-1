@@ -17,14 +17,19 @@ export class DailyInvoiceReportComponent implements OnInit {
   lblTotalCost: any = '';
   lblTotalMargin: any = '';
   lblTotalDiscoount: any = '';
+  moduleId: string | null;
+
   constructor(
     private global: SharedServicesGlobalDataModule,
+    private globalService: SharedServicesGlobalDataModule,
     private dataService: SharedServicesDataModule,
     private valid: SharedHelpersFieldValidationsModule,
     private datePipe: DatePipe
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
+  }
   getDailyInvoice(start: any, end: any) {
     if (start == '') {
       // console.log('enter start date');
@@ -41,7 +46,13 @@ export class DailyInvoiceReportComponent implements OnInit {
           'report-api/FMISReport/getDailySalesByOrder?startDate=' +
             startdate +
             '&endDate=' +
-            enddate,
+            enddate +
+            '&userID=' +
+            this.globalService.getUserId() +
+            '&moduleId=' +
+            this.moduleId +
+            '&branchID=' +
+            this.globalService.getBranchID(),
           ''
         )
         .subscribe(

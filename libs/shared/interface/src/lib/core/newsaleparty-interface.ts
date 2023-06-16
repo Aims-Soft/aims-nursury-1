@@ -5,4 +5,7 @@ export interface NewSalePartyInterface {
   cnic: '';
   mobile: '';
   moduleId: '';
+  branchID: '';
+  businessid: '';
+  companyid: '';
 }

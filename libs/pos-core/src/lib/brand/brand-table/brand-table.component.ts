@@ -33,7 +33,9 @@ export class BrandTableComponent implements OnInit {
         'core-api/Brand/getBrand?&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&businessid=' +
+          this.globalService.getBusinessID(),
         ''
       )
       .subscribe(

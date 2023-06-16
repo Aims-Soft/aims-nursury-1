@@ -14,8 +14,11 @@ export class PresentStockReportComponent implements OnInit {
   cmbCategory: any = '';
   reportDate: any = '';
   stocktList: any = [];
+  moduleId: string | null;
+
   constructor(
     private global: SharedServicesGlobalDataModule,
+    private globalService: SharedServicesGlobalDataModule,
     private dataService: SharedServicesDataModule,
     private valid: SharedHelpersFieldValidationsModule,
     private datePipe: DatePipe
@@ -23,12 +26,21 @@ export class PresentStockReportComponent implements OnInit {
 
   ngOnInit(): void {
     // this.dtpCurrentDate = new Date();
+    this.moduleId = localStorage.getItem('moduleId');
   }
   getDailyStockReport() {
     var date;
     date = this.datePipe.transform(this.reportDate, 'yyyy-MM-dd');
     this.dataService
-      .getHttp('report-api/FMISReport/getStockInStockOut?invDate=' + date, '')
+      .getHttp(
+        'report-api/FMISReport/getStockInStockOut?invDate=' +
+          date +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
       .subscribe(
         (response: any) => {
           this.stocktList = response;

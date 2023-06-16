@@ -26,6 +26,9 @@ export class AddCustoomerComponent implements OnInit {
     cnic: '',
     mobile: '',
     moduleId: '', //5
+    branchID: '',
+    businessid: '', //7
+    companyid: '', //8
   };
 
   formFields: MyFormField[] = [
@@ -65,12 +68,33 @@ export class AddCustoomerComponent implements OnInit {
       type: 'hidden',
       required: false,
     },
+    {
+      value: this.pageFields.branchID,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.businessid,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.companyid,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   error: any;
   ngOnInit(): void {
     this.formFields[1].value = this.globalService.getUserId().toString();
     this.formFields[5].value = localStorage.getItem('moduleId');
+    this.formFields[6].value = this.globalService.getBranchID();
+    this.formFields[7].value = this.globalService.getBusinessID();
+    this.formFields[8].value = this.globalService.getCompanyID();
   }
   save() {
     this.dataService

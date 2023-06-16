@@ -15,6 +15,7 @@ export class PartyTableComponent implements OnInit {
 
   error: any;
   tableData: any = [];
+  moduleId: string | null;
 
   constructor(
     private dataService: SharedServicesDataModule,
@@ -23,6 +24,7 @@ export class PartyTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
     this.getParty();
   }
 
@@ -31,10 +33,12 @@ export class PartyTableComponent implements OnInit {
       .getHttp(
         'core-api/Party/getParty?companyID=' +
           this.globalService.getCompanyID() +
-          '&businessID=' +
-          this.globalService.getBusinessID() +
+          '&branchID=' +
+          this.globalService.getBranchID() +
           '&userID=' +
-          this.globalService.getUserId(),
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(

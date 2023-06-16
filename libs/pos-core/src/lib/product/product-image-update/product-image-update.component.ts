@@ -47,7 +47,9 @@ export class ProductImageUpdateComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchID=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(
@@ -72,7 +74,9 @@ export class ProductImageUpdateComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchID=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(

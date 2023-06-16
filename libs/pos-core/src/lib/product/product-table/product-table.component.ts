@@ -32,8 +32,8 @@ export class ProductTableComponent implements OnInit {
       .getHttp(
         'core-api/Product/getProduct?companyID=' +
           this.globalService.getCompanyID() +
-          '&businessID=' +
-          this.globalService.getBusinessID() +
+          '&branchID=' +
+          this.globalService.getBranchID() +
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +

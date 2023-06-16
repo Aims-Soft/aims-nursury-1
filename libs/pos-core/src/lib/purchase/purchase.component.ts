@@ -233,8 +233,8 @@ export class PurchaseComponent implements OnInit {
       .getHttp(
         'core-api/Product/getProduct?companyID=' +
           this.globalService.getCompanyID() +
-          '&businessID=' +
-          this.globalService.getBusinessID() +
+          '&branchID=' +
+          this.globalService.getBranchID() +
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
@@ -256,10 +256,12 @@ export class PurchaseComponent implements OnInit {
       .getHttp(
         'core-api/Party/getParty?companyID=' +
           this.globalService.getCompanyID() +
-          '&businessID=' +
-          this.globalService.getBusinessID() +
+          '&branchID=' +
+          this.globalService.getBranchID() +
           '&userID=' +
-          this.globalService.getUserId(),
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -441,7 +443,9 @@ export class PurchaseComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchID=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(

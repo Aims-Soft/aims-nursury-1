@@ -55,7 +55,11 @@ export class PosDashboardComponent implements OnInit {
         'core-api/PosDashboard/getTodaySaleTransaction?userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchid=' +
+          this.globalService.getBranchID() +
+          '&businessid=' +
+          this.globalService.getBusinessID(),
         ''
       )
       .subscribe(
@@ -74,7 +78,11 @@ export class PosDashboardComponent implements OnInit {
         'core-api/PosDashboard/getTodaySaleAmount?userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&businessid=' +
+          this.globalService.getBusinessID() +
+          '&branchid=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(
@@ -93,7 +101,11 @@ export class PosDashboardComponent implements OnInit {
         'core-api/PosDashboard/getTopSales?userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchid=' +
+          this.globalService.getBranchID() +
+          '&businessid=' +
+          this.globalService.getBusinessID(),
         ''
       )
       .subscribe(
@@ -112,7 +124,11 @@ export class PosDashboardComponent implements OnInit {
         'core-api/PosDashboard/getUnderStock?userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchid=' +
+          this.globalService.getBranchID() +
+          '&businessid=' +
+          this.globalService.getBusinessID(),
         ''
       )
       .subscribe(
@@ -140,7 +156,11 @@ export class PosDashboardComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&businessid=' +
+          this.globalService.getBusinessID() +
+          '&branchid=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(
@@ -226,7 +246,11 @@ export class PosDashboardComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchid=' +
+          this.globalService.getBranchID() +
+          '&businessid=' +
+          this.globalService.getBusinessID(),
         ''
       )
       .subscribe(
@@ -390,7 +414,11 @@ export class PosDashboardComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&businessid=' +
+          this.globalService.getBusinessID() +
+          '&branchid=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(

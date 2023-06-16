@@ -4,13 +4,11 @@
     <h3 class="ms-3 mt-2">Saved Products</h3>
   </div>
   <div class="table-responsive">
-    <perfect-scrollbar
-      class="bg-light-grey"
-      style="height: 31.5em; max-width: 100%"
-    >
+    <perfect-scrollbar class="bg-light-grey" style="height: 31.5em; max-width: 100%">
       <table class="table">
         <thead>
           <tr>
+            <th>Sr#</th>
             <th>ProductName</th>
             <th>Category</th>
             <!-- <th>Brand</th> -->
@@ -22,6 +20,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of tableData; let i = index">
+            <td>{{i+1}}</td>
             <td>{{ item.productName }}</td>
             <td>{{ item.categoryName }}</td>
             <!-- <td>{{item.brandName}}</td> -->
@@ -29,16 +28,10 @@
             <td class="text-center">{{ item.costPrice | number }}</td>
             <td class="text-center">{{ item.salePrice | number }}</td>
             <td class="text-center">
-              <span
-                class="txtClrDarkGrey pe-2 cursorPointer border-right-dark"
-                (click)="edit(item)"
-              >
+              <span class="txtClrDarkGrey pe-2 cursorPointer border-right-dark" (click)="edit(item)">
                 <mat-icon>edit</mat-icon>
               </span>
-              <span
-                class="txtClrLightGreen cursorPointer ps-2 pe-2"
-                (click)="delete(item)"
-              >
+              <span class="txtClrLightGreen cursorPointer ps-2 pe-2" (click)="delete(item)">
                 <mat-icon>delete</mat-icon>
               </span>
               <!-- <span class="ps-2" (click)="edit(item, '2')">

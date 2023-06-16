@@ -20,6 +20,7 @@ export class PartyLedgerReportComponent implements OnInit {
 
   partyList: any = [];
   reportList: any = [];
+  moduleId: string | null;
 
   constructor(
     private dataService: SharedServicesDataModule,
@@ -29,13 +30,19 @@ export class PartyLedgerReportComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
     this.getParty();
   }
 
   getParty() {
     this.dataService
       .getHttp(
-        'core-api/Party/getAllParties?userID=' + this.globalService.getUserId(),
+        'core-api/Party/getAllParties?userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId +
+          '&branchID=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(
@@ -89,7 +96,13 @@ export class PartyLedgerReportComponent implements OnInit {
           '&fromDate=' +
           this.datepipe.transform(this.dtpFromDate, 'yyyy-MM-dd') +
           '&toDate=' +
-          this.datepipe.transform(this.dtpToDate, 'yyyy-MM-dd'),
+          this.datepipe.transform(this.dtpToDate, 'yyyy-MM-dd') +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId +
+          '&branchID=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(

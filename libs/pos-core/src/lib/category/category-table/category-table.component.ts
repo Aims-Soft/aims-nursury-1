@@ -32,8 +32,8 @@ export class CategoryTableComponent implements OnInit {
       .getHttp(
         'core-api/Category/getCategory?companyID=' +
           this.globalService.getCompanyID() +
-          '&businessID=' +
-          this.globalService.getBusinessID() +
+          '&branchID=' +
+          this.globalService.getBranchID() +
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +

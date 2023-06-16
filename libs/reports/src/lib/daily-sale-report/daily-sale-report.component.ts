@@ -20,10 +20,12 @@ export class DailySaleReportComponent implements OnInit {
   lblTotalMargin: any = '';
   lblTotalDiscoount: any = '';
   lblGrandTotal: any = '';
+  moduleId: string | null;
 
   // rptImg: any = 'assets/ui/ReportPictures/Logo.svg'
   constructor(
     private global: SharedServicesGlobalDataModule,
+    private globalService: SharedServicesGlobalDataModule,
     private dataService: SharedServicesDataModule,
     private valid: SharedHelpersFieldValidationsModule,
     private datePipe: DatePipe
@@ -31,6 +33,7 @@ export class DailySaleReportComponent implements OnInit {
 
   ngOnInit(): void {
     // this.currentDate = new Date();
+    this.moduleId = localStorage.getItem('moduleId');
   }
   getDailySale(start: any, end: any) {
     if (start == '') {
@@ -48,7 +51,13 @@ export class DailySaleReportComponent implements OnInit {
           'report-api/FMISReport/getDailySales?startDate=' +
             startdate +
             '&endDate=' +
-            enddate,
+            enddate +
+            '&userID=' +
+            this.globalService.getUserId() +
+            '&moduleId=' +
+            this.moduleId +
+            '&branchID=' +
+            this.globalService.getBranchID(),
           ''
         )
         .subscribe(
@@ -97,7 +106,13 @@ export class DailySaleReportComponent implements OnInit {
           'report-api/FMISReport/getDailySalesByOrder?startDate=' +
             startdate +
             '&endDate=' +
-            enddate,
+            enddate +
+            '&userID=' +
+            this.globalService.getUserId() +
+            '&moduleId=' +
+            this.moduleId +
+            '&branchID=' +
+            this.globalService.getBranchID(),
           ''
         )
         .subscribe(

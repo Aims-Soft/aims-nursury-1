@@ -22,6 +22,7 @@ export class CategoryComponent implements OnInit {
     businessID: '',
     categoryName: '',
     moduleId: '',
+    branchID: '',
   };
 
   formFields: MyFormField[] = [
@@ -61,6 +62,12 @@ export class CategoryComponent implements OnInit {
       type: 'hidden',
       required: false,
     },
+    {
+      value: this.pageFields.branchID,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   companyList: any = [];
@@ -77,6 +84,7 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {
     this.formFields[1].value = this.globalService.getUserId().toString();
     this.formFields[5].value = localStorage.getItem('moduleId');
+    this.formFields[6].value = this.globalService.getBranchID();
     this.roleID = this.globalService.getRoleId();
     this.getCompany();
   }

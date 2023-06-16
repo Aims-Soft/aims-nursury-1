@@ -6,4 +6,5 @@ export interface SubCategoryInterface {
   companyID: '';
   businessID: '';
   moduleId: '';
+  branchID: '';
 }

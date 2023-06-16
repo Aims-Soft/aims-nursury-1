@@ -23,6 +23,7 @@ export class SubCategoryComponent implements OnInit {
     parentCategoryID: '0', //4
     categoryName: '', //5
     moduleId: '',
+    branchID: '',
   };
 
   formFields: MyFormField[] = [
@@ -68,6 +69,12 @@ export class SubCategoryComponent implements OnInit {
       type: '',
       required: false,
     },
+    {
+      value: this.pageFields.branchID,
+      msg: '',
+      type: '',
+      required: false,
+    },
   ];
 
   companyList: any = [];
@@ -85,7 +92,7 @@ export class SubCategoryComponent implements OnInit {
     this.moduleId = localStorage.getItem('moduleId');
     this.formFields[6].value = localStorage.getItem('moduleId');
     this.formFields[1].value = this.globalService.getUserId().toString();
-
+    this.formFields[7].value = this.globalService.getBranchID();
     this.roleID = this.globalService.getRoleId();
     this.getCompany();
     this.getCategory();
@@ -133,8 +140,8 @@ export class SubCategoryComponent implements OnInit {
       .getHttp(
         'core-api/Category/getCategory?companyID=' +
           this.globalService.getCompanyID() +
-          '&businessID=' +
-          this.globalService.getBusinessID() +
+          '&branchID=' +
+          this.globalService.getBranchID() +
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +

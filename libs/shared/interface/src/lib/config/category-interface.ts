@@ -5,4 +5,5 @@ export interface CategoryInterface {
   businessID: '';
   companyID: '';
   moduleId: '';
+  branchID: '';
 }
