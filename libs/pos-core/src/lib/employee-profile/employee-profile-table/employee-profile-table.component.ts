@@ -37,13 +37,14 @@ export class EmployeeProfileTableComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchID=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(
         (response: any) => {
           this.tableData = response;
-          console.log(response);
         },
         (error: any) => {
           console.log(error);

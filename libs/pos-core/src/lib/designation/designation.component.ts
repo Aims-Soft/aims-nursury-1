@@ -21,7 +21,8 @@ export class DesignationComponent implements OnInit {
     companyid: '', //2
     businessid: '', //3
     designationName: '', //4
-    moduleId: '',
+    moduleId: '', //5
+    branchID: '', //6
   };
 
   formFields: MyFormField[] = [
@@ -61,6 +62,12 @@ export class DesignationComponent implements OnInit {
       type: '',
       required: false,
     },
+    {
+      value: this.pageFields.branchID,
+      msg: '',
+      type: '',
+      required: false,
+    },
   ];
 
   companyList: any = [];
@@ -76,6 +83,7 @@ export class DesignationComponent implements OnInit {
   ngOnInit(): void {
     this.formFields[1].value = this.globalService.getUserId().toString();
     this.formFields[5].value = localStorage.getItem('moduleId');
+    this.formFields[6].value = this.globalService.getBranchID();
     this.roleID = this.globalService.getRoleId();
     this.getCompany();
   }

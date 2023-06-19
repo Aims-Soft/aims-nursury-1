@@ -59,7 +59,9 @@ export class PosDashboardComponent implements OnInit {
           '&branchid=' +
           this.globalService.getBranchID() +
           '&businessid=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&companyid' +
+          this.globalService.getCompanyID(),
         ''
       )
       .subscribe(
@@ -82,7 +84,9 @@ export class PosDashboardComponent implements OnInit {
           '&businessid=' +
           this.globalService.getBusinessID() +
           '&branchid=' +
-          this.globalService.getBranchID(),
+          this.globalService.getBranchID() +
+          '&companyid' +
+          this.globalService.getCompanyID(),
         ''
       )
       .subscribe(
@@ -105,7 +109,9 @@ export class PosDashboardComponent implements OnInit {
           '&branchid=' +
           this.globalService.getBranchID() +
           '&businessid=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&companyid' +
+          this.globalService.getCompanyID(),
         ''
       )
       .subscribe(

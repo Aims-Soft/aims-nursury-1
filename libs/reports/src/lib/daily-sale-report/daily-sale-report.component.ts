@@ -17,8 +17,8 @@ export class DailySaleReportComponent implements OnInit {
   discountList: any = [];
   lblTotalSale: any = '';
   lblTotalCost: any = '';
-  lblTotalMargin: any = '';
-  lblTotalDiscoount: any = '';
+  lblTotalMargin: any;
+  lblTotalDiscoount: any;
   lblGrandTotal: any = '';
   moduleId: string | null;
 
@@ -74,7 +74,7 @@ export class DailySaleReportComponent implements OnInit {
             }, 0);
             this.lblTotalCost = cost;
 
-            const margin = this.reportList.reduce((sum: any, total: any) => {
+            var margin: any = this.reportList.reduce((sum: any, total: any) => {
               return sum + total.margin;
             }, 0);
             this.lblTotalMargin = margin;
@@ -118,14 +118,14 @@ export class DailySaleReportComponent implements OnInit {
         .subscribe(
           (response: any) => {
             this.discountList = response;
-            const disc = this.discountList.reduce((sum: any, total: any) => {
+            var disc: any;
+            disc = this.discountList.reduce((sum: any, total: any) => {
               return sum + total.discount;
             }, 0);
             this.lblTotalDiscoount = disc;
-
-            // this.lblGrandTotal = parseInt(
-            //   this.lblTotalMargin - this.lblTotalDiscoount
-            // );
+            this.lblGrandTotal = parseInt(
+              (this.lblTotalMargin - this.lblTotalDiscoount).toString()
+            );
           },
           (error: any) => {
             console.log(error);

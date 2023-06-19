@@ -37,7 +37,9 @@ export class DesignationTableComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&branchID=' +
+          this.globalService.getBranchID(),
         ''
       )
       .subscribe(

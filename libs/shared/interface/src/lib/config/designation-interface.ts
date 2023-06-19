@@ -5,4 +5,5 @@ export interface DesignationInterface {
   companyid: '';
   businessid: '';
   moduleId: '';
+  branchID: '';
 }
