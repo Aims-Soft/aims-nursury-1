@@ -292,19 +292,7 @@ export class SaleComponent implements OnInit {
   //     );
   // }
 
-  testFunc(e: any) {
-    // alert(e.key)
-    // if(e.key == 'Tab'){
-    //   this._txtCash.nativeElement.focus();
-    //   this.formFields[7].value = '';
-    //   this.txtCode = '';
-    //   return;
-    // }
-  }
-
   pushProductByCode(item: any, e: any) {
-    // alert(e.ctrlKey);
-
     if (e.ctrlKey == true) {
       //   // alert(e.keyCode);
       this._txtCash.nativeElement.focus();
@@ -314,15 +302,19 @@ export class SaleComponent implements OnInit {
     if (e.keyCode == 13) {
       return;
     }
+
     var data = this.productList.filter(
       (x: { barcode1: any; barcode2: any; barcode3: any }) =>
-        x.barcode1 == item.toString() && x.barcode2 == '' && x.barcode3 == ''
+        x.barcode1 == item.toString() &&
+        (x.barcode2 == '' || x.barcode2 == null) &&
+        (x.barcode3 == '' || x.barcode3 == null)
     );
 
     if (data.length == 0 && item.toString() != '') {
       data = this.productList.filter(
         (x: { barcode1: any; barcode2: any; barcode3: any }) =>
-          x.barcode2 == item.toString() && x.barcode3 == ''
+          x.barcode2 == item.toString() &&
+          (x.barcode3 == '' || x.barcode3 == null)
       );
 
       if (data.length == 0 && item.toString() != '') {

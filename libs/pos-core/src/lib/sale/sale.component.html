@@ -12,10 +12,14 @@
 <!-- Add / update -->
 <div class="bg-dark-light">
   <div class="container">
-    <div class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2">
+    <div
+      class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+    >
       <div class="productSaleIcon"></div>
       <h3 class="ms-3 mt-2">Product Sale</h3>
-      <label class="ms-4 mt-3 me-lg-auto">View, edit and manage your sales here.</label>
+      <label class="ms-4 mt-3 me-lg-auto"
+        >View, edit and manage your sales here.</label
+      >
       <button mat-button class="saleReturnBtn me-2" (click)="checkSaleReturn()">
         Sale Return
       </button>
@@ -31,17 +35,30 @@
     <div class="col-md-4">
       <mat-form-field class="w-100">
         <mat-label>Company</mat-label>
-        <mat-select [(ngModel)]="formFields[11].value" (ngModelChange)="getBusiness()">
-          <mat-option *ngFor="let item of companyList" [value]="item.companyID">{{ item.companyFullName }}</mat-option>
+        <mat-select
+          [(ngModel)]="formFields[11].value"
+          (ngModelChange)="getBusiness()"
+        >
+          <mat-option
+            *ngFor="let item of companyList"
+            [value]="item.companyID"
+            >{{ item.companyFullName }}</mat-option
+          >
         </mat-select>
       </mat-form-field>
     </div>
     <div class="col-md-4">
       <mat-form-field class="w-100">
         <mat-label>Business</mat-label>
-        <mat-select [(ngModel)]="formFields[12].value" (ngModelChange)="getBranch()">
-          <mat-option *ngFor="let item of businessList" [value]="item.businessID">{{ item.businessFullName
-            }}</mat-option>
+        <mat-select
+          [(ngModel)]="formFields[12].value"
+          (ngModelChange)="getBranch()"
+        >
+          <mat-option
+            *ngFor="let item of businessList"
+            [value]="item.businessID"
+            >{{ item.businessFullName }}</mat-option
+          >
         </mat-select>
       </mat-form-field>
     </div>
@@ -49,8 +66,11 @@
       <mat-form-field class="w-100">
         <mat-label>Branch</mat-label>
         <mat-select [(ngModel)]="formFields[13].value">
-          <mat-option *ngFor="let item of businessList" [value]="item.businessID">{{ item.businessFullName
-            }}</mat-option>
+          <mat-option
+            *ngFor="let item of businessList"
+            [value]="item.businessID"
+            >{{ item.businessFullName }}</mat-option
+          >
         </mat-select>
       </mat-form-field>
     </div>
@@ -74,35 +94,60 @@
       </mat-form-field>
     </div>
     <div class="col-md-1">
-      <button mat-mini-fab class="mt-2 bg-dark text-white" data-bs-toggle="modal" data-bs-target="#bpsModal">
+      <button
+        mat-mini-fab
+        class="mt-2 bg-dark text-white"
+        data-bs-toggle="modal"
+        data-bs-target="#bpsModal"
+      >
         <mat-icon class="text-center mb-3">add</mat-icon>
       </button>
     </div>
     <div class="col-md-7">
       <mat-form-field class="w-100">
-        <input matInput [(ngModel)]="formFields[9].value" placeholder="Remarks" />
+        <input
+          matInput
+          [(ngModel)]="formFields[9].value"
+          placeholder="Remarks"
+        />
       </mat-form-field>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4">
       <mat-form-field class="w-100">
-        <input matInput placeholder="Search By Code" [(ngModel)]="txtCode" (keyup)="pushProductByCode(txtCode, $event)"
-          (keydown.Tab)="testFunc($event)" autofocus #txtFocusCode />
+        <input
+          matInput
+          placeholder="Search By Code"
+          [(ngModel)]="txtCode"
+          (keyup)="pushProductByCode(txtCode, $event)"
+          autofocus
+          #txtFocusCode
+        />
       </mat-form-field>
     </div>
     <div class="col-md-8">
       <mat-form-field class="w-100">
         <mat-label>Search By Name</mat-label>
-        <mat-select [(ngModel)]="cmbProduct" (ngModelChange)="pushProduct(cmbProduct)">
+        <mat-select
+          [(ngModel)]="cmbProduct"
+          (ngModelChange)="pushProduct(cmbProduct)"
+        >
           <mat-option>
-            <ngx-mat-select-search [(ngModel)]="searchProduct" [noEntriesFoundLabel]="'Not found'"
-              placeholderLabel="Search..." name="search">
+            <ngx-mat-select-search
+              [(ngModel)]="searchProduct"
+              [noEntriesFoundLabel]="'Not found'"
+              placeholderLabel="Search..."
+              name="search"
+            >
             </ngx-mat-select-search>
           </mat-option>
-          <mat-option *ngFor="
+          <mat-option
+            *ngFor="
               let item of productList | search: 'productName':searchProduct
-            " [value]="item.productID">
+            "
+            [value]="item.productID"
+          >
             {{ item.productName }}
           </mat-option>
         </mat-select>
@@ -110,39 +155,60 @@
     </div>
   </div>
   <div class="row bg-light-grey pt-2">
-    <aims-pos-product-sale-table (eventEmitter)="totalBill()"></aims-pos-product-sale-table>
+    <aims-pos-product-sale-table
+      (eventEmitter)="totalBill()"
+    ></aims-pos-product-sale-table>
   </div>
   <div class="row">
     <div class="col-md-12">
       <div class="row mt-2">
         <div class="col-md-3">
-          <div class="bg-light d-flex flex-column align-items-center mat-elevation-z5">
+          <div
+            class="bg-light d-flex flex-column align-items-center mat-elevation-z5"
+          >
             <label class="h2-sale-discount pt-3">DISCOUNT</label>
             <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-2">
-              <input matInput class="blue-text" [(ngModel)]="formFields[6].value" (keyup)="changeValue()"
-                type="number" />
+              <input
+                matInput
+                class="blue-text"
+                [(ngModel)]="formFields[6].value"
+                (keyup)="changeValue()"
+                type="number"
+              />
             </mat-form-field>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="bg-light d-flex flex-column align-items-center mat-elevation-z5">
+          <div
+            class="bg-light d-flex flex-column align-items-center mat-elevation-z5"
+          >
             <label class="h3-sale-cash pt-3">CASH</label>
             <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-1">
-              <input matInput class="blue-text" [(ngModel)]="formFields[7].value"
-                (keyup)="changeValue(); getKeyPressed($event, '#print-data')" type="number" #txtCash />
+              <input
+                matInput
+                class="blue-text"
+                [(ngModel)]="formFields[7].value"
+                (keyup)="changeValue(); getKeyPressed($event, '#print-data')"
+                type="number"
+                #txtCash
+              />
             </mat-form-field>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="bg-light-green d-flex flex-column align-items-center mat-elevation-z5">
+          <div
+            class="bg-light-green d-flex flex-column align-items-center mat-elevation-z5"
+          >
             <label class="h2-sale-discount pt-4 text-white">CHANGE</label>
             <label class="h1-digit text-center mt-1 mb-2 pb-1">{{
               formFields[8].value
-              }}</label>
+            }}</label>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="bg-light-green d-flex flex-column align-items-center mat-elevation-z5">
+          <div
+            class="bg-light-green d-flex flex-column align-items-center mat-elevation-z5"
+          >
             <label class="h3-sale-cash pt-4 text-white">TOTAL AMOUNT</label>
             <label class="text-center mt-1 mb-2 h1-digit">{{ lblTotal }}</label>
           </div>
@@ -155,7 +221,12 @@
 <aims-pos-print-sale class="d-none" id="print-data"></aims-pos-print-sale>
 
 <!-- Modal -->
-<div id="saleReturnModal" class="modal fade" role="dialog" data-bs-backdrop="false">
+<div
+  id="saleReturnModal"
+  class="modal fade"
+  role="dialog"
+  data-bs-backdrop="false"
+>
   <div class="modal-dialog modal-md mat-elevation-z20">
     <!-- Modal content-->
     <div class="modal-content">
@@ -168,7 +239,11 @@
         <div class="d-flex flex-column align-items-center">
           <div class="saleReturnIcon mb-3"></div>
           <mat-form-field>
-            <input matInput placeholder="Enter Invoice Number" [(ngModel)]="lblInvoiceNo" />
+            <input
+              matInput
+              placeholder="Enter Invoice Number"
+              [(ngModel)]="lblInvoiceNo"
+            />
           </mat-form-field>
           <button mat-button class="resetBtn ps-5 pe-5" (click)="saleReturn()">
             Save
@@ -187,10 +262,14 @@
         <h5 class="modal-title fs-5 fw-bold text-white ms-4 mt-2" id="bpsModal">
           Add Customer
         </h5>
-        <mat-icon class="text-white cursorPointer" data-bs-dismiss="modal">close</mat-icon>
+        <mat-icon class="text-white cursorPointer" data-bs-dismiss="modal"
+          >close</mat-icon
+        >
       </div>
       <div class="modalbody bg-light">
-        <aims-pos-add-custoomer (eventEmitter)="getParty()"></aims-pos-add-custoomer>
+        <aims-pos-add-custoomer
+          (eventEmitter)="getParty()"
+        ></aims-pos-add-custoomer>
       </div>
     </div>
   </div>

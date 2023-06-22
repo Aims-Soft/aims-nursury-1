@@ -13,6 +13,8 @@ export class ProductTableComponent implements OnInit {
   @Output() eventEmitter = new EventEmitter();
   @Output() eventEmitterDelete = new EventEmitter();
 
+  txtSearch: any = '';
+
   error: any;
   tableData: any = [];
   moduleId: string | null;
