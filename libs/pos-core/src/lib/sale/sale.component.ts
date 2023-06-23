@@ -28,6 +28,7 @@ export class SaleComponent implements OnInit {
   lblTotal: any = 0;
   lblCash: any = 0;
   lblInvoiceNo: any = 0;
+  percentage: number = 0;
 
   pageFields: SaleInterface = {
     invoiceNo: '0', //0
@@ -155,6 +156,7 @@ export class SaleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.lblTotal = 2000;
     this.moduleId = localStorage.getItem('moduleId');
     this.formFields[14].value = localStorage.getItem('moduleId');
     // this.globalService.setHeaderTitle("Sale");
@@ -496,6 +498,11 @@ export class SaleComponent implements OnInit {
       this.formFields[8].value = 0 - this.lblTotal;
       return;
     }
+    // if (this.percentage > 0) {
+    //   this.formFields[6].value = Math.round(
+    //     this.lblTotal * (this.percentage / 100)
+    //   );
+    // }
     this.formFields[8].value =
       parseInt(this.formFields[6].value) +
       parseInt(this.formFields[7].value) -
@@ -701,6 +708,25 @@ export class SaleComponent implements OnInit {
   getKeyPressed(e: any, printSection: string) {
     if (e.keyCode == 13) {
       this.save(printSection);
+    }
+  }
+  calculateTotalAmount(item: any) {
+    if (item == 1) {
+      this.formFields[6].value = Math.round(
+        this.lblTotal * (this.percentage / 100)
+      );
+      this.formFields[8].value =
+        parseInt(this.formFields[6].value) +
+        parseInt(this.formFields[7].value) -
+        this.lblTotal;
+    }
+    if (item == 2) {
+      this.percentage = (this.formFields[6].value * 100) / this.lblTotal;
+      this.percentage.toFixed(2);
+      this.formFields[8].value =
+        parseInt(this.formFields[6].value) +
+        parseInt(this.formFields[7].value) -
+        this.lblTotal;
     }
   }
 }

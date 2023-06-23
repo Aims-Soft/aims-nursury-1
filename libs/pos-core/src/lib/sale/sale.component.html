@@ -101,9 +101,17 @@
             </ngx-mat-select-search>
           </mat-option>
           <mat-option *ngFor="
-              let item of productList | search: 'productName':searchProduct
+              let item of productList | search: 'productName,salePrice,qty':searchProduct
             " [value]="item.productID">
-            {{ item.productName }}
+            <table>
+              <tbody>
+                <tr>
+                  <td>{{item.productName}}</td>
+                  <td>--SalePrice={{item.salePrice}}</td>
+                  <td>--Quantity={{ item.qty}}</td>
+                </tr>
+              </tbody>
+            </table>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -114,17 +122,26 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <div class="row mt-2">
-        <div class="col-md-3">
+      <div class="row mt-2 justify-content-center">
+        <div class="col-md-2">
+          <div class="bg-light d-flex flex-column align-items-center mat-elevation-z5">
+            <label class="h2-sale-discount pt-3">Percentage</label>
+            <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-2">
+              <input matInput class="blue-text" [(ngModel)]="percentage" (keyup)="changeValue()"
+                (ngModelChange)="calculateTotalAmount(1)" type="text" maxlength="2" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-2">
           <div class="bg-light d-flex flex-column align-items-center mat-elevation-z5">
             <label class="h2-sale-discount pt-3">DISCOUNT</label>
             <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-2">
               <input matInput class="blue-text" [(ngModel)]="formFields[6].value" (keyup)="changeValue()"
-                type="number" />
+                (ngModelChange)="calculateTotalAmount(2)" type="number" />
             </mat-form-field>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="bg-light d-flex flex-column align-items-center mat-elevation-z5">
             <label class="h3-sale-cash pt-3">CASH</label>
             <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-1">
@@ -133,7 +150,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="bg-light-green d-flex flex-column align-items-center mat-elevation-z5">
             <label class="h2-sale-discount pt-4 text-white">CHANGE</label>
             <label class="h1-digit text-center mt-1 mb-2 pb-1">{{
@@ -141,7 +158,7 @@
               }}</label>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="bg-light-green d-flex flex-column align-items-center mat-elevation-z5">
             <label class="h3-sale-cash pt-4 text-white">TOTAL AMOUNT</label>
             <label class="text-center mt-1 mb-2 h1-digit">{{ lblTotal }}</label>
