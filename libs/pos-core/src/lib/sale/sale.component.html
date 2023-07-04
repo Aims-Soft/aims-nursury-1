@@ -88,7 +88,7 @@
     <div class="col-md-4">
       <mat-form-field class="w-100">
         <input matInput placeholder="Search By Code" [(ngModel)]="txtCode" (keyup)="pushProductByCode(txtCode, $event)"
-          (keydown.Tab)="testFunc($event)" autofocus #txtFocusCode />
+          autofocus #txtFocusCode />
       </mat-form-field>
     </div>
     <div class="col-md-8">
@@ -112,6 +112,7 @@
                 </tr>
               </tbody>
             </table>
+
           </mat-option>
         </mat-select>
       </mat-form-field>
