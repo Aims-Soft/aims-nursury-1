@@ -156,7 +156,6 @@ export class SaleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.lblTotal = 2000;
     this.moduleId = localStorage.getItem('moduleId');
     this.formFields[14].value = localStorage.getItem('moduleId');
     // this.globalService.setHeaderTitle("Sale");
