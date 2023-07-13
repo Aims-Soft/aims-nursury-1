@@ -104,8 +104,8 @@ export class AddCustoomerComponent implements OnInit {
         'core-api/Party/saveCustomerSale'
       )
       .subscribe(
-        (response: any[]) => {
-          if (response[0].includes('Success') == true) {
+        (response: any) => {
+          if (response.message == 'Success') {
             console.log(response);
             if (this.formFields[0].value > 0) {
               this.valid.apiInfoResponse(' updated successfully');
