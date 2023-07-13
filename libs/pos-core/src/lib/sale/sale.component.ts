@@ -2,10 +2,16 @@ import { SharedHelpersFieldValidationsModule } from '@aims-pos/shared/helpers/fi
 import { MyFormField, SaleInterface } from '@aims-pos/shared/interface';
 import { SharedServicesDataModule } from '@aims-pos/shared/services/data';
 import { SharedServicesGlobalDataModule } from '@aims-pos/shared/services/global-data';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  HostListener,
+} from '@angular/core';
 import { PrintSaleComponent } from './print-sale/print-sale.component';
 import { ProductSaleTableComponent } from './product-sale-table/product-sale-table.component';
-
+import { MatSelect } from '@angular/material/select';
 declare var $: any;
 
 @Component({
@@ -14,6 +20,9 @@ declare var $: any;
   styleUrls: ['./sale.component.scss'],
 })
 export class SaleComponent implements OnInit {
+  @ViewChild('txtFocusCode') txtFocusCode: ElementRef;
+
+  @ViewChild('searchName') searchName: MatSelect;
   @ViewChild(ProductSaleTableComponent) productSaleTable: any;
   @ViewChild(PrintSaleComponent) printSale: any;
 
@@ -142,6 +151,7 @@ export class SaleComponent implements OnInit {
   ];
 
   error: any;
+  cursorBlinking = false;
 
   companyList: any = [];
   businessList: any = [];
@@ -166,7 +176,34 @@ export class SaleComponent implements OnInit {
     this.getProduct();
     this.getParty();
   }
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'F4') {
+      event.preventDefault();
+      this.setFocusOnInput();
+    }
+  }
 
+  setFocusOnInput() {
+    if (this.txtFocusCode && this.txtFocusCode.nativeElement) {
+      this.txtFocusCode.nativeElement.focus();
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'F4') {
+      event.preventDefault();
+      this.setFocusOnInput();
+    } else if (event.key === 'F8') {
+      this.openProductDropdown();
+    }
+  }
+  openProductDropdown() {
+    if (this.searchName) {
+      this.searchName.open();
+    }
+  }
   getCompany() {
     this.dataService.getHttp('cmis-api/Company/getCompany', '').subscribe(
       (response: any) => {

@@ -87,14 +87,14 @@
   <div class="row">
     <div class="col-md-4">
       <mat-form-field class="w-100">
-        <input matInput placeholder="Search By Code" [(ngModel)]="txtCode" (keyup)="pushProductByCode(txtCode, $event)"
-          autofocus #txtFocusCode />
+        <input placeholder="Search By Code" [(ngModel)]="txtCode" (keyup)="pushProductByCode(txtCode, $event)" autofocus
+          #txtFocusCode matInput />
       </mat-form-field>
     </div>
     <div class="col-md-8">
       <mat-form-field class="w-100">
         <mat-label>Search By Name</mat-label>
-        <mat-select [(ngModel)]="cmbProduct" (ngModelChange)="pushProduct(cmbProduct)">
+        <mat-select #searchName [(ngModel)]="cmbProduct" (ngModelChange)="pushProduct(cmbProduct)">
           <mat-option>
             <ngx-mat-select-search [(ngModel)]="searchProduct" [noEntriesFoundLabel]="'Not found'"
               placeholderLabel="Search..." name="search">
@@ -161,7 +161,7 @@
         </div>
         <div class="col-md-2">
           <div class="bg-light-green d-flex flex-column align-items-center mat-elevation-z5">
-            <label class="h3-sale-cash pt-4 text-white">TOTAL AMOUNT</label>
+            <label class="h3-sale-cash pt-4 text-white">TOTAL</label>
             <label class="text-center mt-1 mb-2 h1-digit">{{ lblTotal }}</label>
           </div>
         </div>

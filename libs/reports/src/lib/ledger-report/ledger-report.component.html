@@ -1,10 +1,11 @@
-<div class="bg-dark-light"> 
+<div class="bg-dark-light">
     <div class="container">
         <div class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2">
             <div class="BankDetailsIcon"></div>
             <h3 class="ms-3 mt-2">Ledger Report</h3>
             <label class=" ms-4 mt-3 me-lg-auto"></label>
-            <button mat-button class="resetBtn me-2" styleSheetFile="assets/printstyles.css" printSectionId="section" ngxPrint [disabled]="reportList.length == 0">Print</button>
+            <button mat-button class="resetBtn me-2" styleSheetFile="assets/printstyles.css" printSectionId="section"
+                ngxPrint [disabled]="reportList.length == 0">Print</button>
             <button mat-button class="saveBtn" (click)="showReport()">Show</button>
         </div>
     </div>
@@ -13,10 +14,9 @@
     <div class="row">
         <div class="col-md-4">
             <mat-form-field class="w-100 pt-3 pe-4">
-                <mat-select class="matInput" [(ngModel)]="cmbCOA" placeholder="Select account head" (ngModelChange)="getAccountHead(cmbCOA)">
-                    <mat-option *ngFor="let item of coaList"
-                        [value]="item.coaID"
-                        >
+                <mat-select class="matInput" [(ngModel)]="cmbCOA" placeholder="Select account head"
+                    (ngModelChange)="getAccountHead(cmbCOA)">
+                    <mat-option *ngFor="let item of coaList" [value]="item.coaID">
                         {{ item.coaTitle }}
                     </mat-option>
                 </mat-select>
@@ -25,7 +25,7 @@
         <div class="col-md-4">
             <mat-form-field class="w-100 pt-3 pe-4">
                 <mat-label>From date</mat-label>
-                <input matInput [matDatepicker]="picker" [(ngModel)]="dtpFromDate"/>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="dtpFromDate" />
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -33,7 +33,7 @@
         <div class="col-md-4">
             <mat-form-field class="w-100 pt-3 pe-4">
                 <mat-label>To date</mat-label>
-                <input matInput [matDatepicker]="picker2" [(ngModel)]="dtpToDate"/>
+                <input matInput [matDatepicker]="picker2" [(ngModel)]="dtpToDate" />
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
@@ -69,7 +69,8 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="text-center border-bottom-green">V. No</th>
+                        <th class="text-center border-bottom-green">Inv.No</th>
+                        <th class="text-center border-bottom-green">Party</th>
                         <th class="text-center border-bottom-green">Type</th>
                         <th class="text-center border-bottom-green">Date</th>
                         <th class="text-center border-bottom-green">CheqNo./Ref.</th>
@@ -82,6 +83,7 @@
                 <tbody>
                     <tr *ngFor="let item of reportList; let i=index">
                         <td class="text-center">{{item.invoiceno}}</td>
+                        <td class="text-center">{{item.partyname}}
                         <td class="text-center">{{item.invoicetype}}</td>
                         <td class="text-center">{{item.invoicedate | date:'MMM-dd-yyyy'}}</td>
                         <td class="text-center">{{item.instrumentno}}</td>
@@ -94,7 +96,7 @@
             </table>
         </div>
     </div>
-        
+
     <div class="row mt-2 mb-2 d-none">
         <div class="col-md-3">
             <div class="borderTopGrey borderBottomGrey pb-01">
@@ -117,7 +119,8 @@
         </div>
         <div class="col-md-7">
             <div class="borderTopGrey borderBottomGrey pb-02">
-                <div class="borderBottomGrey h1Total text-center"><b>Total Balance: </b> {{lblTotalBalance | number}}</div>
+                <div class="borderBottomGrey h1Total text-center"><b>Total Balance: </b> {{lblTotalBalance | number}}
+                </div>
             </div>
         </div>
     </div>

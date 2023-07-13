@@ -103,7 +103,6 @@ export class LedgerReportComponent implements OnInit {
       .subscribe(
         (response: any) => {
           // this.reportList = response;
-          // console.log(response);
           var balance = 0;
           for (var i = 0; i < response.length; i++) {
             balance =
@@ -111,6 +110,7 @@ export class LedgerReportComponent implements OnInit {
               (parseInt(response[i].debit) - parseInt(response[i].credit));
             this.reportList.push({
               invoiceno: response[i].invoiceno,
+              partyname: response[i].partyname,
               invoicetype: response[i].invoicetype,
               invoicedate: response[i].invoicedate,
               instrumentno: response[i].instrumentno,
