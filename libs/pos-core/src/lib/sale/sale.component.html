@@ -26,143 +26,171 @@
     </div>
   </div>
 </div>
-<div class="container overflow-hidden pb-3">
-  <div class="row" *ngIf="roleID == 1">
-    <div class="col-md-4">
-      <mat-form-field class="w-100">
-        <mat-label>Company</mat-label>
-        <mat-select [(ngModel)]="formFields[11].value" (ngModelChange)="getBusiness()">
-          <mat-option *ngFor="let item of companyList" [value]="item.companyID">{{ item.companyFullName }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-md-4">
-      <mat-form-field class="w-100">
-        <mat-label>Business</mat-label>
-        <mat-select [(ngModel)]="formFields[12].value" (ngModelChange)="getBranch()">
-          <mat-option *ngFor="let item of businessList" [value]="item.businessID">{{ item.businessFullName
-            }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-md-4">
-      <mat-form-field class="w-100">
-        <mat-label>Branch</mat-label>
-        <mat-select [(ngModel)]="formFields[13].value">
-          <mat-option *ngFor="let item of businessList" [value]="item.businessID">{{ item.businessFullName
-            }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+<div class="row">
+  <div class="col-md-1 ">
+    <button class="resetBtn mt-2" mat-raised-button matTooltip="Search By Code">
+      F4
+    </button>
+    <button class="resetBtn mt-2" mat-raised-button matTooltip="Search By Name">
+      F8
+    </button>
+    <button class="resetBtn mt-2" mat-raised-button matTooltip="Product Quantity">
+      F9
+    </button>
   </div>
-  <div class="row">
-    <div class="col-md-4">
-      <mat-form-field class="w-100">
-        <mat-label>Customer Name</mat-label>
-        <mat-select [(ngModel)]="formFields[3].value">
-          <mat-option *ngFor="let item of partyList" [value]="item.partyID">
-            <table class="table">
-              <td class="col-6">
-                {{ item.partyName }}
-              </td>
-              <td class="col-6">
-                {{ item.type }}
-              </td>
-            </table>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+  <div class="col-md-10 overflow-hidden pb-3">
+    <div class="row" *ngIf="roleID == 1">
+      <div class="col-md-4">
+        <mat-form-field class="w-100">
+          <mat-label>Company</mat-label>
+          <mat-select [(ngModel)]="formFields[11].value" (ngModelChange)="getBusiness()">
+            <mat-option *ngFor="let item of companyList" [value]="item.companyID">{{ item.companyFullName
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="w-100">
+          <mat-label>Business</mat-label>
+          <mat-select [(ngModel)]="formFields[12].value" (ngModelChange)="getBranch()">
+            <mat-option *ngFor="let item of businessList" [value]="item.businessID">{{ item.businessFullName
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="w-100">
+          <mat-label>Branch</mat-label>
+          <mat-select [(ngModel)]="formFields[13].value">
+            <mat-option *ngFor="let item of businessList" [value]="item.businessID">{{ item.businessFullName
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
-    <div class="col-md-1">
-      <button mat-mini-fab class="mt-2 bg-dark text-white" data-bs-toggle="modal" data-bs-target="#bpsModal">
-        <mat-icon class="text-center mb-3">add</mat-icon>
-      </button>
+    <div class="row">
+      <div class="col-md-4">
+        <mat-form-field class="w-100">
+          <mat-label>Customer Name</mat-label>
+          <mat-select [(ngModel)]="formFields[3].value">
+            <mat-option *ngFor="let item of partyList" [value]="item.partyID">
+              <table class="table">
+                <td class="col-6">
+                  {{ item.partyName }}
+                </td>
+                <td class="col-6">
+                  {{ item.type }}
+                </td>
+              </table>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-1">
+        <button mat-mini-fab class="mt-2 bg-dark text-white" data-bs-toggle="modal" data-bs-target="#customerModal">
+          <mat-icon class="text-center mb-3">add</mat-icon>
+        </button>
+      </div>
+      <div class="col-md-7">
+        <mat-form-field class="w-100">
+          <input matInput [(ngModel)]="formFields[9].value" placeholder="Remarks" />
+        </mat-form-field>
+      </div>
     </div>
-    <div class="col-md-7">
-      <mat-form-field class="w-100">
-        <input matInput [(ngModel)]="formFields[9].value" placeholder="Remarks" />
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <mat-form-field class="w-100">
-        <input placeholder="Search By Code" [(ngModel)]="txtCode" (keyup)="pushProductByCode(txtCode, $event)" autofocus
-          #txtFocusCode matInput />
-      </mat-form-field>
-    </div>
-    <div class="col-md-8">
-      <mat-form-field class="w-100">
-        <mat-label>Search By Name</mat-label>
-        <mat-select #searchName [(ngModel)]="cmbProduct" (ngModelChange)="pushProduct(cmbProduct)">
-          <mat-option>
-            <ngx-mat-select-search [(ngModel)]="searchProduct" [noEntriesFoundLabel]="'Not found'"
-              placeholderLabel="Search..." name="search">
-            </ngx-mat-select-search>
-          </mat-option>
-          <mat-option *ngFor="
-              let item of productList | search: 'productName,salePrice,qty':searchProduct
-            " [value]="item.productID">
-            <table>
-              <tbody>
-                <tr>
-                  <td>{{item.productName}}</td>
-                  <td>--SalePrice={{item.salePrice}}</td>
-                  <td>--Quantity={{ item.qty}}</td>
-                </tr>
-              </tbody>
-            </table>
+    <div class="row">
+      <div class="col-md-4">
+        <mat-form-field class="w-100">
+          <input placeholder="Search By Code" [(ngModel)]="txtCode" (keyup)="pushProductByCode(txtCode, $event)"
+            autofocus #txtFocusCode matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-md-8">
+        <mat-form-field class="w-100">
+          <mat-label>Search By Name</mat-label>
+          <mat-select #searchName [(ngModel)]="cmbProduct" (ngModelChange)="pushProduct(cmbProduct)">
+            <mat-option>
+              <ngx-mat-select-search [(ngModel)]="searchProduct" [noEntriesFoundLabel]="'Not found'"
+                placeholderLabel="Search..." name="search">
+              </ngx-mat-select-search>
+            </mat-option>
+            <mat-option>
+              <tr>
+                <td class="col-6" colspan="6">productName</td>
+                <td class="col-3" colspan="3">SalePrice</td>
+                <td class="col-3" colspan="3">Quantity</td>
+              </tr>
+            </mat-option>
+            <mat-option *ngFor="
+                let item of productList | search: 'productName,salePrice,qty':searchProduct
+              " [value]="item.productID">
 
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+              <tr>
+                <td class="col-3" colspan="3">{{item.productName}}</td>
+                <td class="col-3" colspan="3">--SalePrice={{item.salePrice}}</td>
+                <td class="col-3" colspan="3">--Quantity={{ item.qty}}</td>
+              </tr>
+
+
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
-  </div>
-  <div class="row bg-light-grey pt-2">
-    <aims-pos-product-sale-table (eventEmitter)="totalBill()"></aims-pos-product-sale-table>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="row mt-2 justify-content-center">
-        <div class="col-md-2">
-          <div class="bg-light d-flex flex-column align-items-center mat-elevation-z5">
-            <label class="h2-sale-discount pt-3">Percentage</label>
-            <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-2">
-              <input matInput class="blue-text" [(ngModel)]="percentage" (keyup)="changeValue()"
-                (ngModelChange)="calculateTotalAmount(1)" type="text" maxlength="2" />
-            </mat-form-field>
+    <div class="row bg-light-grey pt-2">
+      <aims-pos-product-sale-table (eventEmitter)="totalBill()"></aims-pos-product-sale-table>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row mt-2 justify-content-center">
+          <div class="col-md-2">
+            <div class="mt-4 bg-light d-flex flex-column align-items-center mat-elevation-z5">
+              <label class="h2-sale-discount pt-3">Percentage</label>
+              <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-2">
+                <input matInput class="blue-text" [(ngModel)]="percentage" (keyup)="changeValue()"
+                  (ngModelChange)="calculateTotalAmount(1)" type="text" maxlength="2" />
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-        <div class="col-md-2">
-          <div class="bg-light d-flex flex-column align-items-center mat-elevation-z5">
-            <label class="h2-sale-discount pt-3">DISCOUNT</label>
-            <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-2">
-              <input matInput class="blue-text" [(ngModel)]="formFields[6].value" (keyup)="changeValue()"
-                (ngModelChange)="calculateTotalAmount(2)" type="number" />
-            </mat-form-field>
+          <div class="col-md-2">
+            <div class="mt-4 bg-light d-flex flex-column align-items-center mat-elevation-z5">
+              <label class="h2-sale-discount pt-3">DISCOUNT</label>
+              <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-2">
+                <input matInput class="blue-text" [(ngModel)]="formFields[6].value" (keyup)="changeValue()"
+                  (ngModelChange)="calculateTotalAmount(2)" type="number" />
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-        <div class="col-md-2">
-          <div class="bg-light d-flex flex-column align-items-center mat-elevation-z5">
-            <label class="h3-sale-cash pt-3">CASH</label>
-            <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-1">
-              <input matInput class="blue-text" [(ngModel)]="formFields[7].value"
-                (keyup)="changeValue(); getKeyPressed($event, '#print-data')" type="number" #txtCash />
-            </mat-form-field>
+          <div class="col-md-2">
+            <div class="col-md-1  ">
+              <mat-checkbox class="ms-5" [(ngModel)]="chkApplied" (change)="Generated(chkApplied)">Bank</mat-checkbox>
+            </div>
+            <div class="bg-light d-flex flex-column align-items-center mat-elevation-z5">
+              <label class="h3-sale-cash pt-3">CASH</label>
+              <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-1">
+                <input matInput class="blue-text" [(ngModel)]="formFields[7].value"
+                  (keyup)="changeValue(); getKeyPressed($event, '#print-data')" type="number" #txtCash />
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-        <div class="col-md-2">
-          <div class="bg-light-green d-flex flex-column align-items-center mat-elevation-z5">
-            <label class="h2-sale-discount pt-4 text-white">CHANGE</label>
-            <label class="h1-digit text-center mt-1 mb-2 pb-1">{{
-              formFields[8].value
-              }}</label>
+          <div class="col-md-2">
+            <div class="mt-4 bg-light-green d-flex flex-column align-items-center mat-elevation-z5">
+              <label class="h2-sale-discount pt-4 text-white">CHANGE</label>
+              <label class="h1-digit text-center mt-1 mb-2 pb-1">{{
+                formFields[8].value
+                }}</label>
+            </div>
           </div>
-        </div>
-        <div class="col-md-2">
-          <div class="bg-light-green d-flex flex-column align-items-center mat-elevation-z5">
-            <label class="h3-sale-cash pt-4 text-white">TOTAL</label>
-            <label class="text-center mt-1 mb-2 h1-digit">{{ lblTotal }}</label>
+          <div class="col-md-2">
+            <div class="mt-4 bg-light-green d-flex flex-column align-items-center mat-elevation-z5">
+              <label class="h3-sale-cash pt-4 text-white">TOTAL</label>
+              <label class="text-center mt-1 mb-2 h1-digit">{{ lblTotal }}</label>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="mt-4 bg-light-green d-flex flex-column align-items-center mat-elevation-z5">
+              <label class="h3-sale-cash pt-4 text-white">Bank</label>
+              <label class="text-center mt-1 mb-2 h1-digit">{{ lblBankAmount }}</label>
+            </div>
           </div>
         </div>
       </div>
@@ -170,7 +198,7 @@
   </div>
 </div>
 
-<aims-pos-print-sale class="d-none" id="print-data"></aims-pos-print-sale>
+<aims-pos-print-sale [customerName]="lblCustomerName" class="d-none" id="print-data"></aims-pos-print-sale>
 
 <!-- Modal -->
 <div id="saleReturnModal" class="modal fade" role="dialog" data-bs-backdrop="false">
@@ -198,17 +226,62 @@
 </div>
 
 <!-- Modal window -->
-<div id="bpsModal" class="modal fade" role="dialog" data-bs-backdrop="false">
+<div id="customerModal" class="modal fade" role="dialog" data-bs-backdrop="false">
   <div class="modal-dialog modal-lg mat-elevation-z20">
     <div class="modal-content">
       <div class="modal-header bgSecondary">
-        <h5 class="modal-title fs-5 fw-bold text-white ms-4 mt-2" id="bpsModal">
+        <h5 class="modal-title fs-5 fw-bold text-white ms-4 mt-2" id="customerModal">
           Add Customer
         </h5>
         <mat-icon class="text-white cursorPointer" data-bs-dismiss="modal">close</mat-icon>
       </div>
       <div class="modalbody bg-light">
-        <aims-pos-add-custoomer (eventEmitter)="getParty()"></aims-pos-add-custoomer>
+        <aims-pos-add-custoomer (eventEmitter)="getParty()" (closeModal)="hideModal()"></aims-pos-add-custoomer>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal window for Bank -->
+<div id="bankModal" class="modal fade" role="dialog" data-bs-backdrop="false">
+  <div class="modal-dialog modal-lg mat-elevation-z20">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bgSecondary">
+        <h4 class="modal-title align-self-center text-white" id="bankModal">Bank Details</h4>
+        <!-- <div class="cancelIcon cursorPointer" data-bs-dismiss="modal"></div> -->
+        <mat-icon class="text-white" data-bs-dismiss="modal" (click)="resetBank()">close</mat-icon>
+      </div>
+      <div class="modal-body">
+
+        <div class="row mt-2">
+          <mat-form-field class="w-100">
+            <mat-label>Select Bank</mat-label>
+            <mat-select [(ngModel)]="formFields[15].value">
+              <mat-option *ngFor="let item of bankList" [value]="item.bankID">
+                {{item.bankName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <input matInput [(ngModel)]="cmbBankAmount" placeholder="Enter amount" />
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <input matInput [(ngModel)]="formFields[17].value" placeholder="Enter reference number" />
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <div class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center ">
+          <button mat-button class="ms-auto saveBtn mat-elevation-z1" (click)="addBank();changeValue()">Add</button>
+          <button mat-button class="resetBtn ms-2 mat-elevation-z1" (click)="resetBank()">Reset</button>
+        </div>
       </div>
     </div>
   </div>

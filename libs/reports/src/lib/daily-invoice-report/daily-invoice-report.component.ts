@@ -18,6 +18,7 @@ export class DailyInvoiceReportComponent implements OnInit {
   lblTotalMargin: any = '';
   lblTotalDiscoount: any = '';
   moduleId: string | null;
+  lblBusinessName: any = '';
 
   constructor(
     private global: SharedServicesGlobalDataModule,
@@ -28,7 +29,24 @@ export class DailyInvoiceReportComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getBusniessName();
     this.moduleId = localStorage.getItem('moduleId');
+  }
+  getBusniessName() {
+    this.dataService
+      .getHttp(
+        'cmis-api/Branch/getBusniessName?branchID=' +
+          this.globalService.getBranchID(),
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.lblBusinessName = response[0].businessFullName;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
   getDailyInvoice(start: any, end: any) {
     if (start == '') {

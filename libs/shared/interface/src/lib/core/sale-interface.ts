@@ -14,4 +14,7 @@ export interface SaleInterface {
   businessid: '';
   branchid: '';
   moduleId: '';
+  bankID: '0';
+  bankcashReceived: '0';
+  bankref: '';
 }

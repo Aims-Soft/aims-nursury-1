@@ -15,7 +15,7 @@ export class PresentStockReportComponent implements OnInit {
   reportDate: any = '';
   stocktList: any = [];
   moduleId: string | null;
-
+  lblBusinessName: any = '';
   constructor(
     private global: SharedServicesGlobalDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -25,8 +25,25 @@ export class PresentStockReportComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getBusniessName();
     // this.dtpCurrentDate = new Date();
     this.moduleId = localStorage.getItem('moduleId');
+  }
+  getBusniessName() {
+    this.dataService
+      .getHttp(
+        'cmis-api/Branch/getBusniessName?branchID=' +
+          this.globalService.getBranchID(),
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.lblBusinessName = response[0].businessFullName;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
   getDailyStockReport() {
     var date;

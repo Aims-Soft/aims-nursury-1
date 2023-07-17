@@ -8,6 +8,7 @@ import {
   OnInit,
   ViewChild,
   HostListener,
+  Input,
 } from '@angular/core';
 import { PrintSaleComponent } from './print-sale/print-sale.component';
 import { ProductSaleTableComponent } from './product-sale-table/product-sale-table.component';
@@ -33,11 +34,14 @@ export class SaleComponent implements OnInit {
 
   searchProduct: any = '';
   cmbProduct: any = '';
+  cmbBankAmount: any = '';
+  lblBankAmount: any = 0;
   txtCode: any = '';
   lblTotal: any = 0;
   lblCash: any = 0;
   lblInvoiceNo: any = 0;
   percentage: number = 0;
+  lblCustomerName: any = '';
 
   pageFields: SaleInterface = {
     invoiceNo: '0', //0
@@ -54,7 +58,10 @@ export class SaleComponent implements OnInit {
     companyid: '', //11
     businessid: '', //12
     branchid: '', //13
-    moduleId: '',
+    moduleId: '', //14
+    bankID: '0', //15
+    bankcashReceived: '0', //16
+    bankref: '', //17
   };
 
   formFields: MyFormField[] = [
@@ -148,15 +155,40 @@ export class SaleComponent implements OnInit {
       type: 'hidden',
       required: false,
     },
+    {
+      value: this.pageFields.bankID,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.bankcashReceived,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.bankcashReceived,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.bankref,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   error: any;
   cursorBlinking = false;
-
+  chkApplied: any;
   companyList: any = [];
   businessList: any = [];
   branchList: any = [];
   productList: any = [];
+  bankList: any = [];
   partyList: any = [];
   moduleId: string | null;
   constructor(
@@ -175,6 +207,7 @@ export class SaleComponent implements OnInit {
     this.getCompany();
     this.getProduct();
     this.getParty();
+    this.getBank();
   }
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
@@ -521,7 +554,10 @@ export class SaleComponent implements OnInit {
     // if(this.formFields[7].value == ''){
     //   this.formFields[7].value = 0;
     // }
-    if (this.formFields[7].value == '' || this.formFields[7].value == null) {
+    if (
+      (this.formFields[7].value == '' || this.formFields[7].value == null) &&
+      this.formFields[16].value == 0
+    ) {
       this.valid.apiInfoResponse('enter cash');
       this.formFields[8].value = 0 - this.lblTotal;
       return;
@@ -533,15 +569,24 @@ export class SaleComponent implements OnInit {
     // }
     this.formFields[8].value =
       parseInt(this.formFields[6].value) +
-      parseInt(this.formFields[7].value) -
+      parseInt(this.formFields[7].value) +
+      parseInt(this.formFields[16].value) -
       this.lblTotal;
   }
 
   save(printSection: string) {
+    const result = this.partyList.filter(function (val: any) {
+      return val.partyID;
+    });
+
+    this.lblCustomerName = result[0].partyName;
     var date = new Date();
 
     // return;
-
+    this.formFields[16].value = this.cmbBankAmount;
+    if (this.cmbBankAmount == '' || this.cmbBankAmount == null) {
+      this.formFields[16].value = '0';
+    }
     this.lblCash = this.formFields[7].value;
 
     this.formFields[2].value = new Date();
@@ -569,21 +614,27 @@ export class SaleComponent implements OnInit {
       return;
     }
 
-    if (this.formFields[7].value == '' || this.formFields[7].value == null) {
+    if (
+      (this.formFields[7].value == '' || this.formFields[7].value == null) &&
+      this.formFields[16].value == 0
+    ) {
       this.valid.apiInfoResponse('enter cash');
       // this.formFields[8].value = 0 - this.lblTotal;
       return;
     }
     if (
       (this.formFields[3].value == '' || this.formFields[3].value == '0') &&
-      this.formFields[7].value == 0
+      this.formFields[7].value == 0 &&
+      this.formFields[16].value == 0
     ) {
       this.valid.apiInfoResponse('enter cash');
       return;
     }
     if (this.formFields[3].value == '') {
       var cash =
-        parseInt(this.formFields[6].value) + parseInt(this.formFields[7].value);
+        parseInt(this.formFields[6].value) +
+        parseInt(this.formFields[7].value) +
+        parseInt(this.formFields[16].value);
       if (this.lblTotal > cash) {
         this.valid.apiInfoResponse('enter correct cash');
         return;
@@ -593,6 +644,9 @@ export class SaleComponent implements OnInit {
     if (this.lblTotal < parseInt(this.formFields[6].value)) {
       this.formFields[6].value =
         parseInt(this.formFields[6].value) - parseInt(this.formFields[8].value);
+    }
+    if (this.formFields[17].value == '0') {
+      this.formFields[17].value = '';
     }
 
     this.dataService
@@ -610,9 +664,11 @@ export class SaleComponent implements OnInit {
             this.printSale.lblGTotal = this.lblTotal;
             this.printSale.lblDiscount = this.formFields[6].value;
             this.printSale.lblCash = this.lblCash;
+            this.printSale.lblBank = this.lblBankAmount;
             this.printSale.lblChange = this.formFields[8].value;
 
             setTimeout(() => this.globalService.printData(printSection), 200);
+            this.resetBank();
             this.reset();
             setTimeout(() => this._txtFocusCode.nativeElement.focus(), 1000);
           } else {
@@ -729,7 +785,8 @@ export class SaleComponent implements OnInit {
     this.lblCash = 0;
     this.productSaleTable.tableData = [];
     this.txtCode = '';
-
+    this.chkApplied = false;
+    this.percentage = 0;
     $('#saleReturnModal').modal('hide');
   }
 
@@ -749,12 +806,72 @@ export class SaleComponent implements OnInit {
         this.lblTotal;
     }
     if (item == 2) {
-      this.percentage = (this.formFields[6].value * 100) / this.lblTotal;
-      this.percentage.toFixed(2);
+      this.percentage = Number(
+        ((this.formFields[6].value * 100) / this.lblTotal).toFixed(2)
+      );
+      // this.percentage.toFixed(2);
       this.formFields[8].value =
         parseInt(this.formFields[6].value) +
         parseInt(this.formFields[7].value) -
         this.lblTotal;
     }
+  }
+
+  getBank() {
+    this.dataService
+      .getHttp(
+        'core-api/Bank/getBank?companyID=' +
+          this.globalService.getCompanyID() +
+          '&businessID=' +
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.bankList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
+  Generated(item: any) {
+    // this.employeeList = this.tempEmpList;
+    if (item == true) {
+      // openModal() {
+      setTimeout(() => $('#bankModal').modal('show'), 300);
+      // }
+      // var data = this.employeeList.filter(function (e: any) {
+      //   return e.payrollGroupID > '0';
+      // });
+      // this.employeeList = data;
+      // this.chkUnApplied = false;
+    }
+    if (item == false) {
+      this.lblBankAmount = 0;
+      this.formFields[16].value = 0;
+      this.changeValue();
+      this.resetBank();
+    }
+  }
+  addBank() {
+    setTimeout(() => $('#bankModal').modal('hide'), 300);
+    this.lblBankAmount = this.cmbBankAmount;
+    this.formFields[16].value = this.cmbBankAmount;
+  }
+  resetBank() {
+    this.lblBankAmount = 0;
+    this.formFields[15].value = '';
+    this.cmbBankAmount = '';
+    this.formFields[16].value = '0';
+    this.formFields[17].value = '';
+  }
+  hideModal() {
+    $('#customerModal').modal('hide');
   }
 }

@@ -21,6 +21,7 @@ export class DailySaleReportComponent implements OnInit {
   lblTotalDiscoount: any;
   lblGrandTotal: any = '';
   moduleId: string | null;
+  lblBusinessName: any = '';
 
   // rptImg: any = 'assets/ui/ReportPictures/Logo.svg'
   constructor(
@@ -32,8 +33,25 @@ export class DailySaleReportComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getBusniessName();
     // this.currentDate = new Date();
     this.moduleId = localStorage.getItem('moduleId');
+  }
+  getBusniessName() {
+    this.dataService
+      .getHttp(
+        'cmis-api/Branch/getBusniessName?branchID=' +
+          this.globalService.getBranchID(),
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.lblBusinessName = response[0].businessFullName;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
   getDailySale(start: any, end: any) {
     if (start == '') {

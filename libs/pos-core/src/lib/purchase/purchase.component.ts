@@ -39,6 +39,9 @@ export class PurchaseComponent implements OnInit {
     businessid: '', //12
     branchid: '', //13
     moduleId: '',
+    bankID: '0', //15
+    bankcashReceived: '0', //16
+    bankref: '',
   };
 
   formFields: MyFormField[] = [
@@ -128,6 +131,24 @@ export class PurchaseComponent implements OnInit {
     },
     {
       value: this.pageFields.moduleId,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.bankID,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.bankcashReceived,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.bankref,
       msg: '',
       type: 'hidden',
       required: false,

@@ -11,6 +11,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class AddCustoomerComponent implements OnInit {
   @Output() eventEmitter = new EventEmitter();
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -52,9 +53,9 @@ export class AddCustoomerComponent implements OnInit {
     },
     {
       value: this.pageFields.cnic,
-      msg: 'enter cnic',
-      type: 'cnic',
-      required: true,
+      msg: '',
+      type: 'hidden',
+      required: false,
     },
     {
       value: this.pageFields.mobile,
@@ -114,6 +115,7 @@ export class AddCustoomerComponent implements OnInit {
             }
             this.eventEmitter.emit();
             this.reset();
+            this.closeModal.emit();
           } else {
             this.valid.apiErrorResponse(response[0]);
           }
@@ -128,6 +130,6 @@ export class AddCustoomerComponent implements OnInit {
   reset() {
     this.formFields = this.valid.resetFormFields(this.formFields);
     this.formFields[0].value = '0';
-    this.formFields[1].value = '';
+    this.formFields[3].value = '';
   }
 }
