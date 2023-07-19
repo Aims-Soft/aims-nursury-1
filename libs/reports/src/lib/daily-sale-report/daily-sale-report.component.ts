@@ -13,6 +13,7 @@ export class DailySaleReportComponent implements OnInit {
   // currentDate: any = '';
   startDate: any = '';
   endDate: any = '';
+  sale: any;
   reportList: any = [];
   discountList: any = [];
   lblTotalSale: any = '';
@@ -82,10 +83,9 @@ export class DailySaleReportComponent implements OnInit {
           (response: any) => {
             // this.deductionList = response;
             this.reportList = response;
-            const sale = this.reportList.reduce((sum: any, total: any) => {
+            this.sale = this.reportList.reduce((sum: any, total: any) => {
               return sum + total.salePrice;
             }, 0);
-            this.lblTotalSale = sale;
 
             const cost = this.reportList.reduce((sum: any, total: any) => {
               return sum + total.costPrice;
@@ -144,6 +144,9 @@ export class DailySaleReportComponent implements OnInit {
             this.lblGrandTotal = parseInt(
               (this.lblTotalMargin - this.lblTotalDiscoount).toString()
             );
+            this.lblTotalSale = (
+              parseInt(this.sale) - parseInt(this.lblTotalDiscoount)
+            ).toString();
           },
           (error: any) => {
             console.log(error);
