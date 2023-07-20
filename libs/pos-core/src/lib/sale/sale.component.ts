@@ -575,11 +575,18 @@ export class SaleComponent implements OnInit {
   }
 
   save(printSection: string) {
-    const result = this.partyList.filter(function (val: any) {
-      return val.partyID;
-    });
+    if (this.formFields[3].value != 0) {
+      var id = this.formFields[3].value;
+      var result = this.partyList.filter(function (val: any) {
+        return val.partyID == id;
+      });
+      this.lblCustomerName = result[0].partyName;
+    } else {
+      this.lblCustomerName = '';
+    }
+    // if (result.length > 0) {
 
-    this.lblCustomerName = result[0].partyName;
+    // }
     var date = new Date();
 
     // return;
@@ -866,7 +873,7 @@ export class SaleComponent implements OnInit {
   }
   resetBank() {
     this.lblBankAmount = 0;
-    this.formFields[15].value = '';
+    this.formFields[15].value = '0';
     this.cmbBankAmount = '';
     this.formFields[16].value = '0';
     this.formFields[17].value = '';

@@ -6,20 +6,23 @@
     <h4>Ph # {{lblContactNumber}}</h4>
   </div>
 </div>
-<div class="d-flex justify-content-between mt-2 mb-0 border-bottom border-dark">
-  <h5>Inv. #</h5>
-  <h5>Date</h5>
-  <h5>Time</h5>
-  <h5>Counter</h5>
-  <h5>Customer</h5>
+<div class="row mt-2 mb-0 border-bottom border-dark">
+  <h5 class="col-2">Inv. #</h5>
+  <h5 class="col-2">Date</h5>
+  <h5 class="col-2">Time</h5>
+  <h5 class="col-3 text-center">Counter</h5>
+  <h5 class="col-3 text-center">Customer</h5>
 </div>
-<div class="d-flex justify-content-between mb-2 mt-2">
-  <h6 class="fw-bold">{{ lblInvoice }}</h6>
-  <h6 class="ms-4">{{ lblDate | date: 'MMM dd, YYYY' }}</h6>
-  <h6 class="me-2">{{ lblDate | date: 'HH:mm a' }}</h6>
-  <h6 class="me-5">{{ lblName }}</h6>
-  <h6>{{ customerName }}</h6>
+<div class="row  mb-2 mt-2">
+  <h6 class="col-2 fw-bold">{{ lblInvoice }}</h6>
+  <h6 class="col-2 ">{{ lblDate | date: 'MMM dd, YYYY' }}</h6>
+  <h6 class="col-2 ">{{ lblDate | date: 'HH:mm a' }}</h6>
+  <h6 class="col-3 text-center">{{ lblName }}</h6>
+  <h6 class="col-3 text-center">{{ customerName ? customerName : 'N/A' }}</h6>
 </div>
+
+
+
 <table class="table">
   <thead>
     <tr>
@@ -61,7 +64,7 @@
           <td class="col-8 text-end">Cash</td>
           <td class="col-4 text-end">{{ lblCash | number }}</td>
         </tr>
-        <tr>
+        <tr *ngIf="lblBank !==0">
           <td class="col-8 text-end">Bank</td>
           <td class="col-4 text-end">{{ lblBank | number }}</td>
         </tr>
