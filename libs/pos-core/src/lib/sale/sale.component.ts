@@ -622,7 +622,9 @@ export class SaleComponent implements OnInit {
           costPrice: this.productSaleTable.tableData[i].costPrice,
           salePrice: this.productSaleTable.tableData[i].salePrice,
           locationID: this.productSaleTable.tableData[i].locationID,
-          total: this.productSaleTable.tableData[i].salePrice,
+          total:
+            this.productSaleTable.tableData[i].salePrice *
+            this.productSaleTable.tableData[i].qty,
           status: '',
         });
       }

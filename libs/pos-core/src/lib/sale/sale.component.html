@@ -285,7 +285,7 @@
             <mat-label>Select Bank</mat-label>
             <mat-select [(ngModel)]="formFields[15].value">
               <mat-option *ngFor="let item of bankList" [value]="item.bankID">
-                {{item.bankName}}
+                {{item.accountTitle}}
               </mat-option>
             </mat-select>
           </mat-form-field>

@@ -74,6 +74,7 @@
                         <th class="text-center border-bottom-green">Date</th>
                         <th class="text-center border-bottom-green">CheqNo./Ref.</th>
                         <th class="text-center border-bottom-green">Description</th>
+                        <th class="text-center border-bottom-green">A/c Title</th>
                         <th class="text-center border-bottom-green">Debit</th>
                         <th class="text-center border-bottom-green">Credit</th>
                         <th class="text-center border-bottom-green">Balance</th>
@@ -86,6 +87,7 @@
                         <td class="text-center">{{item.invoicedate | date:'MMM-dd-yyyy'}}</td>
                         <td class="text-center">{{item.instrumentno}}</td>
                         <td class="text-center">{{item.description}}</td>
+                        <td class="text-center">{{item.coatitle}}</td>
                         <td class="text-center">{{item.debit | number}}</td>
                         <td class="text-center">{{item.credit | number}}</td>
                         <td class="text-center">{{item.balance | number}}</td>

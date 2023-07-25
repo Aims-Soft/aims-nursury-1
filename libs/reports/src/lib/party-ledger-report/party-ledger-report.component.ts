@@ -118,6 +118,7 @@ export class PartyLedgerReportComponent implements OnInit {
               invoicedate: response[i].invoicedate,
               instrumentno: response[i].instrumentno,
               description: response[i].description,
+              coatitle: response[i].coatitle,
               debit: response[i].debit,
               credit: response[i].credit,
               balance: balance,
