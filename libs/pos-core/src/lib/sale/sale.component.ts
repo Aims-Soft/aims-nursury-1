@@ -187,6 +187,7 @@ export class SaleComponent implements OnInit {
   companyList: any = [];
   businessList: any = [];
   branchList: any = [];
+  invoiceList: any = [];
   productList: any = [];
   bankList: any = [];
   partyList: any = [];
@@ -208,6 +209,7 @@ export class SaleComponent implements OnInit {
     this.getProduct();
     this.getParty();
     this.getBank();
+    this.getInvoice();
   }
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
@@ -317,6 +319,7 @@ export class SaleComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.productList = response;
+          console.log(response);
         },
         (error: any) => {
           console.log(error);
@@ -530,18 +533,27 @@ export class SaleComponent implements OnInit {
     for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
       this.lblTotal += this.productSaleTable.tableData[i].total;
     }
-
-    this.formFields[8].value = -this.lblTotal;
+    if (this.formFields[7].value > 0) {
+      this.formFields[8].value -= this.lblTotal;
+    }
   }
 
   totalBill() {
     this.lblTotal = 0;
+
+    // console.log((this.lblTotal += this.productSaleTable.tableData[i].total));
     for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
       if (this.productSaleTable.tableData[i].status != 'deleted')
-        this.lblTotal += this.productSaleTable.tableData[i].total;
+        var currentTotal = this.productSaleTable.tableData[i].total;
+      if (!isNaN(currentTotal)) {
+        this.lblTotal += currentTotal;
+      }
     }
-
-    this.formFields[8].value = -this.lblTotal;
+    if (this.formFields[7].value > 0) {
+      // this.formFields[8].value -= this.lblTotal - this.formFields[7].value;
+      // this.formFields[8].value = Math.max(calculatedValue, 0);
+      this.formFields[8].value = this.formFields[7].value - this.lblTotal;
+    }
   }
 
   changeValue() {
@@ -575,6 +587,10 @@ export class SaleComponent implements OnInit {
   }
 
   save(printSection: string) {
+    if (this.formFields[8].value < 0 && this.formFields[3].value == '0') {
+      this.valid.apiInfoResponse('select customer');
+      return;
+    }
     if (this.formFields[3].value != 0) {
       var id = this.formFields[3].value;
       var result = this.partyList.filter(function (val: any) {
@@ -584,12 +600,9 @@ export class SaleComponent implements OnInit {
     } else {
       this.lblCustomerName = '';
     }
-    // if (result.length > 0) {
 
-    // }
     var date = new Date();
 
-    // return;
     this.formFields[16].value = this.cmbBankAmount;
     if (this.cmbBankAmount == '' || this.cmbBankAmount == null) {
       this.formFields[16].value = '0';
@@ -677,6 +690,7 @@ export class SaleComponent implements OnInit {
             setTimeout(() => this.globalService.printData(printSection), 200);
             this.resetBank();
             this.reset();
+            this.getInvoice();
             setTimeout(() => this._txtFocusCode.nativeElement.focus(), 1000);
           } else {
             this.valid.apiErrorResponse(response.toString());
@@ -880,5 +894,71 @@ export class SaleComponent implements OnInit {
   }
   hideModal() {
     $('#customerModal').modal('hide');
+  }
+  getInvoice() {
+    this.dataService
+      .getHttp(
+        'report-api/FMISReport/getInvoiceDetail?companyID=' +
+          this.globalService.getCompanyID() +
+          '&branchID=' +
+          this.globalService.getBranchID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.invoiceList = response;
+          // console.log(response);
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+  getInvoiceDetail(item: any, printSection: string) {
+    this.dataService
+      .getHttp(
+        'report-api/FMISReport/getInvoicePrintDetail?companyid=' +
+          this.globalService.getCompanyID() +
+          '&branchid=' +
+          this.globalService.getBranchID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId +
+          '&invoiceNo=' +
+          item.invoiceNo,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          if (response.length > 0) {
+            this.printSale.lblInvoice = response[0].invoiceNo;
+            this.printSale.lblDate = response[0].invoiceDate;
+            // this.printSale.lblDate
+            this.printSale.lblName = response[0].empName;
+            this.printSale.customerName = response[0].partyname;
+            this.printSale.lblGTotal = response[0].grandTotal;
+            this.printSale.lblDiscount = response[0].discount;
+            this.printSale.lblCash = response[0].cashReceived;
+            this.printSale.lblBank = response[0].bankcashReceived;
+            this.printSale.lblChange = response[0].change;
+          }
+          const extractedData = response.map((item: any) => ({
+            productName: item.productName,
+            qty: item.qty,
+            salePrice: item.salePrice,
+            total: item.totalsalePrice,
+          }));
+          this.printSale.tableData = extractedData;
+          setTimeout(() => this.globalService.printData(printSection), 200);
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 }

@@ -15,7 +15,7 @@ export class BankTableComponent implements OnInit {
 
   error: any;
   tableData: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -23,6 +23,7 @@ export class BankTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
     this.getBank();
   }
 
@@ -31,8 +32,12 @@ export class BankTableComponent implements OnInit {
       .getHttp(
         'core-api/Bank/getBank?companyID=' +
           this.globalService.getCompanyID() +
-          '&businessid=' +
-          this.globalService.getBusinessID(),
+          '&businessID=' +
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -56,6 +61,7 @@ export class BankTableComponent implements OnInit {
       bankID: '0',
       userID: '',
       coaID: '',
+      moduleId: '',
     };
 
     var formFields: MyFormField[] = [
@@ -77,11 +83,18 @@ export class BankTableComponent implements OnInit {
         type: 'hidden',
         required: false,
       },
+      {
+        value: pageFields.moduleId,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
     ];
 
     formFields[0].value = item.bankID;
     formFields[1].value = this.globalService.getUserId().toString();
     formFields[2].value = item.coaID;
+    formFields[3].value = this.moduleId;
 
     this.dataService
       .deleteHttp(pageFields, formFields, 'core-api/Bank/deleteBank')

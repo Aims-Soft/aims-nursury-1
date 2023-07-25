@@ -13,4 +13,5 @@ export interface BankInterface {
   userID: '';
   companyid: '';
   businessid: '';
+  moduleId: '';
 }

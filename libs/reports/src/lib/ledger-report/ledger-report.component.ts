@@ -35,14 +35,26 @@ export class LedgerReportComponent implements OnInit {
   }
 
   getChartOfAccount() {
-    this.dataService.getHttp('fmis-api/ChartOfAccount/getCOA', '').subscribe(
-      (response: any) => {
-        this.coaList = response;
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    this.dataService
+      .getHttp(
+        'core-api/ChartOfAccount/getCOA?companyID=' +
+          this.globalService.getCompanyID() +
+          '&businessID=' +
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.coaList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
   getAccountHead(item: any) {

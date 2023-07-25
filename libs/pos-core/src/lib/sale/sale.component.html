@@ -23,6 +23,7 @@
       <button mat-button class="saveBtn" (click)="save('#print-data')">
         Save
       </button>
+      <button mat-button class="ms-2 saleReturnBtn " data-bs-toggle="modal" data-bs-target="#printModal">Record</button>
     </div>
   </div>
 </div>
@@ -113,23 +114,49 @@
                 placeholderLabel="Search..." name="search">
               </ngx-mat-select-search>
             </mat-option>
-            <mat-option>
+            <!-- <mat-option>
               <tr>
                 <td class="col-6" colspan="6">productName</td>
                 <td class="col-3" colspan="3">SalePrice</td>
                 <td class="col-3" colspan="3">Quantity</td>
               </tr>
+            </mat-option> -->
+            <mat-option>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="col-8">Product Name</th>
+                    <th class="col-2">SalePrice</th>
+                    <th class="col-2">Quantity</th>
+                  </tr>
+                </thead>
+              </table>
             </mat-option>
             <mat-option *ngFor="
                 let item of productList | search: 'productName,salePrice,qty':searchProduct
               " [value]="item.productID">
 
-              <tr>
+              <!-- <tr>
                 <td class="col-3" colspan="3">{{item.productName}}</td>
                 <td class="col-3" colspan="3">--SalePrice={{item.salePrice}}</td>
                 <td class="col-3" colspan="3">--Quantity={{ item.qty}}</td>
-              </tr>
+              </tr> -->
+              <table class="table">
 
+                <tbody>
+                  <tr>
+                    <td class="col-8">
+                      {{ item.productName }}
+                    </td>
+                    <td class="col-2">
+                      {{ item.salePrice }}
+                    </td>
+                    <td class="col-2">
+                      {{ item.qty }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
 
             </mat-option>
           </mat-select>
@@ -282,6 +309,50 @@
           <button mat-button class="ms-auto saveBtn mat-elevation-z1" (click)="addBank();changeValue()">Add</button>
           <button mat-button class="resetBtn ms-2 mat-elevation-z1" (click)="resetBank()">Reset</button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="printModal" class="modal fade" role="dialog" data-bs-backdrop="false">
+  <div class="modal-dialog modal-lg mat-elevation-z20">
+    <div class="modal-content">
+      <div class="modal-header bgSecondary">
+        <h5 class="modal-title fs-5 fw-bold text-white  mt-2" id="printModal">
+          Saved Invoice
+        </h5>
+        <mat-icon class="text-white cursorPointer" data-bs-dismiss="modal">close</mat-icon>
+      </div>
+      <div class="modalbody bg-light ">
+        <perfect-scrollbar class="bg-light-grey stickyHeader" style="height: 72vh; max-width: 100%">
+          <table class="table table-striped table-hover mat-elevation-z3">
+            <thead>
+              <tr class="bg-light">
+                <th class=" text-secondary">Invoice No.</th>
+                <th class=" text-secondary">InvoiceDate</th>
+                <th class=" text-secondary">Party</th>
+                <th class=" text-secondary">InvoiceType</th>
+                <th class=" text-secondary">Amount</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!--  -->
+              <tr *ngFor="let item of invoiceList">
+                <td class="">{{item.invoiceNo}}</td>
+                <td class="">{{item.invoiceDate | date}}</td>
+                <td>{{item.partyname}}</td>
+                <td class="">{{item.invoiceType}}</td>
+                <td class="text-center">{{item.amount | number}}</td>
+                <td class="text-center">
+                  <span class="txtClrLightGreen cursorPointer ps-2 pe-2">
+                    <mat-icon (click)="getInvoiceDetail(item,'#print-data')">local_printshop</mat-icon>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </perfect-scrollbar>
       </div>
     </div>
   </div>

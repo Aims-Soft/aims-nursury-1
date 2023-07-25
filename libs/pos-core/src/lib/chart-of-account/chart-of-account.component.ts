@@ -14,7 +14,7 @@ export class ChartOfAccountComponent implements OnInit {
   @ViewChild(ChartOfAccountTableComponent) coaTable: any;
 
   roleID: any = 0;
-
+  moduleId: string | null;
   pageFields: COAInterface = {
     coaID: '0', //0
     userID: '', //1
@@ -22,6 +22,7 @@ export class ChartOfAccountComponent implements OnInit {
     coaTypeID: '', //3
     companyid: '', //4
     businessid: '', //5
+    moduleId: '', //6
   };
 
   formFields: MyFormField[] = [
@@ -61,6 +62,12 @@ export class ChartOfAccountComponent implements OnInit {
       type: 'selectbox',
       required: true,
     },
+    {
+      value: this.pageFields.moduleId,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   companyList: any = [];
@@ -75,8 +82,9 @@ export class ChartOfAccountComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.formFields[6].value = localStorage.getItem('moduleId');
     this.formFields[1].value = this.globalService.getUserId().toString();
-
+    this.moduleId = localStorage.getItem('moduleId');
     this.roleID = this.globalService.getRoleId();
     this.getCompany();
     this.getCOAType();
@@ -121,7 +129,13 @@ export class ChartOfAccountComponent implements OnInit {
 
   getCOAType() {
     this.dataService
-      .getHttp('fmis-api/ChartOfAccount/getCOAType', '')
+      .getHttp(
+        'core-api/ChartOfAccount/getCOAType?&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
       .subscribe(
         (response: any) => {
           this.coaTypeList = response;
@@ -137,7 +151,7 @@ export class ChartOfAccountComponent implements OnInit {
       .savetHttp(
         this.pageFields,
         this.formFields,
-        'fmis-api/ChartOfAccount/saveCOA'
+        'core-api/ChartOfAccount/saveCOA'
       )
       .subscribe(
         (response: any) => {

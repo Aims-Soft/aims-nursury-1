@@ -33,6 +33,7 @@ export class BankComponent implements OnInit {
     coaID: '', //11
     companyid: '', //12
     businessid: '', //13
+    moduleId: '', //14
   };
 
   formFields: MyFormField[] = [
@@ -120,6 +121,12 @@ export class BankComponent implements OnInit {
       type: 'selectbox',
       required: false,
     },
+    {
+      value: this.pageFields.moduleId,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   companyList: any = [];
@@ -135,6 +142,7 @@ export class BankComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.formFields[14].value = localStorage.getItem('moduleId');
     this.formFields[1].value = this.globalService.getUserId().toString();
 
     this.roleID = this.globalService.getRoleId();

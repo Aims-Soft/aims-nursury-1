@@ -215,10 +215,14 @@ export class PaymentComponent implements OnInit {
   getCOASubTypeWise() {
     this.dataService
       .getHttp(
-        'fmis-api/ChartOfAccount/getCOASubTypeWise?companyID=' +
+        'core-api/ChartOfAccount/getCOASubTypeWise?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -257,10 +261,14 @@ export class PaymentComponent implements OnInit {
   getChartOfAccount() {
     this.dataService
       .getHttp(
-        'fmis-api/ChartOfAccount/getCOA?companyID=' +
+        'core-api/ChartOfAccount/getCOA??companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(

@@ -15,7 +15,7 @@ export class ChartOfAccountTableComponent implements OnInit {
 
   error: any;
   tableData: any = [];
-
+  moduleId: string | null;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -23,16 +23,21 @@ export class ChartOfAccountTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moduleId = localStorage.getItem('moduleId');
     this.getCOA();
   }
 
   getCOA() {
     this.dataService
       .getHttp(
-        'fmis-api/ChartOfAccount/getCOA?companyID=' +
+        'core-api/ChartOfAccount/getCOA?companyID=' +
           this.globalService.getCompanyID() +
           '&businessID=' +
-          this.globalService.getBusinessID(),
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
         ''
       )
       .subscribe(
@@ -55,6 +60,7 @@ export class ChartOfAccountTableComponent implements OnInit {
     var pageFields = {
       coaID: '0',
       userID: '',
+      moduleId: '',
     };
 
     var formFields: MyFormField[] = [
@@ -70,13 +76,19 @@ export class ChartOfAccountTableComponent implements OnInit {
         type: 'hidden',
         required: false,
       },
+      {
+        value: pageFields.moduleId,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
     ];
 
     formFields[0].value = item.coaID;
     formFields[1].value = this.globalService.getUserId().toString();
-
+    formFields[2].value = this.moduleId;
     this.dataService
-      .deleteHttp(pageFields, formFields, 'fmis-api/ChartOfAccount/deleteCOA')
+      .deleteHttp(pageFields, formFields, 'core-api/ChartOfAccount/deleteCOA')
       .subscribe(
         (response: any) => {
           if (response.message == 'Success') {

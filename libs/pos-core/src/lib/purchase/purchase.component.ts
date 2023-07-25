@@ -2,7 +2,7 @@ import { SharedHelpersFieldValidationsModule } from '@aims-pos/shared/helpers/fi
 import { MyFormField, SaleInterface } from '@aims-pos/shared/interface';
 import { SharedServicesDataModule } from '@aims-pos/shared/services/data';
 import { SharedServicesGlobalDataModule } from '@aims-pos/shared/services/global-data';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ProductPurchaseTableComponent } from './product-purchase-table/product-purchase-table.component';
 
 declare var $: any;
@@ -14,13 +14,13 @@ declare var $: any;
 })
 export class PurchaseComponent implements OnInit {
   @ViewChild(ProductPurchaseTableComponent) productPurchaseTable: any;
-
+  @ViewChild('txtCash') _txtCash: ElementRef;
   searchProduct: any = '';
   cmbProduct: any = '';
   lblTotal: any = 0;
   lblCash: any = 0;
   lblInvoiceNo: any = 0;
-
+  txtCode: any = '';
   roleID: any = 0;
 
   pageFields: SaleInterface = {
@@ -294,7 +294,108 @@ export class PurchaseComponent implements OnInit {
         }
       );
   }
+  pushProductByCode(item: any, e: any) {
+    if (e.ctrlKey == true) {
+      //   // alert(e.keyCode);
+      this._txtCash.nativeElement.focus();
+      this.formFields[7].value = '';
+      this.txtCode = '';
+    }
+    if (e.keyCode == 13) {
+      return;
+    }
 
+    var data = this.productList.filter(
+      (x: { barcode1: any; barcode2: any; barcode3: any }) =>
+        x.barcode1 == item.toString() &&
+        (x.barcode2 == '' || x.barcode2 == null) &&
+        (x.barcode3 == '' || x.barcode3 == null)
+    );
+
+    if (data.length == 0 && item.toString() != '') {
+      data = this.productList.filter(
+        (x: { barcode1: any; barcode2: any; barcode3: any }) =>
+          x.barcode2 == item.toString() &&
+          (x.barcode3 == '' || x.barcode3 == null)
+      );
+
+      if (data.length == 0 && item.toString() != '') {
+        var data = this.productList.filter(
+          (x: { barcode1: any; barcode2: any; barcode3: any }) =>
+            x.barcode3 == item.toString()
+        );
+
+        if (data.length == 0) {
+          return;
+        }
+      }
+    }
+    if (this.productPurchaseTable.tableData.length == 0) {
+      this.productPurchaseTable.tableData.push({
+        barcode1: data[0].barcode1,
+        barcode2: data[0].barcode2,
+        barcode3: data[0].barcode3,
+        productID: data[0].productID,
+        productName: data[0].productName,
+        qty: 1,
+        costPrice: data[0].costPrice,
+        salePrice: data[0].salePrice,
+        locationID: data[0].locationID,
+        total: data[0].salePrice,
+        packing: data[0].packing,
+        packingSalePrice: data[0].packingSalePrice,
+        status: '',
+      });
+    } else {
+      var found = false;
+      var index = 0;
+      for (var i = 0; i < this.productPurchaseTable.tableData.length; i++) {
+        if (
+          this.productPurchaseTable.tableData[i].barcode1 == item ||
+          this.productPurchaseTable.tableData[i].barcode2 == item ||
+          this.productPurchaseTable.tableData[i].barcode3 == item
+        ) {
+          found = true;
+          index = i;
+          i = this.productPurchaseTable.tableData.length + 1;
+        }
+      }
+      if (found == true) {
+        if (this.productPurchaseTable.tableData[index].status == 'deleted') {
+          this.productPurchaseTable.tableData[index].status = '';
+        } else {
+          this.productPurchaseTable.tableData[index].qty += 1;
+          this.productPurchaseTable.tableData[index].total =
+            this.productPurchaseTable.tableData[index].salePrice *
+            this.productPurchaseTable.tableData[index].qty;
+        }
+      } else {
+        this.productPurchaseTable.tableData.push({
+          barcode1: data[0].barcode1,
+          barcode2: data[0].barcode2,
+          barcode3: data[0].barcode3,
+          productID: data[0].productID,
+          productName: data[0].productName,
+          qty: 1,
+          costPrice: data[0].costPrice,
+          salePrice: data[0].salePrice,
+          locationID: data[0].locationID,
+          total: data[0].salePrice,
+          packing: data[0].packing,
+          packingSalePrice: data[0].packingSalePrice,
+          status: '',
+        });
+      }
+    }
+
+    this.lblTotal = 0;
+    for (var i = 0; i < this.productPurchaseTable.tableData.length; i++) {
+      this.lblTotal += this.productPurchaseTable.tableData[i].total;
+    }
+
+    this.formFields[8].value = -this.lblTotal;
+    this.txtCode = '';
+  }
   pushProduct(item: any) {
     var data = this.productList.filter(
       (x: { productID: any }) => x.productID == item
@@ -549,7 +650,7 @@ export class PurchaseComponent implements OnInit {
     this.lblTotal = 0;
     this.lblCash = 0;
     this.productPurchaseTable.tableData = [];
-
+    this.txtCode = '';
     $('#purchaseReturnModal').modal('hide');
   }
 }
