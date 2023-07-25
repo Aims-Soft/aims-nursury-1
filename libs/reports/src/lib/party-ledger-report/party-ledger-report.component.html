@@ -12,7 +12,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <mat-form-field class="w-100 pt-3 pe-4">
                 <mat-select class="matInput" [(ngModel)]="cmbParty" placeholder="Select party name"
                     (ngModelChange)="getPartyName(cmbParty)">
@@ -22,7 +22,16 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <mat-form-field class="w-100 pt-3 pe-4">
+                <mat-select class="matInput" [(ngModel)]="cmbCOA" placeholder="Select account head">
+                    <mat-option *ngFor="let item of coaList" [value]="item.coaID">
+                        {{ item.coaTitle }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
             <mat-form-field class="w-100 pt-3 pe-4">
                 <mat-label>From date</mat-label>
                 <input matInput [matDatepicker]="picker" [(ngModel)]="dtpFromDate" />
@@ -30,7 +39,7 @@
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <mat-form-field class="w-100 pt-3 pe-4">
                 <mat-label>To date</mat-label>
                 <input matInput [matDatepicker]="picker2" [(ngModel)]="dtpToDate" />

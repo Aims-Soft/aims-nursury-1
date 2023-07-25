@@ -11,13 +11,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PartyLedgerReportComponent implements OnInit {
   cmbParty = '';
+  cmbCOA = '';
   lblPartyName = '';
   dtpFromDate = '';
   dtpToDate = '';
   lblTotalDebit = 0;
   lblTotalCredit = 0;
   lblTotalBalance = 0;
-
+  coaList: any = [];
   partyList: any = [];
   reportList: any = [];
   moduleId: string | null;
@@ -32,6 +33,7 @@ export class PartyLedgerReportComponent implements OnInit {
   ngOnInit(): void {
     this.moduleId = localStorage.getItem('moduleId');
     this.getParty();
+    this.getChartOfAccount();
   }
 
   getParty() {
@@ -88,6 +90,9 @@ export class PartyLedgerReportComponent implements OnInit {
       this.valid.apiErrorResponse('select to date');
       return;
     }
+    if (this.cmbCOA == '' || null) {
+      this.cmbCOA = '0';
+    }
 
     this.dataService
       .getHttp(
@@ -102,11 +107,14 @@ export class PartyLedgerReportComponent implements OnInit {
           '&moduleId=' +
           this.moduleId +
           '&branchID=' +
-          this.globalService.getBranchID(),
+          this.globalService.getBranchID() +
+          '&coaID=' +
+          this.cmbCOA,
         ''
       )
       .subscribe(
         (response: any) => {
+          this.reportList = [];
           var balance = 0;
           for (var i = 0; i < response.length; i++) {
             balance =
@@ -128,6 +136,28 @@ export class PartyLedgerReportComponent implements OnInit {
             this.lblTotalCredit += response[i].credit;
             this.lblTotalBalance = balance;
           }
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+  getChartOfAccount() {
+    this.dataService
+      .getHttp(
+        'core-api/ChartOfAccount/getCOA?companyID=' +
+          this.globalService.getCompanyID() +
+          '&businessID=' +
+          this.globalService.getBusinessID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.coaList = response;
         },
         (error: any) => {
           console.log(error);
