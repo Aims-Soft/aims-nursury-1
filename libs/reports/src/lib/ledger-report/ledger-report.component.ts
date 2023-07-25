@@ -115,6 +115,7 @@ export class LedgerReportComponent implements OnInit {
       .subscribe(
         (response: any) => {
           // this.reportList = response;
+          this.reportList = [];
           var balance = 0;
           for (var i = 0; i < response.length; i++) {
             balance =
