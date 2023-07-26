@@ -107,7 +107,6 @@ export class AddCustoomerComponent implements OnInit {
       .subscribe(
         (response: any) => {
           if (response.message == 'Success') {
-            console.log(response);
             if (this.formFields[0].value > 0) {
               this.valid.apiInfoResponse(' updated successfully');
             } else {

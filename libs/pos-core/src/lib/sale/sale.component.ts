@@ -319,7 +319,6 @@ export class SaleComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.productList = response;
-          console.log(response);
         },
         (error: any) => {
           console.log(error);
