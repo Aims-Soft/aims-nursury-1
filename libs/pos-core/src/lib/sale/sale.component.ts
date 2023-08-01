@@ -31,7 +31,7 @@ export class SaleComponent implements OnInit {
   @ViewChild('txtFocusCode') _txtFocusCode: ElementRef;
 
   roleID: any = 0;
-
+  tblSearch: any = [];
   searchProduct: any = '';
   cmbProduct: any = '';
   cmbBankAmount: any = '';
