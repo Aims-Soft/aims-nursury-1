@@ -23,8 +23,8 @@ export class PaymentTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getPayment();
     this.moduleId = localStorage.getItem('moduleId');
+    this.getPayment();
   }
 
   getPayment() {

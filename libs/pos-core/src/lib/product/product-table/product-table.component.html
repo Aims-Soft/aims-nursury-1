@@ -2,15 +2,15 @@
   <div class="d-flex flex-row mt-4 mb-3 align-items-center">
     <div class="saveProductIcon"></div>
     <h3 class="ms-3 mt-2">Saved Products</h3>
+
+    <mat-form-field class="w-25 ms-auto">
+      <input matInput placeholder="Search..." [(ngModel)]="txtSearch" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
   </div>
   <div class="table-responsive">
-    <mat-form-field class="w-100">
-      <input matInput placeholder="Search..." [(ngModel)]="txtSearch" />
-    </mat-form-field>
-    <perfect-scrollbar
-      class="bg-light-grey"
-      style="height: 31.5em; max-width: 100%"
-    >
+
+    <perfect-scrollbar class="bg-light-grey" style="height: 31.5em; max-width: 100%">
       <table class="table">
         <thead>
           <tr>
@@ -34,16 +34,10 @@
             <td class="text-center">{{ item.costPrice | number }}</td>
             <td class="text-center">{{ item.salePrice | number }}</td>
             <td class="text-center">
-              <span
-                class="txtClrDarkGrey pe-2 cursorPointer border-right-dark"
-                (click)="edit(item)"
-              >
+              <span class="txtClrDarkGrey pe-2 cursorPointer border-right-dark" (click)="edit(item)">
                 <mat-icon>edit</mat-icon>
               </span>
-              <span
-                class="txtClrLightGreen cursorPointer ps-2 pe-2"
-                (click)="delete(item)"
-              >
+              <span class="txtClrLightGreen cursorPointer ps-2 pe-2" (click)="delete(item)">
                 <mat-icon>delete</mat-icon>
               </span>
               <!-- <span class="ps-2" (click)="edit(item, '2')">

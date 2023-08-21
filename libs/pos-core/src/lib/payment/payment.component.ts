@@ -227,6 +227,7 @@ export class PaymentComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
+          console.log(response);
           this.categoryList = response;
         },
         (error: any) => {

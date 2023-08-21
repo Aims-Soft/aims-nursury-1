@@ -1,8 +1,7 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import "./assets/fonts/fonts.scss";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import './assets/fonts/fonts.scss';
 
 body {
-
   background-color: #efefef !important;
   margin: 0mm 0mm 0mm 0mm;
 }
@@ -58,8 +57,8 @@ html {
   box-sizing: border-box;
   -ms-overflow-style: scrollbar;
   line-height: 1.5;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   font-weight: normal;
   color: rgba(0, 0, 0, 0.87);
 }
@@ -100,8 +99,8 @@ html {
   margin-left: 0;
 }
 
-.no-gutters>.col,
-.no-gutters>[class*="col-"] {
+.no-gutters > .col,
+.no-gutters > [class*='col-'] {
   padding-right: 0;
   padding-left: 0;
 }
@@ -427,7 +426,7 @@ html {
 
 table {
   /* border-collapse: collapse; */
-    width: 100% !important;
+  width: 100% !important;
 }
 
 .table th,
@@ -440,13 +439,13 @@ table {
 th {
   /* border-top: 1px solid grey; */
   font-family: 'Roboto';
-  font-size: 0.60em !important;
+  font-size: 0.6em !important;
 }
 
 td {
   border-bottom: 1px solid grey;
   font-family: 'Roboto';
-  font-size: 0.60em !important;
+  font-size: 0.6em !important;
 }
 
 .table thead th {
@@ -454,7 +453,7 @@ td {
   /* border-bottom: 2px solid #000; */
 }
 
-.table tbody+tbody {
+.table tbody + tbody {
   border-top: 2px solid #dee2e6;
 }
 
@@ -466,33 +465,32 @@ th {
   font-family: '';
 }
 
-
 /*********************** margin *************************/
-.ms-2{
+.ms-2 {
   margin-left: 1em;
 }
-.mt-1{
+.mt-1 {
   margin-top: 1em;
 }
-.mt-2{
+.mt-2 {
   margin-top: 2em;
 }
-.mb-1{
+.mb-1 {
   margin-bottom: 1em;
 }
-.mb-2{
+.mb-2 {
   margin-bottom: 2em;
 }
-.pt-1{
+.pt-1 {
   padding-top: 0.5em;
 }
-.pb-1{
+.pb-1 {
   padding-bottom: 0.5em;
 }
-.pb-02{
+.pb-02 {
   padding-bottom: 0.2em;
 }
-.pb-01{
+.pb-01 {
   padding-bottom: 0.1em;
 }
 /*******************************************************/
@@ -517,11 +515,11 @@ th {
   border: 1px solid #ccc;
 }
 
-.borderTopGrey{
+.borderTopGrey {
   border-top: 3px solid #565845 !important;
 }
 
-.borderBottomGrey{
+.borderBottomGrey {
   border-bottom: 2px solid #565845 !important;
 }
 
@@ -554,7 +552,7 @@ th {
   color: #fff;
 }
 
-.heading{
+.heading {
   color: green !important;
 }
 .h1Report {
@@ -585,7 +583,7 @@ th {
   padding-bottom: 2px !important;
 }
 
-.h1Total{
+.h1Total {
   font-size: 2em !important;
   font-weight: 500 !important;
   padding-bottom: 2px !important;
@@ -682,7 +680,9 @@ div.divFooter .label {
   display: none;
 }
 
-::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
+::ng-deep
+  .mat-sort-header-container:not(.mat-sort-header-sorted)
+  .mat-sort-header-arrow {
   opacity: 0.54 !important;
   transform: translateY(0px) !important;
   display: none !important;
@@ -694,7 +694,7 @@ div.divFooter .label {
 }
 
 /********************* background and text color ***********************/
-.txtDarkGrey{
+.txtDarkGrey {
   color: #565845 !important;
 }
 /* .bgGreen{
@@ -709,8 +709,7 @@ div.divFooter .label {
   /* border: 1px solid red; */
 }
 
-
-@media all and (max-width : 768) {
+@media all and (max-width: 768) {
   .tagBox {
     width: 495px;
     height: 175.38px;
@@ -719,5 +718,3 @@ div.divFooter .label {
 }
 
 /*************** the end ************************/
-
-

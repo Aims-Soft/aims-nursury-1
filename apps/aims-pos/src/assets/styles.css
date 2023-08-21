@@ -445,10 +445,20 @@ th {
 }
 
 td {
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid black;
   /* font-family: 'Roboto'; */
-  font-family: Arial, sans-serif;
+  /* font-family: Arial, sans-serif; */
   font-size: 0.6em !important;
+  padding-top: 1em !important;
+}
+.mt-n1 {
+  margin-top: -1em !important;
+}
+.mb-n1 {
+  margin-bottom: -1em !important;
+  border-top: #000 1px solid;
+  border-right: #000 1px solid;
+  border-left: #000 1px solid;
 }
 
 .table thead th {

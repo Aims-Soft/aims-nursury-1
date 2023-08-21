@@ -20,9 +20,16 @@ declare var $: any;
   templateUrl: './sale.component.html',
   styleUrls: ['./sale.component.scss'],
 })
+// export class SaleComponent implements AfterViewInit {
+//   ngAfterViewInit(): void {
+//     $('#noUnderlineInput').parent().find('.mat-form-field-underline').hide();
+//   }
+
+//   // ...
+// }
 export class SaleComponent implements OnInit {
   @ViewChild('txtFocusCode') txtFocusCode: ElementRef;
-
+  @ViewChild('txtCash') txtCash: ElementRef;
   @ViewChild('searchName') searchName: MatSelect;
   @ViewChild(ProductSaleTableComponent) productSaleTable: any;
   @ViewChild(PrintSaleComponent) printSale: any;
@@ -197,6 +204,9 @@ export class SaleComponent implements OnInit {
     private globalService: SharedServicesGlobalDataModule,
     private valid: SharedHelpersFieldValidationsModule
   ) {}
+  // ngAfterViewInit(): void {
+  //   $('#noUnderlineInput').parent().find('.mat-form-field-underline').hide();
+  // }
 
   ngOnInit(): void {
     this.moduleId = localStorage.getItem('moduleId');
@@ -211,13 +221,13 @@ export class SaleComponent implements OnInit {
     this.getBank();
     this.getInvoice();
   }
-  @HostListener('window:keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    if (event.key === 'F4') {
-      event.preventDefault();
-      this.setFocusOnInput();
-    }
-  }
+  // @HostListener('window:keydown', ['$event'])
+  // onKeyDown(event: KeyboardEvent) {
+  //   if (event.key === 'F4') {
+  //     event.preventDefault();
+  //     this.setFocusOnInput();
+  //   }
+  // }
 
   setFocusOnInput() {
     if (this.txtFocusCode && this.txtFocusCode.nativeElement) {
@@ -230,8 +240,16 @@ export class SaleComponent implements OnInit {
     if (event.key === 'F4') {
       event.preventDefault();
       this.setFocusOnInput();
+    } else if (event.key === 'Shift') {
+      event.preventDefault();
+      this.setFocusOnCash();
     } else if (event.key === 'F8') {
       this.openProductDropdown();
+    }
+  }
+  setFocusOnCash() {
+    if (this.txtCash && this.txtCash.nativeElement) {
+      this.txtCash.nativeElement.focus();
     }
   }
   openProductDropdown() {
@@ -686,6 +704,7 @@ export class SaleComponent implements OnInit {
             this.printSale.lblDiscount = this.formFields[6].value;
             this.printSale.lblCash = this.lblCash;
             this.printSale.lblBank = this.lblBankAmount;
+            this.printSale.lblSubTotal = this.lblTotal;
             this.printSale.lblChange = this.formFields[8].value;
 
             setTimeout(() => this.globalService.printData(printSection), 200);
@@ -936,6 +955,7 @@ export class SaleComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
+          console.log(response);
           if (response.length > 0) {
             this.printSale.lblInvoice = response[0].invoiceNo;
             this.printSale.lblDate = response[0].invoiceDate;
@@ -947,6 +967,10 @@ export class SaleComponent implements OnInit {
             this.printSale.lblCash = response[0].cashReceived;
             this.printSale.lblBank = response[0].bankcashReceived;
             this.printSale.lblChange = response[0].change;
+            this.printSale.lblSubTotal = response[0].subtotal;
+            this.printSale.lblGrandBal = response[0].grandbal;
+            this.printSale.lblOldBal = response[0].oldbal;
+            this.printSale.lblNewBal = response[0].newbal;
           }
           const extractedData = response.map((item: any) => ({
             productName: item.productName,
@@ -962,4 +986,20 @@ export class SaleComponent implements OnInit {
         }
       );
   }
+  // async printContent() {
+  //   try {
+  //     const port = await navigator.serial.requestPort();
+  //     await port.open({ baudRate: 9600 }); // Adjust baud rate as needed
+
+  //     // Send your printer-specific commands here
+  //     const printData = 'Your print data here';
+  //     const writer = port.writable.getWriter();
+  //     await writer.write(printData);
+  //     writer.releaseLock();
+
+  //     await port.close();
+  //   } catch (error) {
+  //     console.error('Error printing:', error);
+  //   }
+  // }
 }

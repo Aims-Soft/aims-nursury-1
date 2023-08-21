@@ -23,8 +23,8 @@ export class CategoryTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCategory();
     this.moduleId = localStorage.getItem('moduleId');
+    this.getCategory();
   }
 
   getCategory() {

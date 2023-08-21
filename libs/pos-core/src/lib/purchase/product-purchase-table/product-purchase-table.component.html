@@ -19,18 +19,30 @@
                     <td class="text-center">{{i+1}}</td>
                     <td>{{item.barcode1}}</td>
                     <td>{{item.productName}}</td>
-                    <td>  
+                    <td>
                         <mat-form-field class="w-100" floatLabel="never">
-                        <input class="text-right" (keyup)="totalBill(i, item.qty)" [(ngModel)]="item.qty" matInput />
+                            <input class="text-right" (keyup)="totalBill(i, item.qty)" [(ngModel)]="item.qty"
+                                matInput />
                         </mat-form-field>
                     </td>
-                    <td>{{item.costPrice}}</td>
-                    <td>{{item.salePrice}}</td>
+                    <!-- <td>{{item.costPrice}}</td> -->
+                    <td>
+                        <mat-form-field class="w-100" floatLabel="never">
+                            <input class="text-right" (keyup)="cost(i,item.costPrice)" [(ngModel)]="item.costPrice"
+                                matInput />
+                        </mat-form-field>
+                    </td>
+                    <!-- <td>{{item.salePrice}}</td> -->
+                    <td>
+                        <mat-form-field class="w-100" floatLabel="never">
+                            <input class="text-right" [(ngModel)]="item.salePrice" matInput />
+                        </mat-form-field>
+                    </td>
                     <td>{{item.total}}</td>
                     <!-- <td>{{item.qty}}</td> -->
                     <td class="text-center">
                         <span class="txtClrLightGreen cursorPointer ps-2 pe-2" (click)="delete(i)">
-                        <mat-icon>delete</mat-icon>
+                            <mat-icon>delete</mat-icon>
                         </span>
                     </td>
                 </tr>

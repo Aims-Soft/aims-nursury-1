@@ -18,7 +18,11 @@ export class PrintSaleComponent implements OnInit {
   lblDiscount: any = 0;
   lblCash: any = 0;
   lblBank: any = 0;
+  lblSubTotal: any = 0;
   lblChange: any = 0;
+  lblGrandBal: any = 0;
+  lblNewBal: any = 0;
+  lblOldBal: any = 0;
   tableData: any = [];
   lblBusinessName: any = '';
   lblContactNumber: any = '';

@@ -19,7 +19,13 @@ export class ProductPurchaseTableComponent implements OnInit {
 
     this.eventEmitter.emit();
   }
-
+  cost(index: any, item: any) {
+    this.tableData[index].total = this.tableData[index].qty * item;
+    this.eventEmitter.emit();
+  }
+  // sale(index:any,item:any){
+  //   this.tableData[index].total = this.tableData[index].qty * item;
+  // }
   delete(index: any) {
     this.tableData.splice(index, 1);
   }
