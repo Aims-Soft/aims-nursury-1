@@ -13,6 +13,7 @@ import {
 import { PrintSaleComponent } from './print-sale/print-sale.component';
 import { ProductSaleTableComponent } from './product-sale-table/product-sale-table.component';
 import { MatSelect } from '@angular/material/select';
+import { PrintKotSaleComponent } from './print-kot-sale/print-kot-sale.component';
 declare var $: any;
 
 @Component({
@@ -33,6 +34,7 @@ export class SaleComponent implements OnInit {
   @ViewChild('searchName') searchName: MatSelect;
   @ViewChild(ProductSaleTableComponent) productSaleTable: any;
   @ViewChild(PrintSaleComponent) printSale: any;
+  @ViewChild(PrintKotSaleComponent) printKot:any;
 
   @ViewChild('txtCash') _txtCash: ElementRef;
   @ViewChild('txtFocusCode') _txtFocusCode: ElementRef;

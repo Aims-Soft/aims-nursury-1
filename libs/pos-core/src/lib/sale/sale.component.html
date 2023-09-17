@@ -51,7 +51,8 @@
       >
         Record
       </button>
-      <!-- <button mat-button class="saveBtn" (click)="printContent()">
+      <!-- <button *ngIf="formFields[12].value === 4 && formFields[13].value === 5  "mat-button class=" ms-1 saleReturnBtn ps-5 pe-5"
+      (click)="printKot.print('#print-data')">
         KOT
       </button> -->
     </div>
@@ -749,3 +750,7 @@
     </div>
   </div>
 </div>
+
+<!-- <div class="d-none">
+  <aims-pos-print-kot-sale></aims-pos-print-kot-sale>
+</div> -->
