@@ -55,7 +55,11 @@ export class PresentStockReportComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&companyID=' +
+          this.globalService.getCompanyID() +
+          '&businessID=' +
+          this.globalService.getBusinessID(),
         ''
       )
       .subscribe(

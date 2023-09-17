@@ -646,6 +646,7 @@ export class ProductComponent implements OnInit {
     this.formFields[20].value = 0;
     this.formFields[21].value = 1;
     this.formFields[22].value = '';
+    this.getSubCategory(this.cmbCategory);
   }
 
   edit(item: any) {

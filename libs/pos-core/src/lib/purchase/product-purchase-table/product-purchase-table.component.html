@@ -1,52 +1,102 @@
 <div class="table-responsive">
-    <perfect-scrollbar style="height: 18em; max-width: 100%;">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="text-center">Sr#</th>
-                    <th>Barcode</th>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>Cost Price</th>
-                    <th>Sale Price</th>
-                    <th>Total</th>
-                    <!-- <th>AQ</th> -->
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of tableData; let i=index">
-                    <td class="text-center">{{i+1}}</td>
-                    <td>{{item.barcode1}}</td>
-                    <td>{{item.productName}}</td>
-                    <td>
-                        <mat-form-field class="w-100" floatLabel="never">
-                            <input class="text-right" (keyup)="totalBill(i, item.qty)" [(ngModel)]="item.qty"
-                                matInput />
-                        </mat-form-field>
-                    </td>
-                    <!-- <td>{{item.costPrice}}</td> -->
-                    <td>
-                        <mat-form-field class="w-100" floatLabel="never">
-                            <input class="text-right" (keyup)="cost(i,item.costPrice)" [(ngModel)]="item.costPrice"
-                                matInput />
-                        </mat-form-field>
-                    </td>
-                    <!-- <td>{{item.salePrice}}</td> -->
-                    <td>
-                        <mat-form-field class="w-100" floatLabel="never">
-                            <input class="text-right" [(ngModel)]="item.salePrice" matInput />
-                        </mat-form-field>
-                    </td>
-                    <td>{{item.total}}</td>
-                    <!-- <td>{{item.qty}}</td> -->
-                    <td class="text-center">
-                        <span class="txtClrLightGreen cursorPointer ps-2 pe-2" (click)="delete(i)">
-                            <mat-icon>delete</mat-icon>
-                        </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </perfect-scrollbar>
+  <!-- <perfect-scrollbar style="height: 18em; max-width: 100%"> -->
+  <perfect-scrollbar
+    class="bg-light-grey"
+    [class.ps--active-x]="true"
+    style="height: 18em"
+    [config]="{
+      useBothWheelAxes: true,
+      suppressScrollX: false,
+      suppressScrollY: false
+    }"
+  >
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="text-center">Sr#</th>
+          <!-- <th>Barcode</th> -->
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Cost Price</th>
+          <th>Sale Price</th>
+          <th>ADT %</th>
+          <th>ADT Amount</th>
+          <th>ST %</th>
+          <th>ST Amount</th>
+          <th>Total</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tableData; let i = index">
+          <td class="text-center">{{ i + 1 }}</td>
+          <!-- <td>{{item.barcode1}}</td> -->
+          <td>{{ item.productName }}</td>
+          <td>
+            <mat-form-field class="w-100" floatLabel="never">
+              <input
+                class="text-right"
+                (keyup)="totalBill(i, item.qty)"
+                [(ngModel)]="item.qty"
+                matInput
+              />
+            </mat-form-field>
+          </td>
+          <!-- <td>{{item.costPrice}}</td> -->
+          <td>
+            <mat-form-field class="w-100" floatLabel="never">
+              <input
+                class="text-right"
+                (keyup)="cost(i, item.costPrice)"
+                [(ngModel)]="item.costPrice"
+                matInput
+              />
+            </mat-form-field>
+          </td>
+          <!-- <td>{{item.salePrice}}</td> -->
+          <td>
+            <mat-form-field class="w-100" floatLabel="never">
+              <input class="text-right" [(ngModel)]="item.salePrice" matInput />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="w-100" floatLabel="never">
+              <input
+                class="text-right"
+                (keyup)="onADTChange(i, item.adtPer)"
+                [(ngModel)]="item.adtPer"
+                matInput
+              />
+            </mat-form-field>
+          </td>
+          <td>
+            {{ item.adtAmount }}
+          </td>
+          <td>
+            <mat-form-field class="w-100" floatLabel="never">
+              <input
+                class="text-right"
+                (keyup)="onSTChange(i, item.stPer)"
+                [(ngModel)]="item.stPer"
+                matInput
+              />
+            </mat-form-field>
+          </td>
+          <td>
+            {{ item.stAmount }}
+          </td>
+          <td>{{ item.total }}</td>
+          <!-- <td>{{item.qty}}</td> -->
+          <td class="text-center">
+            <span
+              class="txtClrLightGreen cursorPointer ps-2 pe-2"
+              (click)="delete(i)"
+            >
+              <mat-icon>delete</mat-icon>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </perfect-scrollbar>
 </div>

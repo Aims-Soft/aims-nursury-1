@@ -11,6 +11,8 @@
   --dark-grey: #565845;
   --darktone1: #9fa8a3;
   --sun-red: #d8705c;
+  --bright-red: #d22b2b;
+  --golden: #ffc300;
   --white: #ffffff;
   --blue: #005877;
   // --nha-light-blue: #87CEFA;
@@ -92,6 +94,19 @@ button {
   // color: var(--dark);
   font-family: 'SevenSegments';
   font-size: 2em;
+}
+
+.h1-digit-purchase-Tax {
+  // color: var(--dark);
+  font-family: 'SevenSegments';
+  font-size: 2em;
+  width: 8em;
+}
+.h3-digit-purchase-Tax {
+  // color: var(--dark);
+  font-family: 'SevenSegments';
+  font-size: 2em;
+  width: 3em;
 }
 .h2-digit {
   // color: var(--dark);
@@ -177,6 +192,9 @@ button {
 .bg-dark-light {
   background-color: var(--dark-light) !important;
 }
+.bg-gold {
+  background-color: var(--golden) !important;
+}
 .bg-light {
   background-color: var(--light);
 }
@@ -188,6 +206,10 @@ button {
 }
 .bg-light-green {
   background-color: var(--light-green) !important;
+}
+.bg-red {
+  background-color: var(--bright-red) !important;
+  color: white;
 }
 .bg-dark-grey {
   background-color: var(--dark-grey) !important;
@@ -249,6 +271,21 @@ button {
   transition: all 0.5s ease-in-out;
 }
 
+.resetBtnZaki {
+  position: fixed;
+  right: 0;
+  height: 40px;
+  background-color: var(--bright-red) !important;
+  color: white;
+  border-radius: 0 !important;
+}
+.resetBtnZaki:hover {
+  height: 40px;
+  background-color: #adb961 !important;
+  color: white;
+  border-radius: 0 !important;
+  transition: all 0.5s ease-in-out;
+}
 .saleReturnBtn {
   position: fixed;
   right: 0;
@@ -883,5 +920,21 @@ button.mat-raised-button.uploadbtn {
 .placeOrderBtn:hover {
   background-color: #adb961 !important;
   color: white;
+  transition: all 0.5s ease-in-out;
+}
+
+.productSaleBox {
+  background-color: var(--white);
+  // background-color: var(--light-green);
+  // color: white;
+  text-align: center;
+  width: 10em;
+  height: 8em;
+}
+
+.productSaleBox:hover {
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.72);
+  -webkit-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.72);
+  -moz-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.72);
   transition: all 0.5s ease-in-out;
 }

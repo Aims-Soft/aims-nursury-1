@@ -199,6 +199,7 @@ export class SaleComponent implements OnInit {
   bankList: any = [];
   partyList: any = [];
   moduleId: string | null;
+
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -213,6 +214,9 @@ export class SaleComponent implements OnInit {
     this.formFields[14].value = localStorage.getItem('moduleId');
     // this.globalService.setHeaderTitle("Sale");
     this.formFields[1].value = this.globalService.getUserId().toString();
+
+    this.formFields[12].value = this.globalService.getBusinessID();
+    this.formFields[13].value = this.globalService.getBranchID();
 
     this.roleID = this.globalService.getRoleId();
     this.getCompany();
@@ -336,7 +340,33 @@ export class SaleComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          this.productList = response;
+          // this.productList = response;
+          this.productList = [];
+          for (var i = 0; i < response.length; i++) {
+            var img = '';
+            if (response[i].applicationedoc == '') {
+              img =
+                'http://135.181.62.34:7060/assets/ui/productPictures2/noImage.png';
+              // img =
+              //   'https://image.sungreenfresh.com:7061/assets/ui/productPictures/noImage.png';
+            } else {
+              img =
+                'http://135.181.62.34:7060/assets/ui/productPictures2/' +
+                response[i].productID +
+                '.png';
+            }
+            this.productList.push({
+              availableqty: response[i].qty,
+              costPrice: response[i].costPrice,
+              invoiceDate: response[i].invoiceDate,
+              pPriceID: response[i].pPriceID,
+              productID: response[i].productID,
+              productName: response[i].productName,
+              salePrice: response[i].salePrice,
+              imgUrl: img,
+            });
+          }
+          console.log(this.productList);
         },
         (error: any) => {
           console.log(error);

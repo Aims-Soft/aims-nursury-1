@@ -11,6 +11,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PrintSaleComponent implements OnInit {
   @Input() customerName: string;
+
+  lblBranchID: any = 0;
   lblInvoice: any = '';
   lblDate: any = '';
   lblName: any = '';
@@ -38,6 +40,7 @@ export class PrintSaleComponent implements OnInit {
     this.getBusniessName();
     this.currentUser = this.authService.currentUserValue;
     this.lblName = this.currentUser.fullName;
+    this.lblBranchID = this.globalService.getBranchID();
   }
   getBusniessName() {
     this.dataService

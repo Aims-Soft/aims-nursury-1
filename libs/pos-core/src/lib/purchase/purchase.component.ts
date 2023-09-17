@@ -23,6 +23,11 @@ export class PurchaseComponent implements OnInit {
   txtCode: any = '';
   roleID: any = 0;
 
+  txtAdvanceTax: any = 0;
+  txtAdvanceTaxAmount: any = 0;
+  txtSaleTax: any = 0;
+  txtSaleTaxAmount: any = 0;
+
   pageFields: SaleInterface = {
     invoiceNo: '0', //0
     userID: '', //1
@@ -294,6 +299,7 @@ export class PurchaseComponent implements OnInit {
         }
       );
   }
+
   pushProductByCode(item: any, e: any) {
     if (e.ctrlKey == true) {
       //   // alert(e.keyCode);
@@ -345,6 +351,10 @@ export class PurchaseComponent implements OnInit {
         packing: data[0].packing,
         packingSalePrice: data[0].packingSalePrice,
         status: '',
+        stPer: 0,
+        stAmount: 0,
+        adtPer: 0,
+        adtAmount: 0,
       });
     } else {
       var found = false;
@@ -364,10 +374,26 @@ export class PurchaseComponent implements OnInit {
         if (this.productPurchaseTable.tableData[index].status == 'deleted') {
           this.productPurchaseTable.tableData[index].status = '';
         } else {
-          this.productPurchaseTable.tableData[index].qty += 1;
+          this.productPurchaseTable.tableData[index].qty =
+            parseInt(this.productPurchaseTable.tableData[index].qty) + 1;
+
+          this.productPurchaseTable.tableData[index].adtAmount =
+            (this.productPurchaseTable.tableData[index].costPrice *
+              this.productPurchaseTable.tableData[index].qty *
+              this.productPurchaseTable.tableData[index].adtPer) /
+            100;
+
+          this.productPurchaseTable.tableData[index].stAmount =
+            (this.productPurchaseTable.tableData[index].costPrice *
+              this.productPurchaseTable.tableData[index].qty *
+              this.productPurchaseTable.tableData[index].stPer) /
+            100;
+
           this.productPurchaseTable.tableData[index].total =
-            this.productPurchaseTable.tableData[index].salePrice *
-            this.productPurchaseTable.tableData[index].qty;
+            this.productPurchaseTable.tableData[index].costPrice *
+              this.productPurchaseTable.tableData[index].qty +
+            this.productPurchaseTable.tableData[index].adtAmount +
+            this.productPurchaseTable.tableData[index].stAmount;
         }
       } else {
         this.productPurchaseTable.tableData.push({
@@ -384,6 +410,10 @@ export class PurchaseComponent implements OnInit {
           packing: data[0].packing,
           packingSalePrice: data[0].packingSalePrice,
           status: '',
+          stPer: 0,
+          stAmount: 0,
+          adtPer: 0,
+          adtAmount: 0,
         });
       }
     }
@@ -396,6 +426,7 @@ export class PurchaseComponent implements OnInit {
     this.formFields[8].value = -this.lblTotal;
     this.txtCode = '';
   }
+
   pushProduct(item: any) {
     var data = this.productList.filter(
       (x: { productID: any }) => x.productID == item
@@ -411,6 +442,10 @@ export class PurchaseComponent implements OnInit {
         salePrice: data[0].salePrice,
         locationID: data[0].locationID,
         total: data[0].costPrice,
+        stPer: 0,
+        stAmount: 0,
+        adtPer: 0,
+        adtAmount: 0,
       });
     } else {
       var found = false;
@@ -424,10 +459,26 @@ export class PurchaseComponent implements OnInit {
       }
 
       if (found == true) {
-        this.productPurchaseTable.tableData[index].qty += 1;
+        this.productPurchaseTable.tableData[index].qty =
+          parseInt(this.productPurchaseTable.tableData[index].qty) + 1;
+
+        this.productPurchaseTable.tableData[index].adtAmount =
+          (this.productPurchaseTable.tableData[index].costPrice *
+            this.productPurchaseTable.tableData[index].qty *
+            this.productPurchaseTable.tableData[index].adtPer) /
+          100;
+
+        this.productPurchaseTable.tableData[index].stAmount =
+          (this.productPurchaseTable.tableData[index].costPrice *
+            this.productPurchaseTable.tableData[index].qty *
+            this.productPurchaseTable.tableData[index].stPer) /
+          100;
+
         this.productPurchaseTable.tableData[index].total =
           this.productPurchaseTable.tableData[index].costPrice *
-          this.productPurchaseTable.tableData[index].qty;
+            this.productPurchaseTable.tableData[index].qty +
+          this.productPurchaseTable.tableData[index].adtAmount +
+          this.productPurchaseTable.tableData[index].stAmount;
       } else {
         this.productPurchaseTable.tableData.push({
           productID: data[0].productID,
@@ -438,6 +489,10 @@ export class PurchaseComponent implements OnInit {
           salePrice: data[0].salePrice,
           locationID: data[0].locationID,
           total: data[0].costPrice,
+          stPer: 0,
+          stAmount: 0,
+          adtPer: 0,
+          adtAmount: 0,
         });
       }
     }
@@ -453,7 +508,10 @@ export class PurchaseComponent implements OnInit {
   totalBill() {
     this.lblTotal = 0;
     for (var i = 0; i < this.productPurchaseTable.tableData.length; i++) {
-      this.lblTotal += this.productPurchaseTable.tableData[i].total;
+      this.lblTotal += parseInt(this.productPurchaseTable.tableData[i].total);
+      // +
+      // parseInt(this.productPurchaseTable.tableData[i].stAmount) +
+      // parseInt(this.productPurchaseTable.tableData[i].adtAmount);
     }
 
     this.formFields[8].value = -this.lblTotal;
