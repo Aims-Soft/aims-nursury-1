@@ -1,11 +1,13 @@
 <!-- DESIGN NO 1 KOT --> 
 <!-- CHANGES on DIV's(*ngIf) to DO WHEN DATA IS AVAILABLE  -->
+<div id="print-summary">
+
 <div class="row">
     <div class="col-md-12 text-center">
-      <h4></h4>
+      <h4>Zaki Foods</h4>
     </div>
     <div class="col-md-12 text-center">
-      <h6>Ph #</h6>
+      <h6>Ph # {{lblContactNumber}}</h6>
     </div>
   </div>
   <div class="mb-n1">
@@ -33,14 +35,14 @@
       </div>
       <div class="col-1 text-end">
         <p>
-          <b></b>
+          <b>{{toPrintData[0]?.lblInvoice}}</b>
         </p>
       </div>
       <div class="row mt-n1">
         <div class="col-2">
           <p><b>Customer:</b></p>
         </div>
-        <div class="col-2"></div>
+        <div class="col-2">{{toPrintData[0]?.lblInvoice | date}}</div>
         <div class="col-4 text-end">
           <p>
             <b></b>
@@ -49,20 +51,52 @@
       </div>
     </div> 
     </div>
-  
-<table class="table borderBlack">
+<!-- <table class="table borderBlack">
     <thead>
       <tr>
         <th class="col-6">Description</th>
         <th class="col-1 text-center borderBlack">Qty</th>
+        <th  *ngIf="isCustomer === true" class="col-2 text-end borderBlack">Price</th>
+        <th  *ngIf="isCustomer === true" class="col-2 text-end borderBlack">Total</th>
+        <th ></th>
       </tr>
     </thead>
     <tbody>
-      <tr >
-        <td class="col-6"></td>
-        <td class="col-1 text-center borderBlack"></td>
-      </tr>
+      <tr *ngFor="let item of tableData; let i = index">
+      <td class="col-6">{{ item.productName }}</td>
+      <td class="col-1 text-center borderBlack">{{ item.qty }}</td>
+      <td *ngIf="isCustomer === true" class="col-2 text-end borderBlack">{{ item.salePrice }}</td>
+      <td *ngIf="isCustomer === true" class="col-2 text-end borderBlack">{{ item.total }}</td>
+      </tr> 
     </tbody>
-  </table>
+  </table> -->
+  </div>
+
+  <!-- <div class="row" *ngIf="isCustomer === true">
+  <div class="col-md-6"></div>
+  <div class="col-md-6">
+    <div class="borderBlack">
+      <table class="">
+        <tbody>
+          <tr class="single-line">
+            <td class="fw-bold">Grand Total</td>
+            <td class="text-end">{{ lblGrandBal | number }}</td>
+          </tr>
+          <tr class="single-line">
+            <td class="fw-bold">Old Bal</td>
+            <td class="text-end">{{ lblOldBal | number }}</td>
+          </tr>
+          <tr class="single-line">
+            <td class="fw-bold">New Bal</td>
+            <td class="text-end">{{ lblNewBal | number }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p class="fw-bold">Wish to Serve You Again.</p>
+    </div>
+  </div>
+</div> -->
 
   

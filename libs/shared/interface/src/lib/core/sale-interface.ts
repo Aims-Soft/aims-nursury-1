@@ -17,4 +17,5 @@ export interface SaleInterface {
   bankID: '0';
   bankcashReceived: '0';
   bankref: '';
+  status?:'',
 }

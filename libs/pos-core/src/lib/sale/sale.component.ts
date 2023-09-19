@@ -34,7 +34,7 @@ export class SaleComponent implements OnInit {
   @ViewChild('searchName') searchName: MatSelect;
   @ViewChild(ProductSaleTableComponent) productSaleTable: any;
   @ViewChild(PrintSaleComponent) printSale: any;
-  @ViewChild(PrintKotSaleComponent) printKot:any;
+  @ViewChild(PrintKotSaleComponent) printKot: any;
 
   @ViewChild('txtCash') _txtCash: ElementRef;
   @ViewChild('txtFocusCode') _txtFocusCode: ElementRef;
@@ -71,6 +71,7 @@ export class SaleComponent implements OnInit {
     bankID: '0', //15
     bankcashReceived: '0', //16
     bankref: '', //17
+    status: '', //18
   };
 
   formFields: MyFormField[] = [
@@ -184,6 +185,12 @@ export class SaleComponent implements OnInit {
     },
     {
       value: this.pageFields.bankref,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.status,
       msg: '',
       type: 'hidden',
       required: false,
@@ -719,6 +726,14 @@ export class SaleComponent implements OnInit {
     if (this.formFields[17].value == '0') {
       this.formFields[17].value = '';
     }
+    if (printSection === 'kot') {
+      this.formFields[18].value = 0;
+    } else if (printSection === 'kotCustomerBill') {
+      this.formFields[18].value = 1;
+    }
+    else {
+      this.formFields[18].value = null;
+    }
 
     this.dataService
       .savetHttp(this.pageFields, this.formFields, 'core-api/Sale/saveSales')
@@ -738,7 +753,10 @@ export class SaleComponent implements OnInit {
             this.printSale.lblBank = this.lblBankAmount;
             this.printSale.lblSubTotal = this.lblTotal;
             this.printSale.lblChange = this.formFields[8].value;
-
+            if (printSection === 'kot' || 'kotCustomerBill') {
+              this.printKotReport(prodTableData, response, date,printSection);
+              return;
+            }
             setTimeout(() => this.globalService.printData(printSection), 200);
             this.resetBank();
             this.reset();
@@ -753,6 +771,19 @@ export class SaleComponent implements OnInit {
           this.valid.apiErrorResponse(this.error);
         }
       );
+  }
+
+  printKotReport(prodTableData:any,response:any,date:any,printSection:string) {
+    this.printKot.tableData = prodTableData;
+    printSection === 'kotCustomerBill' ? this.printKot.isCustomer = true : this.printKot.isCustomer = false;
+    this.printKot.toPrintData.push({
+      lblInvoice: response.invoiceNo,
+      lblDate: date,
+    });
+    setTimeout(() => this.printKot.print());
+    this.resetBank();
+    this.reset();
+    this.getInvoice();
   }
 
   checkSaleReturn() {

@@ -6,9 +6,14 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'aims-pos-print-kot-sale',
   templateUrl: './print-kot-sale.component.html',
-  styleUrls: ['./print-kot-sale.component.scss']
+  styleUrls: ['./print-kot-sale.component.scss'],
 })
 export class PrintKotSaleComponent implements OnInit {
+
+  lblContactNumber:any;
+  isCustomer = ''; //if customer then show total
+  toPrintData:any=[];
+  tableData:any=[];
 
   constructor(
     private dataService: SharedServicesDataModule,
@@ -17,10 +22,30 @@ export class PrintKotSaleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getBusniessName();
   }
 
-  print(printSection:any){
-    this.globalService.printData(printSection), 200;
+  print() {
+    console.log(this.toPrintData);
+    setTimeout(() => this.globalService.printData('#print-summary'), 200);
   }
 
+  getBusniessName() {
+    this.dataService
+      .getHttp(
+        'cmis-api/Branch/getBusniessName?branchID=' +
+          this.globalService.getBranchID(),
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          // this.lblBusinessName = response[0].businessFullName;
+          this.lblContactNumber = response[0].mobileNo;
+          // this.bankList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
 }
