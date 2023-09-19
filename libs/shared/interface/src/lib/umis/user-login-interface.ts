@@ -7,6 +7,7 @@ export interface UserInterface {
   roleId: number;
   companyID: number;
   businessID: number;
+  businessTypeID: number;
   branchID: number;
   isPinCode: string;
   token?: string;

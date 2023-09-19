@@ -1,4 +1,6 @@
 import { SharedHelpersFieldValidationsModule } from '@aims-pos/shared/helpers/field-validations';
+import { UserInterface } from '@aims-pos/shared/interface';
+import { SharedServicesAuthModule } from '@aims-pos/shared/services/auth';
 import { SharedServicesDataModule } from '@aims-pos/shared/services/data';
 import { SharedServicesGlobalDataModule } from '@aims-pos/shared/services/global-data';
 import { Component, OnInit } from '@angular/core';
@@ -9,20 +11,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./print-kot-sale.component.scss'],
 })
 export class PrintKotSaleComponent implements OnInit {
+  lblBranchID: any = 0;
+  lblInvoice: any = '';
+  lblDate: any = '';
+  lblName: any = '';
+  lblBusinessName: any = '';
+  lblType: any = '';
 
-  lblContactNumber:any;
+  lblContactNumber: any;
   isCustomer = ''; //if customer then show total
-  toPrintData:any=[];
-  tableData:any=[];
+  toPrintData: any = [];
+  tableData: any = [];
+  currentUser!: UserInterface;
 
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
-    private valid: SharedHelpersFieldValidationsModule
+    private valid: SharedHelpersFieldValidationsModule,
+    private authService: SharedServicesAuthModule
   ) {}
 
   ngOnInit(): void {
     this.getBusniessName();
+    this.currentUser = this.authService.currentUserValue;
+    this.lblName = this.currentUser.fullName;
+    this.lblBranchID = this.globalService.getBranchID();
   }
 
   print() {
@@ -39,7 +52,7 @@ export class PrintKotSaleComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          // this.lblBusinessName = response[0].businessFullName;
+          this.lblBusinessName = response[0].businessFullName;
           this.lblContactNumber = response[0].mobileNo;
           // this.bankList = response;
         },

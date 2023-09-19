@@ -117,6 +117,15 @@ export class SharedServicesGlobalDataModule {
     }
   }
 
+  getBusinessTypeID(): number {
+    this.currentUser = this.authService.currentUserValue;
+    if (this.currentUser) {
+      return this.currentUser.businessTypeID;
+    } else {
+      return 0;
+    }
+  }
+
   getBranchID(): number {
     this.currentUser = this.authService.currentUserValue;
     if (this.currentUser) {

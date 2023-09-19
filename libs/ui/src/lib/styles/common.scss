@@ -314,6 +314,26 @@ button {
   border-radius: 0 !important;
 }
 
+.kotBtn {
+  // position: fixed;
+  right: 0;
+  height: 40px;
+  width: 7em;
+  background-color: var(--dark-grey) !important;
+  color: white;
+  border-radius: 0 !important;
+}
+
+.customerBillBtn {
+  // position: fixed;
+  right: 0;
+  height: 40px;
+  width: 8em;
+  background-color: var(--dark-grey) !important;
+  color: white;
+  border-radius: 0 !important;
+}
+
 .saveBtn {
   position: fixed;
   right: 0;
@@ -767,6 +787,9 @@ button.mat-raised-button.uploadbtn {
 ////////////////////////////////////////////////////////
 .txtClrLightGreen {
   color: var(--light-green) !important;
+}
+.txtClrRed {
+  color: var(--bright-red) !important;
 }
 
 .txtClrDarkGrey {

@@ -1,13 +1,84 @@
-<!-- DESIGN NO 1 KOT --> 
+<!-- DESIGN NO 1 KOT -->
 <!-- CHANGES on DIV's(*ngIf) to DO WHEN DATA IS AVAILABLE  -->
-<div id="print-summary">
 
 <div class="row">
+  <div class="col-md-12 text-center">
+    <h4>{{ lblBusinessName }}</h4>
+  </div>
+  <div class="col-md-12 text-center">
+    <h6>Ph # {{ lblContactNumber }}</h6>
+  </div>
+</div>
+<div class="mb-n1">
+  <div class="row">
+    <div class="col-2">
+      <p><b>Counter:</b></p>
+    </div>
+    <div class="col-4">
+      <p>
+        <b>{{ lblName }}</b>
+      </p>
+    </div>
+    <div class="col-1">
+      <p><b>Type:</b></p>
+    </div>
+    <div class="col-2">
+      <p>
+        <b>{{ lblType }}</b>
+      </p>
+    </div>
+    <div class="col-1">
+      <p><b>KOT#:</b></p>
+    </div>
+    <div class="col-2">
+      <p>
+        <b>{{ lblInvoice }}</b>
+      </p>
+    </div>
+  </div>
+  <div class="row mt-n1">
+    <div class="col-6">
+      <p>
+        <b>{{ lblDate | date: 'MMM dd, YYYY' }}</b>
+      </p>
+    </div>
+    <div class="col-2"></div>
+    <div class="col-4 text-end">
+      <p>
+        <b>{{ lblDate | date: 'HH:mm a' }}</b>
+      </p>
+    </div>
+  </div>
+</div>
+
+<table class="table borderBlack">
+  <thead>
+    <tr>
+      <!-- <th class="col-1 text-center">Sr</th> -->
+      <th class="col-6">Description</th>
+      <th class="col-1 text-center borderBlack">Qty</th>
+      <th class="col-2 text-end borderBlack">Price</th>
+      <th class="col-2 text-end borderBlack">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of tableData; let i = index">
+      <!-- <td class="col-1 text-center">{{ i + 1 }}</td> -->
+      <td class="col-6">{{ item.productName }}</td>
+      <td class="col-1 text-center borderBlack">{{ item.qty }}</td>
+      <td class="col-2 text-end borderBlack">{{ item.salePrice }}</td>
+      <td class="col-2 text-end borderBlack">{{ item.total }}</td>
+    </tr>
+  </tbody>
+</table>
+<!-- 
+<div id="print-summary">
+  <div class="row">
     <div class="col-md-12 text-center">
       <h4>Zaki Foods</h4>
     </div>
     <div class="col-md-12 text-center">
-      <h6>Ph # {{lblContactNumber}}</h6>
+      <h6>Ph # {{ lblContactNumber }}</h6>
     </div>
   </div>
   <div class="mb-n1">
@@ -35,22 +106,22 @@
       </div>
       <div class="col-1 text-end">
         <p>
-          <b>{{toPrintData[0]?.lblInvoice}}</b>
+          <b>{{ toPrintData[0]?.lblInvoice }}</b>
         </p>
       </div>
       <div class="row mt-n1">
         <div class="col-2">
           <p><b>Customer:</b></p>
         </div>
-        <div class="col-2">{{toPrintData[0]?.lblInvoice | date}}</div>
+        <div class="col-2">{{ toPrintData[0]?.lblInvoice | date }}</div>
         <div class="col-4 text-end">
           <p>
             <b></b>
           </p>
         </div>
       </div>
-    </div> 
     </div>
+  </div> -->
 <!-- <table class="table borderBlack">
     <thead>
       <tr>
@@ -70,9 +141,9 @@
       </tr> 
     </tbody>
   </table> -->
-  </div>
+<!-- </div> -->
 
-  <!-- <div class="row" *ngIf="isCustomer === true">
+<!-- <div class="row" *ngIf="isCustomer === true">
   <div class="col-md-6"></div>
   <div class="col-md-6">
     <div class="borderBlack">
@@ -98,5 +169,3 @@
     </div>
   </div>
 </div> -->
-
-  

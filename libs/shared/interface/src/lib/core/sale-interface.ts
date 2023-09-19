@@ -17,5 +17,9 @@ export interface SaleInterface {
   bankID: '0';
   bankcashReceived: '0';
   bankref: '';
-  status?:'',
+  status?: '';
+  customerName?: '';
+  orderType?: '';
+  businessTypeID?: '';
+  orderJson?: '';
 }

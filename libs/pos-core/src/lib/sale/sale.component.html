@@ -31,7 +31,6 @@
       </button>
       <button
         mat-button
-        class="me-2"
         [ngClass]="{
           resetBtnZaki: formFields[12].value == 4 || formFields[13].value == 5,
           resetBtn: formFields[12].value != 4 || formFields[13].value != 5
@@ -39,9 +38,6 @@
         (click)="reset()"
       >
         Reset
-      </button>
-      <button mat-button class="saveBtn" (click)="save('#print-data')">
-        Save
       </button>
       <button
         mat-button
@@ -52,14 +48,52 @@
         Record
       </button>
       <!-- printKot.print('#print-data')" -->
-      <button *ngIf="formFields[12].value === 4 && formFields[13].value === 5  "mat-button class=" ms-1 saleReturnBtn ps-5 pe-5"
-      (click)="save('kot')">
-        KOT
+      <button
+        *ngIf="lblBusinessTypeID == 3 && lblOrder == ''"
+        mat-button
+        class="ms-2 kotBtn"
+        (click)="saveOrder('#print-kot')"
+      >
+        Place Order
       </button>
-      <button *ngIf="formFields[12].value === 4 && formFields[13].value === 5  "mat-button class=" ms-1 saleReturnBtn ps-5 pe-5"
-      (click)="save('kotCustomerBill')">
+
+      <button
+        mat-button
+        class="ms-2"
+        [ngClass]="{
+          resetBtnZaki: formFields[12].value == 4 || formFields[13].value == 5,
+          resetBtn: formFields[12].value != 4 || formFields[13].value != 5
+        }"
+        data-bs-toggle="modal"
+        data-bs-target="#placeOrderModal"
+        *ngIf="lblBusinessTypeID == 3"
+      >
+        Order Placed
+      </button>
+      <button
+        *ngIf="lblBusinessTypeID == 3 && lblOrder != ''"
+        mat-button
+        class="ms-2 customerBillBtn"
+        (click)="save('#print-data')"
+      >
+        Customer Bill
+      </button>
+      <button
+        mat-button
+        class="saveBtn ms-2"
+        (click)="save('#print-data')"
+        *ngIf="lblBusinessTypeID != 3"
+      >
+        Save
+      </button>
+      <!-- <button
+        *ngIf="formFields[12].value === 4 && formFields[13].value === 5"
+        mat-button
+        class="ms-1 saleReturnBtn ps-5 pe-5"
+        (click)="save('kotCustomerBill')"
+      >
         Cusomter Bill
-      </button>
+      </button> -->
     </div>
   </div>
 </div>
@@ -300,7 +334,7 @@
               >
                 <div
                   class="productSaleBox cursorPointer ms-4 me-2 mb-2 mt-2 pt-2"
-                  (click)="pushProduct(item.pPriceID)"
+                  (click)="pushProduct(item.productID)"
                 >
                   <div class="d-flex flex-column align-items-center">
                     <img
@@ -393,7 +427,25 @@
                 <mat-icon class="text-center mb-3">add</mat-icon>
               </button>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6 mt-3">
+              <mat-radio-group
+                [(ngModel)]="rdbType"
+                aria-label="Select an option"
+              >
+                <mat-radio-button
+                  class="fs-5 ms-2"
+                  checked="true"
+                  value="Dine-In"
+                  >Dine-In</mat-radio-button
+                >
+                <mat-radio-button class="fs-5 ms-3" value="Take-Away"
+                  >Take-Away</mat-radio-button
+                >
+              </mat-radio-group>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
               <mat-form-field class="w-100">
                 <input
                   matInput
@@ -510,9 +562,9 @@
               }"
             >
               <label class="h3-sale-cash pt-4 text-white">TOTAL</label>
-              <label class="text-center mt-1 mb-2 h1-digit">{{
-                lblTotal
-              }}</label>
+              <label class="text-center mt-1 mb-2 h1-digit">
+                {{ lblTotal }}
+              </label>
             </div>
           </div>
           <div class="col-md-2">
@@ -544,6 +596,9 @@
   id="print-data"
 ></aims-pos-print-sale>
 
+<div class="d-none">
+  <aims-pos-print-kot-sale id="print-kot"></aims-pos-print-kot-sale>
+</div>
 <!-- Modal -->
 <div
   id="saleReturnModal"
@@ -756,6 +811,83 @@
   </div>
 </div>
 
-<div class="d-none">
-  <aims-pos-print-kot-sale></aims-pos-print-kot-sale>
+<div
+  id="placeOrderModal"
+  class="modal fade"
+  role="dialog"
+  data-bs-backdrop="false"
+>
+  <div class="modal-dialog modal-lg mat-elevation-z20">
+    <div class="modal-content">
+      <div class="modal-header bgSecondary">
+        <h5 class="modal-title fs-5 fw-bold text-white mt-2" id="printModal">
+          Placed Order
+        </h5>
+        <mat-icon class="text-white cursorPointer" data-bs-dismiss="modal"
+          >close</mat-icon
+        >
+      </div>
+      <div class="modalbody bg-light">
+        <div class="row">
+          <div class="col-md-6 mt-3"><strong></strong></div>
+          <div class="col-md-6 mt-2 ms-auto">
+            <mat-form-field class="w-100">
+              <input
+                class="text-capitalize"
+                type="tel"
+                matInput
+                placeholder="Search"
+                [(ngModel)]="tblSearch"
+              />
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- <div class="mt-2 ms-2  ms-auto">
+          <mat-form-field class="w-50 ">
+            <input class="text-capitalize" type="tel" matInput placeholder="Search" [(ngModel)]="tblSearch" />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div> -->
+        <perfect-scrollbar
+          class="bg-light-grey stickyHeader"
+          style="height: 72vh; max-width: 100%"
+        >
+          <table class="table table-striped table-hover mat-elevation-z3">
+            <thead>
+              <tr class="bg-light">
+                <th class="text-secondary">Order No.</th>
+                <th class="text-secondary">Customer Name</th>
+                <th class="text-secondary">Order Type</th>
+                <th class="text-secondary">Amount</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!--  -->
+              <tr
+                *ngFor="
+                  let item of orderList
+                    | search: 'orderID,customerName,total':tblSearch
+                "
+              >
+                <td class="">{{ item.orderID }}</td>
+                <td>{{ item.customerName }}</td>
+                <td class="">{{ item.orderType }}</td>
+                <td class="text-center">{{ item.total | number }}</td>
+                <td class="text-center">
+                  <span class="txtClrDarkGrey cursorPointer ps-2 pe-2">
+                    <mat-icon (click)="deleteOrder(item)">delete</mat-icon>
+                  </span>
+                  <span class="txtClrRed cursorPointer ps-2 pe-2">
+                    <mat-icon (click)="getOrderDetail(item)">edit</mat-icon>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </div>
 </div>

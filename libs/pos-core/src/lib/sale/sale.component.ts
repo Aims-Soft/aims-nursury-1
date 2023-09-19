@@ -39,6 +39,8 @@ export class SaleComponent implements OnInit {
   @ViewChild('txtCash') _txtCash: ElementRef;
   @ViewChild('txtFocusCode') _txtFocusCode: ElementRef;
 
+  lblOrder: any = '';
+  rdbType: any = '';
   roleID: any = 0;
   tblSearch: any = [];
   searchProduct: any = '';
@@ -51,6 +53,7 @@ export class SaleComponent implements OnInit {
   lblInvoiceNo: any = 0;
   percentage: number = 0;
   lblCustomerName: any = '';
+  lblBusinessTypeID: any = '';
 
   pageFields: SaleInterface = {
     invoiceNo: '0', //0
@@ -72,6 +75,10 @@ export class SaleComponent implements OnInit {
     bankcashReceived: '0', //16
     bankref: '', //17
     status: '', //18
+    customerName: '', //19
+    orderType: '', //20
+    businessTypeID: '', //21
+    orderJson: '', //22
   };
 
   formFields: MyFormField[] = [
@@ -195,6 +202,30 @@ export class SaleComponent implements OnInit {
       type: 'hidden',
       required: false,
     },
+    {
+      value: this.pageFields.customerName,
+      msg: 'enter customer name',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.orderType,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.businessTypeID,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.orderJson,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
   ];
 
   error: any;
@@ -207,6 +238,10 @@ export class SaleComponent implements OnInit {
   productList: any = [];
   bankList: any = [];
   partyList: any = [];
+  orderList: any = [];
+
+  orderJsonList: any = [];
+
   moduleId: string | null;
 
   constructor(
@@ -224,6 +259,8 @@ export class SaleComponent implements OnInit {
     // this.globalService.setHeaderTitle("Sale");
     this.formFields[1].value = this.globalService.getUserId().toString();
 
+    this.lblBusinessTypeID = this.globalService.getBusinessTypeID();
+
     this.formFields[12].value = this.globalService.getBusinessID();
     this.formFields[13].value = this.globalService.getBranchID();
 
@@ -233,6 +270,7 @@ export class SaleComponent implements OnInit {
     this.getParty();
     this.getBank();
     this.getInvoice();
+    this.getOrder();
   }
   // @HostListener('window:keydown', ['$event'])
   // onKeyDown(event: KeyboardEvent) {
@@ -364,8 +402,13 @@ export class SaleComponent implements OnInit {
                 response[i].productID +
                 '.png';
             }
+
             this.productList.push({
+              barcode1: response[i].barcode1,
+              barcode2: response[i].barcode2,
+              barcode3: response[i].barcode3,
               availableqty: response[i].qty,
+              qty: response[i].qty,
               costPrice: response[i].costPrice,
               invoiceDate: response[i].invoiceDate,
               pPriceID: response[i].pPriceID,
@@ -373,9 +416,11 @@ export class SaleComponent implements OnInit {
               productName: response[i].productName,
               salePrice: response[i].salePrice,
               imgUrl: img,
+              locationID: response[i].locationID,
+              packing: response[i].packing,
+              packingSalePrice: response[i].packingSalePrice,
             });
           }
-          console.log(this.productList);
         },
         (error: any) => {
           console.log(error);
@@ -730,10 +775,12 @@ export class SaleComponent implements OnInit {
       this.formFields[18].value = 0;
     } else if (printSection === 'kotCustomerBill') {
       this.formFields[18].value = 1;
-    }
-    else {
+    } else {
       this.formFields[18].value = null;
     }
+    this.formFields[21].value = this.globalService.getBusinessTypeID();
+
+    this.formFields[22].value = JSON.stringify(this.orderJsonList);
 
     this.dataService
       .savetHttp(this.pageFields, this.formFields, 'core-api/Sale/saveSales')
@@ -753,14 +800,12 @@ export class SaleComponent implements OnInit {
             this.printSale.lblBank = this.lblBankAmount;
             this.printSale.lblSubTotal = this.lblTotal;
             this.printSale.lblChange = this.formFields[8].value;
-            if (printSection === 'kot' || 'kotCustomerBill') {
-              this.printKotReport(prodTableData, response, date,printSection);
-              return;
-            }
+
             setTimeout(() => this.globalService.printData(printSection), 200);
             this.resetBank();
             this.reset();
             this.getInvoice();
+            this.getOrder();
             setTimeout(() => this._txtFocusCode.nativeElement.focus(), 1000);
           } else {
             this.valid.apiErrorResponse(response.toString());
@@ -773,17 +818,163 @@ export class SaleComponent implements OnInit {
       );
   }
 
-  printKotReport(prodTableData:any,response:any,date:any,printSection:string) {
+  saveOrder(printSection: string) {
+    if (
+      this.formFields[7].value == 0 &&
+      (this.formFields[3].value == 0 || this.formFields[3].value == '')
+    ) {
+      this.valid.apiInfoResponse('select customer');
+      return;
+    }
+
+    this.formFields[21].value = this.globalService.getBusinessTypeID();
+
+    if (this.rdbType == '') {
+      this.valid.apiInfoResponse('select type');
+      return;
+    } else {
+      this.formFields[20].value = this.rdbType;
+    }
+
+    if (this.formFields[3].value != 0) {
+      var id = this.formFields[3].value;
+      var result = this.partyList.filter(function (val: any) {
+        return val.partyID == id;
+      });
+      this.lblCustomerName = result[0].partyName;
+      this.formFields[19].value = result[0].partyName;
+    } else {
+      this.lblCustomerName = '';
+    }
+
+    var date = new Date();
+
+    this.formFields[16].value = this.cmbBankAmount;
+    if (this.cmbBankAmount == '' || this.cmbBankAmount == null) {
+      this.formFields[16].value = '0';
+    }
+    this.lblCash = this.formFields[7].value;
+
+    this.formFields[2].value = new Date();
+
+    var prodTableData: any = [];
+
+    for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
+      if (this.productSaleTable.tableData[i].status != 'deleted') {
+        prodTableData.push({
+          productID: this.productSaleTable.tableData[i].productID,
+          productName: this.productSaleTable.tableData[i].productName,
+          qty: this.productSaleTable.tableData[i].qty,
+          costPrice: this.productSaleTable.tableData[i].costPrice,
+          salePrice: this.productSaleTable.tableData[i].salePrice,
+          locationID: this.productSaleTable.tableData[i].locationID,
+          total:
+            this.productSaleTable.tableData[i].salePrice *
+            this.productSaleTable.tableData[i].qty,
+          status: '',
+        });
+      }
+    }
+    this.formFields[10].value = JSON.stringify(prodTableData);
+
+    if (prodTableData.length == 0) {
+      this.valid.apiInfoResponse('enter products');
+      return;
+    }
+
+    // if (
+    //   (this.formFields[7].value == '' || this.formFields[7].value == null) &&
+    //   this.formFields[16].value == 0
+    // ) {
+    //   this.valid.apiInfoResponse('enter cash');
+    //   // this.formFields[8].value = 0 - this.lblTotal;
+    //   return;
+    // }
+    // if (
+    //   (this.formFields[3].value == '' || this.formFields[3].value == '0') &&
+    //   this.formFields[7].value == 0 &&
+    //   this.formFields[16].value == 0
+    // ) {
+    //   this.valid.apiInfoResponse('enter cash');
+    //   return;
+    // }
+    // if (this.formFields[3].value == '') {
+    //   var cash =
+    //     parseInt(this.formFields[6].value) +
+    //     parseInt(this.formFields[7].value) +
+    //     parseInt(this.formFields[16].value);
+    //   if (this.lblTotal > cash) {
+    //     this.valid.apiInfoResponse('enter correct cash');
+    //     return;
+    //   }
+    // }
+
+    if (this.lblTotal < parseInt(this.formFields[6].value)) {
+      this.formFields[6].value =
+        parseInt(this.formFields[6].value) - parseInt(this.formFields[8].value);
+    }
+    if (this.formFields[17].value == '0') {
+      this.formFields[17].value = '';
+    }
+    // if (printSection === 'kot') {
+    //   this.formFields[18].value = 0;
+    // } else if (printSection === 'kotCustomerBill') {
+    //   this.formFields[18].value = 1;
+    // } else {
+    //   this.formFields[18].value = null;
+    // }
+
+    this.dataService
+      .savetHttp(this.pageFields, this.formFields, 'core-api/Sale/saveOrder')
+      .subscribe(
+        (response: any) => {
+          // console.log(response);
+          if (response.message == 'Success') {
+            this.valid.apiInfoResponse('Record saved successfully');
+
+            this.printKot.tableData = prodTableData;
+
+            this.printKot.lblInvoice = response.orderNo;
+            this.printKot.lblDate = date;
+            this.printKot.lblType = this.rdbType;
+            // if (printSection === 'kot' || 'kotCustomerBill') {
+            //   this.printKotReport(prodTableData, response, date, printSection);
+            //   return;
+            // }
+            setTimeout(() => this.globalService.printData(printSection), 200);
+            this.resetBank();
+            this.reset();
+            this.getOrder();
+            setTimeout(() => this._txtFocusCode.nativeElement.focus(), 1000);
+          } else {
+            this.valid.apiErrorResponse(response.toString());
+          }
+        },
+        (error: any) => {
+          this.error = error;
+          this.valid.apiErrorResponse(this.error);
+        }
+      );
+  }
+
+  printKotReport(
+    prodTableData: any,
+    response: any,
+    date: any,
+    printSection: string
+  ) {
     this.printKot.tableData = prodTableData;
-    printSection === 'kotCustomerBill' ? this.printKot.isCustomer = true : this.printKot.isCustomer = false;
+    printSection === 'kotCustomerBill'
+      ? (this.printKot.isCustomer = true)
+      : (this.printKot.isCustomer = false);
     this.printKot.toPrintData.push({
       lblInvoice: response.invoiceNo,
       lblDate: date,
     });
     setTimeout(() => this.printKot.print());
-    this.resetBank();
-    this.reset();
-    this.getInvoice();
+    // this.resetBank();
+    // this.reset();
+    // this.getInvoice();
   }
 
   checkSaleReturn() {
@@ -891,6 +1082,7 @@ export class SaleComponent implements OnInit {
     this.txtCode = '';
     this.chkApplied = false;
     this.percentage = 0;
+    this.lblOrder = '';
     $('#saleReturnModal').modal('hide');
   }
 
@@ -899,6 +1091,7 @@ export class SaleComponent implements OnInit {
       this.save(printSection);
     }
   }
+
   calculateTotalAmount(item: any) {
     if (item == 1) {
       this.formFields[6].value = Math.round(
@@ -978,6 +1171,7 @@ export class SaleComponent implements OnInit {
   hideModal() {
     $('#customerModal').modal('hide');
   }
+
   getInvoice() {
     this.dataService
       .getHttp(
@@ -1001,6 +1195,28 @@ export class SaleComponent implements OnInit {
         }
       );
   }
+
+  getOrder() {
+    this.dataService
+      .getHttp(
+        'core-api/Sale/getOrder?branchID=' +
+          this.globalService.getBranchID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.orderList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
   getInvoiceDetail(item: any, printSection: string) {
     this.dataService
       .getHttp(
@@ -1046,6 +1262,144 @@ export class SaleComponent implements OnInit {
         },
         (error: any) => {
           console.log(error);
+        }
+      );
+  }
+
+  getOrderDetail(item: any) {
+    this.lblOrder = item.orderID;
+    this.formFields[19].value = item.customerName;
+    this.rdbType = item.orderType;
+
+    if (this.orderJsonList.length == 0) {
+      this.orderJsonList.push({
+        orderID: item.orderID,
+        customerID: item.customerID,
+      });
+    } else {
+      for (var i = 0; i < this.orderJsonList.length; i++) {
+        if (this.orderJsonList[i].customerID == item.customerID) {
+          this.valid.apiInfoResponse('customer order not matched');
+          return;
+        }
+        if (this.orderJsonList[i].orderID == item.orderID) {
+          this.valid.apiInfoResponse('order already added in list');
+          return;
+        }
+      }
+    }
+
+    this.dataService
+      .getHttp(
+        'core-api/Sale/getOrderDetail?branchid=' +
+          this.globalService.getBranchID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId +
+          '&orderNo=' +
+          item.orderID,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          console.log(response);
+          for (var i = 0; i < response.length; i++) {
+            var found = false;
+            var index = 0;
+            for (var j = 0; j < this.productSaleTable.tableData.length; j++) {
+              if (
+                this.productSaleTable.tableData[j].productID ==
+                response[i].productID
+              ) {
+                found = true;
+                index = j;
+                j = this.productSaleTable.tableData.length + 1;
+              }
+            }
+
+            if (found == true) {
+              if (this.productSaleTable.tableData[index].status == 'deleted') {
+                this.productSaleTable.tableData[index].status = '';
+              } else {
+                this.productSaleTable.tableData[index].qty += response[i].qty;
+                this.productSaleTable.tableData[index].total =
+                  this.productSaleTable.tableData[index].salePrice *
+                  this.productSaleTable.tableData[index].qty;
+              }
+            } else {
+              this.productSaleTable.tableData.push({
+                productID: response[i].productID,
+                productName: response[i].productName,
+                qty: response[i].qty,
+                costPrice: response[i].costPrice,
+                salePrice: response[i].price,
+                total: response[i].qty * response[i].price,
+                status: '',
+              });
+            }
+          }
+
+          this.lblTotal = 0;
+          for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
+            this.lblTotal += this.productSaleTable.tableData[i].total;
+          }
+          if (this.formFields[7].value > 0) {
+            this.formFields[8].value -= this.lblTotal;
+          }
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
+  deleteOrder(item: any) {
+    var pageFields = {
+      orderID: '0',
+      userID: '',
+      moduleId: '',
+    };
+
+    var formFields: MyFormField[] = [
+      {
+        value: pageFields.orderID,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
+      {
+        value: pageFields.userID,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
+      {
+        value: pageFields.moduleId,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
+    ];
+
+    formFields[0].value = item.orderID;
+    formFields[1].value = this.globalService.getUserId().toString();
+    formFields[2].value = localStorage.getItem('moduleId');
+
+    this.dataService
+      .deleteHttp(pageFields, formFields, 'core-api/Sale/deleteOrder')
+      .subscribe(
+        (response: any) => {
+          if (response.message == 'Success') {
+            this.valid.apiInfoResponse('Record deleted successfully');
+            this.getOrder();
+          } else {
+            this.valid.apiErrorResponse(response[0]);
+          }
+        },
+        (error: any) => {
+          this.error = error;
+          this.valid.apiErrorResponse(this.error);
         }
       );
   }
