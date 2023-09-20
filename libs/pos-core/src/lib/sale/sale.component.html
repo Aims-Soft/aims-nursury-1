@@ -877,7 +877,7 @@
                 <td class="text-center">{{ item.total | number }}</td>
                 <td class="text-center">
                   <span class="txtClrDarkGrey cursorPointer ps-2 pe-2">
-                    <mat-icon (click)="deleteOrder(item)">delete</mat-icon>
+                    <mat-icon (click)="checkPin(item)">delete</mat-icon>
                   </span>
                   <span class="txtClrRed cursorPointer ps-2 pe-2">
                     <mat-icon (click)="getOrderDetail(item)">edit</mat-icon>
@@ -891,3 +891,35 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="pinModal" role="dialog" data-bs-backdrop="false">
+  <div class="modal-dialog modal-md mat-elevation-z20" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex flex-row-reverse bg-dark-grey">
+        <!-- <h4 class="modal-title align-self-center text-white">Pin</h4> -->
+        <div class="cancelIcon cursorPointer" data-bs-dismiss="modal"></div>
+      </div>
+
+      <div class="modal-body overflow-hidden">
+        <div class="d-flex flex-column align-items-center">
+          <div class="padLockIcon mb-3"></div>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Enter Pin"
+              [(ngModel)]="txtPin"
+              type="password"
+            />
+          </mat-form-field>
+          <button mat-button class="resetBtn ps-5 pe-5" (click)="pin()">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- modal-content -->
+  </div>
+  <!-- modal-dialog -->
+</div>
+<!--modal-->

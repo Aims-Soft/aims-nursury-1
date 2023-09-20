@@ -39,6 +39,8 @@ export class SaleComponent implements OnInit {
   @ViewChild('txtCash') _txtCash: ElementRef;
   @ViewChild('txtFocusCode') _txtFocusCode: ElementRef;
 
+  txtPin: any = '';
+  lblOrderID: any = '';
   lblOrder: any = '';
   rdbType: any = '';
   roleID: any = 0;
@@ -1278,7 +1280,7 @@ export class SaleComponent implements OnInit {
       });
     } else {
       for (var i = 0; i < this.orderJsonList.length; i++) {
-        if (this.orderJsonList[i].customerID == item.customerID) {
+        if (this.orderJsonList[i].customerID != item.customerID) {
           this.valid.apiInfoResponse('customer order not matched');
           return;
         }
@@ -1287,6 +1289,10 @@ export class SaleComponent implements OnInit {
           return;
         }
       }
+      this.orderJsonList.push({
+        orderID: item.orderID,
+        customerID: item.customerID,
+      });
     }
 
     this.dataService
@@ -1303,7 +1309,6 @@ export class SaleComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          console.log(response);
           for (var i = 0; i < response.length; i++) {
             var found = false;
             var index = 0;
@@ -1354,6 +1359,48 @@ export class SaleComponent implements OnInit {
       );
   }
 
+  checkPin(item: any) {
+    if (
+      this.globalService.getPinCode() == null ||
+      this.globalService.getPinCode() == '0'
+    ) {
+      this.valid.apiErrorResponse('Pin not allowed');
+      return;
+    } else {
+      $('#pinModal').modal('show');
+      this.lblOrderID = item.orderID;
+    }
+  }
+
+  pin() {
+    if (this.txtPin == '') {
+      this.valid.apiErrorResponse('enter pin');
+      return;
+    } else {
+      this.dataService
+        .getHttp(
+          'user-api/User/getPin?pin=' +
+            this.txtPin +
+            '&userID=' +
+            this.globalService.getUserId(),
+          ''
+        )
+        .subscribe(
+          (response: any) => {
+            if (response.length == 0) {
+              this.valid.apiErrorResponse('Invlaid pin');
+              return;
+            } else {
+              this.deleteOrder(this.lblOrderID);
+            }
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        );
+    }
+  }
+
   deleteOrder(item: any) {
     var pageFields = {
       orderID: '0',
@@ -1382,7 +1429,7 @@ export class SaleComponent implements OnInit {
       },
     ];
 
-    formFields[0].value = item.orderID;
+    formFields[0].value = item;
     formFields[1].value = this.globalService.getUserId().toString();
     formFields[2].value = localStorage.getItem('moduleId');
 
@@ -1393,6 +1440,10 @@ export class SaleComponent implements OnInit {
           if (response.message == 'Success') {
             this.valid.apiInfoResponse('Record deleted successfully');
             this.getOrder();
+            this.lblOrderID = '';
+            this.txtPin = '';
+
+            $('#pinModal').modal('hide');
           } else {
             this.valid.apiErrorResponse(response[0]);
           }
