@@ -43,13 +43,13 @@ export class SubCategoryComponent implements OnInit {
       value: this.pageFields.companyID,
       msg: 'select company',
       type: 'selectbox',
-      required: true,
+      required: false,
     },
     {
       value: this.pageFields.businessID,
       msg: 'select business',
       type: 'selectbox',
-      required: true,
+      required: false,
     },
     {
       value: this.pageFields.parentCategoryID,

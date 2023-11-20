@@ -66,9 +66,9 @@
                 <mat-label>Branch</mat-label>
                 <mat-select [(ngModel)]="formFields[34].value">
                   <mat-option
-                    *ngFor="let item of businessList"
-                    [value]="item.businessID"
-                    >{{ item.businessFullName }}</mat-option
+                    *ngFor="let item of branchList"
+                    [value]="item.branchID"
+                    >{{ item.branchName }}</mat-option
                   >
                 </mat-select>
               </mat-form-field>

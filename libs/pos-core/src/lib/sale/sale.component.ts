@@ -39,6 +39,7 @@ export class SaleComponent implements OnInit {
   @ViewChild('txtCash') _txtCash: ElementRef;
   @ViewChild('txtFocusCode') _txtFocusCode: ElementRef;
 
+  chkExtendOrder: any;
   txtPin: any = '';
   lblOrderID: any = '';
   lblOrder: any = '';
@@ -81,6 +82,7 @@ export class SaleComponent implements OnInit {
     orderType: '', //20
     businessTypeID: '', //21
     orderJson: '', //22
+    refOrderNo: '', //23
   };
 
   formFields: MyFormField[] = [
@@ -224,6 +226,12 @@ export class SaleComponent implements OnInit {
     },
     {
       value: this.pageFields.orderJson,
+      msg: '',
+      type: 'hidden',
+      required: false,
+    },
+    {
+      value: this.pageFields.refOrderNo,
       msg: '',
       type: 'hidden',
       required: false,
@@ -400,7 +408,7 @@ export class SaleComponent implements OnInit {
               //   'https://image.sungreenfresh.com:7061/assets/ui/productPictures/noImage.png';
             } else {
               img =
-                'http://135.181.62.34:7060/assets/ui/productPictures2/' +
+                'http://135.181.62.34:7060/assets/ui/productPictures/' +
                 response[i].productID +
                 '.png';
             }
@@ -643,14 +651,15 @@ export class SaleComponent implements OnInit {
 
   totalBill() {
     this.lblTotal = 0;
-
     // console.log((this.lblTotal += this.productSaleTable.tableData[i].total));
     for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
-      if (this.productSaleTable.tableData[i].status != 'deleted')
-        var currentTotal = this.productSaleTable.tableData[i].total;
-      if (!isNaN(currentTotal)) {
-        this.lblTotal += currentTotal;
+      if (this.productSaleTable.tableData[i].status != 'deleted') {
+        // var currentTotal = this.productSaleTable.tableData[i].total;
+        this.lblTotal += this.productSaleTable.tableData[i].total;
       }
+      // if (!isNaN(currentTotal)) {
+      //   this.lblTotal += currentTotal;
+      // }
     }
     if (this.formFields[7].value > 0) {
       // this.formFields[8].value -= this.lblTotal - this.formFields[7].value;
@@ -690,6 +699,8 @@ export class SaleComponent implements OnInit {
   }
 
   save(printSection: string) {
+    this.formFields[23].value = '0';
+
     if (this.formFields[8].value < 0 && this.formFields[3].value == '0') {
       this.valid.apiInfoResponse('select customer');
       return;
@@ -821,6 +832,15 @@ export class SaleComponent implements OnInit {
   }
 
   saveOrder(printSection: string) {
+    if (this.chkExtendOrder == true) {
+      if (this.formFields[23].value == '' || this.formFields[23].value == '0') {
+        this.valid.apiInfoResponse('enter ref order no');
+        return;
+      }
+    } else {
+      this.formFields[23].value = '0';
+    }
+
     if (
       this.formFields[7].value == 0 &&
       (this.formFields[3].value == 0 || this.formFields[3].value == '')
@@ -836,6 +856,13 @@ export class SaleComponent implements OnInit {
       return;
     } else {
       this.formFields[20].value = this.rdbType;
+    }
+
+    if (this.rdbType == 'Dine-In') {
+      if (this.formFields[9].value == '') {
+        this.valid.apiInfoResponse('enter table no');
+        return;
+      }
     }
 
     if (this.formFields[3].value != 0) {
@@ -1025,6 +1052,9 @@ export class SaleComponent implements OnInit {
                 this.productSaleTable.tableData
               );
 
+              this.formFields[21].value =
+                this.globalService.getBusinessTypeID();
+
               this.dataService
                 .savetHttp(
                   this.pageFields,
@@ -1074,6 +1104,8 @@ export class SaleComponent implements OnInit {
     this.formFields[7].value = '0';
     this.formFields[8].value = '0';
     this.formFields[9].value = '';
+    this.formFields[23].value = '';
+    this.chkExtendOrder = false;
 
     this.lblInvoiceNo = 0;
     this.searchProduct = '';
@@ -1085,6 +1117,7 @@ export class SaleComponent implements OnInit {
     this.chkApplied = false;
     this.percentage = 0;
     this.lblOrder = '';
+    this.orderJsonList = [];
     $('#saleReturnModal').modal('hide');
   }
 
@@ -1212,11 +1245,25 @@ export class SaleComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.orderList = response;
+          this.orderList.sort((a: any, b: any) => b.orderID - a.orderID);
         },
         (error: any) => {
           console.log(error);
         }
       );
+  }
+
+  getKeyUpOrderDetail(e: any) {
+    if (e.keyCode == 13) {
+      console.log(this.orderList);
+      var data = this.orderList.filter(
+        (x: any) => x.orderID == this.formFields[23].value
+      );
+
+      this.formFields[3].value = data[0].customerID;
+      this.formFields[9].value = data[0].remarks;
+      this.rdbType = data[0].orderType;
+    }
   }
 
   getInvoiceDetail(item: any, printSection: string) {
@@ -1268,31 +1315,36 @@ export class SaleComponent implements OnInit {
       );
   }
 
-  getOrderDetail(item: any) {
-    this.lblOrder = item.orderID;
-    this.formFields[19].value = item.customerName;
-    this.rdbType = item.orderType;
+  getOrderDetail(item: any, value: any) {
+    if (value == 'edit') {
+      this.lblOrder = item.orderID;
+      this.formFields[19].value = item.customerName;
+      this.formFields[9].value = item.remarks;
+      this.rdbType = item.orderType;
 
-    if (this.orderJsonList.length == 0) {
-      this.orderJsonList.push({
-        orderID: item.orderID,
-        customerID: item.customerID,
-      });
-    } else {
-      for (var i = 0; i < this.orderJsonList.length; i++) {
-        if (this.orderJsonList[i].customerID != item.customerID) {
-          this.valid.apiInfoResponse('customer order not matched');
-          return;
+      if (this.orderJsonList.length == 0) {
+        this.orderJsonList.push({
+          orderID: item.orderID,
+          refOrderID: item.refOrderID,
+          customerID: item.customerID,
+        });
+      } else {
+        for (var i = 0; i < this.orderJsonList.length; i++) {
+          if (this.orderJsonList[i].refOrderID != item.refOrderID) {
+            this.valid.apiInfoResponse('reference order no. not matched');
+            return;
+          }
+          if (this.orderJsonList[i].orderID == item.orderID) {
+            this.valid.apiInfoResponse('order already added in list');
+            return;
+          }
         }
-        if (this.orderJsonList[i].orderID == item.orderID) {
-          this.valid.apiInfoResponse('order already added in list');
-          return;
-        }
+        this.orderJsonList.push({
+          orderID: item.orderID,
+          refOrderID: item.refOrderID,
+          customerID: item.customerID,
+        });
       }
-      this.orderJsonList.push({
-        orderID: item.orderID,
-        customerID: item.customerID,
-      });
     }
 
     this.dataService
@@ -1309,48 +1361,71 @@ export class SaleComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          for (var i = 0; i < response.length; i++) {
-            var found = false;
-            var index = 0;
-            for (var j = 0; j < this.productSaleTable.tableData.length; j++) {
-              if (
-                this.productSaleTable.tableData[j].productID ==
-                response[i].productID
-              ) {
-                found = true;
-                index = j;
-                j = this.productSaleTable.tableData.length + 1;
+          if (value == 'edit') {
+            for (var i = 0; i < response.length; i++) {
+              var found = false;
+              var index = 0;
+              for (var j = 0; j < this.productSaleTable.tableData.length; j++) {
+                if (
+                  this.productSaleTable.tableData[j].productID ==
+                  response[i].productID
+                ) {
+                  found = true;
+                  index = j;
+                  j = this.productSaleTable.tableData.length + 1;
+                }
+              }
+
+              if (found == true) {
+                if (
+                  this.productSaleTable.tableData[index].status == 'deleted'
+                ) {
+                  this.productSaleTable.tableData[index].status = '';
+                } else {
+                  this.productSaleTable.tableData[index].qty += response[i].qty;
+                  this.productSaleTable.tableData[index].total =
+                    this.productSaleTable.tableData[index].salePrice *
+                    this.productSaleTable.tableData[index].qty;
+                }
+              } else {
+                this.productSaleTable.tableData.push({
+                  productID: response[i].productID,
+                  productName: response[i].productName,
+                  qty: response[i].qty,
+                  costPrice: response[i].costPrice,
+                  salePrice: response[i].price,
+                  total: response[i].qty * response[i].price,
+                  status: '',
+                });
               }
             }
 
-            if (found == true) {
-              if (this.productSaleTable.tableData[index].status == 'deleted') {
-                this.productSaleTable.tableData[index].status = '';
-              } else {
-                this.productSaleTable.tableData[index].qty += response[i].qty;
-                this.productSaleTable.tableData[index].total =
-                  this.productSaleTable.tableData[index].salePrice *
-                  this.productSaleTable.tableData[index].qty;
-              }
-            } else {
-              this.productSaleTable.tableData.push({
+            this.lblTotal = 0;
+            for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
+              this.lblTotal += this.productSaleTable.tableData[i].total;
+            }
+            if (this.formFields[7].value > 0) {
+              this.formFields[8].value -= this.lblTotal;
+            }
+          } else {
+            this.printKot.lblInvoice = item.orderID;
+            this.printKot.lblType = item.orderType;
+
+            var tempList: any = [];
+            for (var i = 0; i < response.length; i++) {
+              tempList.push({
+                orderDetailID: response[i].orderDetailID,
+                orderID: response[i].orderID,
                 productID: response[i].productID,
                 productName: response[i].productName,
-                qty: response[i].qty,
+                price: response[i].price,
                 costPrice: response[i].costPrice,
-                salePrice: response[i].price,
-                total: response[i].qty * response[i].price,
-                status: '',
+                qty: response[i].qty,
               });
             }
-          }
+            this.printKot.tableData = tempList;
 
-          this.lblTotal = 0;
-          for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
-            this.lblTotal += this.productSaleTable.tableData[i].total;
-          }
-          if (this.formFields[7].value > 0) {
-            this.formFields[8].value -= this.lblTotal;
+            setTimeout(() => this.globalService.printData('#print-kot'), 200);
           }
         },
         (error: any) => {

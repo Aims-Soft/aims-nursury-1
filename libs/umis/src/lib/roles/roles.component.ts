@@ -357,6 +357,7 @@ export class RolesComponent implements OnInit {
   }
 
   save() {
+    this.formFields[5].value = '0';
     var tempList: any = [];
 
     if (this.tempModuleList.length > 0) {

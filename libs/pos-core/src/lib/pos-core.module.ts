@@ -66,6 +66,7 @@ import { UpdateProductDataComponent } from './update-product-data/update-product
 import { ProductImageUpdateComponent } from './product/product-image-update/product-image-update.component';
 import { AddCustoomerComponent } from './sale/add-custoomer/add-custoomer.component';
 import { PrintKotSaleComponent } from './sale/print-kot-sale/print-kot-sale.component';
+import { UploadProductComponent } from './upload-product/upload-product.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -95,12 +96,12 @@ export const posCoreRoutes: Route[] = [
   { path: 'designation', component: DesignationComponent },
   { path: 'dashboard', component: PosDashboardComponent },
   { path: 'updtprod', component: UpdateProductDataComponent },
-
+  { path: 'uploadProduct', component: UploadProductComponent },
 ];
 
 @NgModule({
   imports: [
-    CommonModule, 
+    CommonModule,
     RouterModule.forChild(posCoreRoutes),
     MaterialModule,
     FormsModule,
@@ -110,7 +111,7 @@ export const posCoreRoutes: Route[] = [
     TextMaskModule,
     ChartModule,
   ],
-  exports:[
+  exports: [
     RouterModule,
     ProductTableComponent,
     CategoryTableComponent,
@@ -184,6 +185,7 @@ export const posCoreRoutes: Route[] = [
     ProductImageUpdateComponent,
     AddCustoomerComponent,
     PrintKotSaleComponent,
+    UploadProductComponent,
   ],
   providers: [
     {

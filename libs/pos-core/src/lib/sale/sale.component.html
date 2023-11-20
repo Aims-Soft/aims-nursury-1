@@ -182,9 +182,9 @@
             <mat-label>Branch</mat-label>
             <mat-select [(ngModel)]="formFields[13].value">
               <mat-option
-                *ngFor="let item of businessList"
-                [value]="item.businessID"
-                >{{ item.businessFullName }}</mat-option
+                *ngFor="let item of branchList"
+                [value]="item.branchID"
+                >{{ item.branchName }}</mat-option
               >
             </mat-select>
           </mat-form-field>
@@ -329,7 +329,7 @@
               <div
                 *ngFor="
                   let item of productList
-                    | search: 'productName,availableqty':tblSearch
+                    | search: 'productName,salePrice':tblSearch
                 "
               >
                 <div
@@ -344,7 +344,7 @@
                       width="80px"
                     />
                     <label>{{ item.productName }}</label>
-                    <h4 class="text-center">{{ item.availableqty }}</h4>
+                    <h4 class="text-center">{{ item.salePrice }}</h4>
                   </div>
                 </div>
               </div>
@@ -397,6 +397,24 @@
             </div>
           </div>
           <div class="row">
+            <div class="col-md-2 mt-3">
+              <mat-checkbox
+                *ngIf="lblBusinessTypeID == 3"
+                [(ngModel)]="chkExtendOrder"
+                >Extend Order</mat-checkbox
+              >
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="w-100" *ngIf="lblBusinessTypeID == 3">
+                <input
+                  matInput
+                  [(ngModel)]="formFields[23].value"
+                  placeholder="Ref Order No"
+                  [disabled]="!chkExtendOrder"
+                  (keyup)="getKeyUpOrderDetail($event)"
+                />
+              </mat-form-field>
+            </div>
             <div class="col-md-4">
               <mat-form-field class="w-100">
                 <mat-label>Customer Name</mat-label>
@@ -427,30 +445,38 @@
                 <mat-icon class="text-center mb-3">add</mat-icon>
               </button>
             </div>
-            <div class="col-md-6 mt-3">
-              <mat-radio-group
-                [(ngModel)]="rdbType"
-                aria-label="Select an option"
+            <div class="col-md-2">
+              <div
+                class="d-flex flex-column justify-content-center align-items-center"
               >
-                <mat-radio-button
-                  class="fs-5 ms-2"
-                  checked="true"
-                  value="Dine-In"
-                  >Dine-In</mat-radio-button
+                <mat-radio-group
+                  [(ngModel)]="rdbType"
+                  aria-label="Select an option"
                 >
-                <mat-radio-button class="fs-5 ms-3" value="Take-Away"
-                  >Take-Away</mat-radio-button
-                >
-              </mat-radio-group>
+                  <mat-radio-button class="fs-5" checked="true" value="Dine-In"
+                    >Dine-In</mat-radio-button
+                  >
+                  <mat-radio-button class="fs-5" value="Take-Away"
+                    >Take-Away</mat-radio-button
+                  >
+                </mat-radio-group>
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
-              <mat-form-field class="w-100">
+              <mat-form-field class="w-100" *ngIf="lblBusinessTypeID != 3">
                 <input
                   matInput
                   [(ngModel)]="formFields[9].value"
                   placeholder="Remarks"
+                />
+              </mat-form-field>
+              <mat-form-field class="w-100" *ngIf="lblBusinessTypeID == 3">
+                <input
+                  matInput
+                  [(ngModel)]="formFields[9].value"
+                  placeholder="Table No"
                 />
               </mat-form-field>
             </div>
@@ -857,9 +883,13 @@
             <thead>
               <tr class="bg-light">
                 <th class="text-secondary">Order No.</th>
+                <th class="text-secondary">Ref Order No.</th>
                 <th class="text-secondary">Customer Name</th>
                 <th class="text-secondary">Order Type</th>
                 <th class="text-secondary">Amount</th>
+                <th class="text-secondary" *ngIf="lblBusinessTypeID == 3">
+                  Table
+                </th>
                 <th class="text-center">Action</th>
               </tr>
             </thead>
@@ -872,15 +902,26 @@
                 "
               >
                 <td class="">{{ item.orderID }}</td>
+                <td class="">{{ item.refOrderID }}</td>
                 <td>{{ item.customerName }}</td>
                 <td class="">{{ item.orderType }}</td>
                 <td class="text-center">{{ item.total | number }}</td>
+                <td *ngIf="lblBusinessTypeID == 3">
+                  {{ item.remarks }}
+                </td>
                 <td class="text-center">
+                  <span class="txtClrDarkGrey cursorPointer ps-2 pe-2">
+                    <mat-icon (click)="getOrderDetail(item, 'print')"
+                      >print</mat-icon
+                    >
+                  </span>
                   <span class="txtClrDarkGrey cursorPointer ps-2 pe-2">
                     <mat-icon (click)="checkPin(item)">delete</mat-icon>
                   </span>
                   <span class="txtClrRed cursorPointer ps-2 pe-2">
-                    <mat-icon (click)="getOrderDetail(item)">edit</mat-icon>
+                    <mat-icon (click)="getOrderDetail(item, 'edit')"
+                      >edit</mat-icon
+                    >
                   </span>
                 </td>
               </tr>

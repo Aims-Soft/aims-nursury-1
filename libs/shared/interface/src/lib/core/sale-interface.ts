@@ -22,4 +22,5 @@ export interface SaleInterface {
   orderType?: '';
   businessTypeID?: '';
   orderJson?: '';
+  refOrderNo?: '';
 }
