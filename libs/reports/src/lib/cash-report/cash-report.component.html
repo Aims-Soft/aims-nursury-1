@@ -1,0 +1,95 @@
+<div class="bg-dark-light">
+  <div class="container">
+    <div
+      class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+    >
+      <div class="BankDetailsIcon"></div>
+      <h3 class="ms-3 mt-2">Cash Report</h3>
+      <label class="ms-4 mt-3 me-lg-auto"></label>
+      <button
+        mat-button
+        class="resetBtn"
+        styleSheetFile="assets/printstyles.css"
+        printSectionId="section"
+        ngxPrint
+      >
+        Print
+      </button>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-md-3">
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Date</mat-label>
+        <!-- [(ngModel)]="formFields[11].value" -->
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          [(ngModel)]="invoiceDate"
+          (ngModelChange)="getCashReport(invoiceDate)"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div class="container mt-5" id="section">
+  <div class="row d-none">
+    <div class="col-md-6 text-left">
+      <div class="h1Report">Cash Report</div>
+      <!-- <div class="h3Report">Date: <b>{{currentDate | date: 'dd-mm-yyyy'}}</b></div> -->
+    </div>
+    <div class="col-md-6 text-right">
+      <!-- <img src="assets/ui/ReportPictures/Logo.svg" width="80px" /> -->
+      <div class="h1Report txtDarkGrey">{{ lblBusinessName }}</div>
+    </div>
+  </div>
+
+  <div class="row d-none">
+    <img
+      src="assets/ui/ReportPictures/GradientBar.svg"
+      height="20px"
+      width="100%"
+    />
+  </div>
+  <div class="row d-none">
+    <div class="col-md-4">Invoice Date: {{ invoiceDate | date }}</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <perfect-scrollbar
+        class="bg-light-grey stickyHeader"
+        style="height: 30em; max-width: 100%"
+      >
+        <table class="table table-striped table-hover mat-elevation-z3">
+          <thead>
+            <tr class="bg-light sticky-top">
+              <th class="text-center border-bottom-green">Sr#</th>
+              <th class="text-center border-bottom-green">Invoice No</th>
+              <th class="border-bottom-green">Party Name</th>
+              <th class="text-center border-bottom-green">Type</th>
+              <th class="text-center border-bottom-green">Debit (Rs)</th>
+              <th class="text-center border-bottom-green">Credit (Rs)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of reportList; let i = index">
+              <td class="text-center">{{ i + 1 }}</td>
+              <td>{{ item.invoiceNo }}</td>
+              <td class="text-center">{{ item.partyName }}</td>
+              <td class="text-center">{{ item.invoiceType }}</td>
+              <td class="text-center">{{ item.debit | number }}</td>
+              <td class="text-center">{{ item.credit | number }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </perfect-scrollbar>
+    </div>
+  </div>
+</div>

@@ -96,6 +96,7 @@ export class DailySaleReportComponent implements OnInit {
               return sum + total.margin;
             }, 0);
             this.lblTotalMargin = margin;
+
             // const disc = this.reportList.reduce((sum: any, total: any) => {
             //   return sum + total.discount;
             // }, 0);

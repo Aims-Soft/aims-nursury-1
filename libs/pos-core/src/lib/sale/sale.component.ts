@@ -1016,6 +1016,8 @@ export class SaleComponent implements OnInit {
   }
 
   saleReturn() {
+    this.formFields[23].value = '0';
+
     this.dataService
       .getHttp(
         'core-api/Sale/getSaleReturn?invoiceNo=' +

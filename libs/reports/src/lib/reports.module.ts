@@ -26,6 +26,8 @@ import { TrialBalanceComponent } from './trial-balance/trial-balance.component';
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { BalanceSheetComponent } from './balance-sheet/balance-sheet.component';
 import { DailyInvoiceReportComponent } from './daily-invoice-report/daily-invoice-report.component';
+import { CashReportComponent } from './cash-report/cash-report.component';
+import { CreditReportComponent } from './credit-report/credit-report.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -44,6 +46,8 @@ export const reportsRoutes: Route[] = [
   { path: 'balsheetrpt', component: BalanceSheetComponent },
   { path: 'jourvoucherrpt', component: JournalVoucherComponent },
   { path: 'dailyinvoiverpt', component: DailyInvoiceReportComponent },
+  { path: 'cashreport', component: CashReportComponent },
+  { path: 'creditreport', component: CreditReportComponent },
 ];
 
 @NgModule({
@@ -70,6 +74,8 @@ export const reportsRoutes: Route[] = [
     JournalVoucherComponent,
     BalanceSheetComponent,
     DailyInvoiceReportComponent,
+    CashReportComponent,
+    CreditReportComponent,
   ],
   providers: [
     {
