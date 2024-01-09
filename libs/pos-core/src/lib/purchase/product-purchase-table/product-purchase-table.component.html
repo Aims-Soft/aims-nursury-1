@@ -19,6 +19,7 @@
           <th>Quantity</th>
           <th>Cost Price</th>
           <th>Sale Price</th>
+          <th>Discount</th>
           <th>ADT %</th>
           <th>ADT Amount</th>
           <th>ST %</th>
@@ -33,10 +34,10 @@
           <!-- <td>{{item.barcode1}}</td> -->
           <td>{{ item.productName }}</td>
           <td>
-            <mat-form-field class="w-100" floatLabel="never">
+            <mat-form-field class="w-100 custom-width" floatLabel="never">
               <input
                 class="text-right"
-                (keyup)="totalBill(i, item.qty)"
+                (keyup)="totalBill(i, item.qty); calculateTotal()"
                 [(ngModel)]="item.qty"
                 matInput
               />
@@ -44,10 +45,10 @@
           </td>
           <!-- <td>{{item.costPrice}}</td> -->
           <td>
-            <mat-form-field class="w-100" floatLabel="never">
+            <mat-form-field class="w-100 custom-width" floatLabel="never">
               <input
                 class="text-right"
-                (keyup)="cost(i, item.costPrice)"
+                (keyup)="cost(i, item.costPrice); calculateTotal()"
                 [(ngModel)]="item.costPrice"
                 matInput
               />
@@ -55,15 +56,30 @@
           </td>
           <!-- <td>{{item.salePrice}}</td> -->
           <td>
-            <mat-form-field class="w-100" floatLabel="never">
-              <input class="text-right" [(ngModel)]="item.salePrice" matInput />
+            <mat-form-field class="w-100 custom-width" floatLabel="never">
+              <input
+                class="text-right"
+                [(ngModel)]="item.salePrice"
+                matInput
+                (keyup)="calculateTotal()"
+              />
             </mat-form-field>
           </td>
           <td>
-            <mat-form-field class="w-100" floatLabel="never">
+            <mat-form-field class="w-100 custom-width" floatLabel="never">
               <input
                 class="text-right"
-                (keyup)="onADTChange(i, item.adtPer)"
+                (keyup)="discount(i, item.discount); calculateTotal()"
+                [(ngModel)]="item.discount"
+                matInput
+              />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="w-100 custom-width" floatLabel="never">
+              <input
+                class="text-right"
+                (keyup)="onADTChange(i, item.adtPer); calculateTotal()"
                 [(ngModel)]="item.adtPer"
                 matInput
               />
@@ -73,10 +89,10 @@
             {{ item.adtAmount }}
           </td>
           <td>
-            <mat-form-field class="w-100" floatLabel="never">
+            <mat-form-field class="w-100 custom-width" floatLabel="never">
               <input
                 class="text-right"
-                (keyup)="onSTChange(i, item.stPer)"
+                (keyup)="onSTChange(i, item.stPer); calculateTotal()"
                 [(ngModel)]="item.stPer"
                 matInput
               />
@@ -90,11 +106,25 @@
           <td class="text-center">
             <span
               class="txtClrLightGreen cursorPointer ps-2 pe-2"
-              (click)="delete(i)"
+              (click)="delete(i); calculateTotal()"
             >
               <mat-icon>delete</mat-icon>
             </span>
           </td>
+        </tr>
+        <tr>
+          <th class="text-center"></th>
+          <th></th>
+          <th>{{ lblTotalQty }}</th>
+          <th>{{ lblTotalCostPrice }}</th>
+          <th>{{ lblTotalSalePrice }}</th>
+          <th>{{ lblTotalDiscount }}</th>
+          <th></th>
+          <th>{{ lblTotalAdtAmount }}</th>
+          <th></th>
+          <th>{{ lblTotalStAmount }}</th>
+          <th>{{ lblTotal }}</th>
+          <th></th>
         </tr>
       </tbody>
     </table>

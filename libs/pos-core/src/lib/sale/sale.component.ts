@@ -479,7 +479,6 @@ export class SaleComponent implements OnInit {
 
   pushProductByCode(item: any, e: any) {
     if (e.ctrlKey == true) {
-      //   // alert(e.keyCode);
       this._txtCash.nativeElement.focus();
       this.formFields[7].value = '';
       this.txtCode = '';
@@ -533,14 +532,16 @@ export class SaleComponent implements OnInit {
       var found = false;
       var index = 0;
       for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
-        if (
-          this.productSaleTable.tableData[i].barcode1 == item ||
-          this.productSaleTable.tableData[i].barcode2 == item ||
-          this.productSaleTable.tableData[i].barcode3 == item
-        ) {
-          found = true;
-          index = i;
-          i = this.productSaleTable.tableData.length + 1;
+        if (item != '') {
+          if (
+            this.productSaleTable.tableData[i].barcode1 == item ||
+            this.productSaleTable.tableData[i].barcode2 == item ||
+            this.productSaleTable.tableData[i].barcode3 == item
+          ) {
+            found = true;
+            index = i;
+            i = this.productSaleTable.tableData.length + 1;
+          }
         }
       }
       if (found == true) {
@@ -1225,7 +1226,6 @@ export class SaleComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.invoiceList = response;
-          // console.log(response);
         },
         (error: any) => {
           console.log(error);
@@ -1285,7 +1285,6 @@ export class SaleComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          console.log(response);
           if (response.length > 0) {
             this.printSale.lblInvoice = response[0].invoiceNo;
             this.printSale.lblDate = response[0].invoiceDate;

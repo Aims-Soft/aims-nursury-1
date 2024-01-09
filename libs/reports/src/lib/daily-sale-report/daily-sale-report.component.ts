@@ -82,7 +82,26 @@ export class DailySaleReportComponent implements OnInit {
         .subscribe(
           (response: any) => {
             // this.deductionList = response;
+            console.log(response);
             this.reportList = response;
+            {
+            }
+            this.reportList = [];
+            for (var i = 0; i < response.length; i++) {
+              this.reportList.push({
+                invoiceNo: response[i].invoiceNo,
+                invoiceDate: response[i].invoiceDate,
+                discount: response[i].discount,
+                productName: response[i].productName,
+                qty: response[i].qty,
+                costPrice: response[i].costPrice,
+                salePrice: response[i].salePrice,
+                margin: response[i].salePrice - response[i].costPrice,
+                invoiceType: response[i].invoiceType,
+                branchid: response[i].branchid,
+              });
+            }
+
             this.sale = this.reportList.reduce((sum: any, total: any) => {
               return sum + total.salePrice;
             }, 0);
@@ -95,7 +114,7 @@ export class DailySaleReportComponent implements OnInit {
             var margin: any = this.reportList.reduce((sum: any, total: any) => {
               return sum + total.margin;
             }, 0);
-            this.lblTotalMargin = margin;
+            this.lblTotalMargin = this.sale - cost;
 
             // const disc = this.reportList.reduce((sum: any, total: any) => {
             //   return sum + total.discount;
@@ -155,6 +174,14 @@ export class DailySaleReportComponent implements OnInit {
             console.log(error);
           }
         );
+    }
+  }
+
+  exportExcel() {
+    if (this.reportList.length > 0) {
+      this.global.exportExcel('print-report', 'Daily Sales Report');
+    } else {
+      this.valid.apiInfoResponse('no record found to convert into excel');
     }
   }
 }

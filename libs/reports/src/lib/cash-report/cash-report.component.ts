@@ -72,4 +72,12 @@ export class CashReportComponent implements OnInit {
         }
       );
   }
+
+  exportExcel() {
+    if (this.reportList.length > 0) {
+      this.globalService.exportExcel('print-report', 'Cash Report');
+    } else {
+      this.valid.apiInfoResponse('no record found to convert into excel');
+    }
+  }
 }

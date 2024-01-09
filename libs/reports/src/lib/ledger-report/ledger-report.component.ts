@@ -143,4 +143,12 @@ export class LedgerReportComponent implements OnInit {
         }
       );
   }
+
+  exportExcel() {
+    if (this.reportList.length > 0) {
+      this.globalService.exportExcel('print-report', 'Ledger Report');
+    } else {
+      this.valid.apiInfoResponse('no record found to convert into excel');
+    }
+  }
 }

@@ -2,7 +2,13 @@ import { SharedHelpersFieldValidationsModule } from '@aims-pos/shared/helpers/fi
 import { MyFormField, SaleInterface } from '@aims-pos/shared/interface';
 import { SharedServicesDataModule } from '@aims-pos/shared/services/data';
 import { SharedServicesGlobalDataModule } from '@aims-pos/shared/services/global-data';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  HostListener,
+  ElementRef,
+} from '@angular/core';
 import { ProductPurchaseTableComponent } from './product-purchase-table/product-purchase-table.component';
 
 declare var $: any;
@@ -15,6 +21,13 @@ declare var $: any;
 export class PurchaseComponent implements OnInit {
   @ViewChild(ProductPurchaseTableComponent) productPurchaseTable: any;
   @ViewChild('txtCash') _txtCash: ElementRef;
+  @ViewChild('txtFocusCode') txtFocusCode: ElementRef;
+
+  lblPInvoiceNo: any = 0;
+  lblPartyName: any = 0;
+  lblInvoiceDate: any = 0;
+
+  tblSearch: any = '';
   searchProduct: any = '';
   cmbProduct: any = '';
   lblTotal: any = 0;
@@ -166,9 +179,13 @@ export class PurchaseComponent implements OnInit {
 
   error: any;
 
+  invoiceList: any = [];
+  invoiceDetailList: any = [];
   productList: any = [];
   partyList: any = [];
+
   moduleId: string | null;
+
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -188,6 +205,27 @@ export class PurchaseComponent implements OnInit {
     this.getCompany();
     this.getProduct();
     this.getParty();
+    this.getInvoice();
+  }
+
+  setFocusOnInput() {
+    if (this.txtFocusCode && this.txtFocusCode.nativeElement) {
+      this.txtFocusCode.nativeElement.focus();
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'F4') {
+      event.preventDefault();
+      this.setFocusOnInput();
+    }
+    // else if (event.key === 'Shift') {
+    //   event.preventDefault();
+    //   this.setFocusOnCash();
+    // } else if (event.key === 'F8') {
+    //   this.openProductDropdown();
+    // }
   }
 
   getCompany() {
@@ -247,6 +285,61 @@ export class PurchaseComponent implements OnInit {
           if (this.globalService.getRoleId() != 1) {
             this.formFields[13].value = this.globalService.getBranchID();
           }
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
+  getInvoice() {
+    this.dataService
+      .getHttp(
+        'report-api/FMISReport/getPurchases?companyID=' +
+          this.globalService.getCompanyID() +
+          '&branchID=' +
+          this.globalService.getBranchID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.invoiceList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
+  getInvoiceDetail(item: any) {
+    this.dataService
+      .getHttp(
+        'report-api/FMISReport/getPurchaseDetail?companyid=' +
+          this.globalService.getCompanyID() +
+          '&branchid=' +
+          this.globalService.getBranchID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          this.moduleId +
+          '&invoiceNo=' +
+          item.invoiceNo,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          console.log(response);
+
+          $('#purchaseDetailModal').modal('show');
+          this.lblPInvoiceNo = response[0].invoiceNo;
+          this.lblPartyName = response[0].empName;
+          this.lblInvoiceDate = response[0].invoiceDate;
+
+          this.invoiceDetailList = response;
         },
         (error: any) => {
           console.log(error);
@@ -345,7 +438,9 @@ export class PurchaseComponent implements OnInit {
         productName: data[0].productName,
         qty: 1,
         costPrice: data[0].costPrice,
+        tempCostPrice: data[0].costPrice,
         salePrice: data[0].salePrice,
+        discount: 0,
         locationID: data[0].locationID,
         total: data[0].salePrice,
         packing: data[0].packing,
@@ -404,7 +499,9 @@ export class PurchaseComponent implements OnInit {
           productName: data[0].productName,
           qty: 1,
           costPrice: data[0].costPrice,
+          tempCostPrice: data[0].costPrice,
           salePrice: data[0].salePrice,
+          discount: 0,
           locationID: data[0].locationID,
           total: data[0].salePrice,
           packing: data[0].packing,
@@ -425,6 +522,8 @@ export class PurchaseComponent implements OnInit {
 
     this.formFields[8].value = -this.lblTotal;
     this.txtCode = '';
+
+    this.productPurchaseTable.calculateTotal();
   }
 
   pushProduct(item: any) {
@@ -439,7 +538,9 @@ export class PurchaseComponent implements OnInit {
         productName: data[0].productName,
         qty: 1,
         costPrice: data[0].costPrice,
+        tempCostPrice: data[0].costPrice,
         salePrice: data[0].salePrice,
+        discount: 0,
         locationID: data[0].locationID,
         total: data[0].costPrice,
         stPer: 0,
@@ -486,7 +587,9 @@ export class PurchaseComponent implements OnInit {
           productName: data[0].productName,
           qty: 1,
           costPrice: data[0].costPrice,
+          tempCostPrice: data[0].costPrice,
           salePrice: data[0].salePrice,
+          discount: 0,
           locationID: data[0].locationID,
           total: data[0].costPrice,
           stPer: 0,
@@ -503,6 +606,8 @@ export class PurchaseComponent implements OnInit {
     }
 
     this.formFields[8].value = -this.lblTotal;
+
+    this.productPurchaseTable.calculateTotal();
   }
 
   totalBill() {
@@ -708,6 +813,15 @@ export class PurchaseComponent implements OnInit {
     this.lblTotal = 0;
     this.lblCash = 0;
     this.productPurchaseTable.tableData = [];
+
+    this.productPurchaseTable.lblTotalQty = 0;
+    this.productPurchaseTable.lblTotalCostPrice = 0;
+    this.productPurchaseTable.lblTotalSalePrice = 0;
+    this.productPurchaseTable.lblTotalDiscount = 0;
+    this.productPurchaseTable.lblTotal = 0;
+    this.productPurchaseTable.lblTotalAdtAmount = 0;
+    this.productPurchaseTable.lblTotalStAmount = 0;
+
     this.txtCode = '';
     $('#purchaseReturnModal').modal('hide');
   }

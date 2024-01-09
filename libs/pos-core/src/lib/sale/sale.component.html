@@ -804,7 +804,7 @@
                 <th class="text-secondary">InvoiceDate</th>
                 <th class="text-secondary">Party</th>
                 <th class="text-secondary">InvoiceType</th>
-                <th class="text-secondary">Amount</th>
+                <th class="text-secondary text-end">Amount</th>
                 <th class="text-center">Action</th>
               </tr>
             </thead>
@@ -820,7 +820,7 @@
                 <td class="">{{ item.invoiceDate | date }}</td>
                 <td>{{ item.partyname }}</td>
                 <td class="">{{ item.invoiceType }}</td>
-                <td class="text-center">{{ item.amount | number }}</td>
+                <td class="text-end">{{ item.totalamount | number }}</td>
                 <td class="text-center">
                   <span class="txtClrLightGreen cursorPointer ps-2 pe-2">
                     <mat-icon (click)="getInvoiceDetail(item, '#print-data')"

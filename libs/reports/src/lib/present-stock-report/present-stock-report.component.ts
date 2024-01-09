@@ -48,6 +48,7 @@ export class PresentStockReportComponent implements OnInit {
   getDailyStockReport() {
     var date;
     date = this.datePipe.transform(this.reportDate, 'yyyy-MM-dd');
+
     this.dataService
       .getHttp(
         'report-api/FMISReport/getStockInStockOut?invDate=' +
@@ -67,12 +68,18 @@ export class PresentStockReportComponent implements OnInit {
           this.stocktList = response;
 
           console.log(response);
-          // debugger;
-          // console.log(this.reportDate);
         },
         (error: any) => {
           console.log(error);
         }
       );
+  }
+
+  exportExcel() {
+    if (this.stocktList.length > 0) {
+      this.global.exportExcel('print-report', 'Present Stock Report');
+    } else {
+      this.valid.apiInfoResponse('no record found to convert into excel');
+    }
   }
 }

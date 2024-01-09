@@ -164,4 +164,12 @@ export class PartyLedgerReportComponent implements OnInit {
         }
       );
   }
+
+  exportExcel() {
+    if (this.reportList.length > 0) {
+      this.globalService.exportExcel('print-report', 'Party ledger Report');
+    } else {
+      this.valid.apiInfoResponse('no record found to convert into excel');
+    }
+  }
 }

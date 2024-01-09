@@ -4,7 +4,7 @@
       class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
     >
       <div class="BankDetailsIcon"></div>
-      <h3 class="ms-3 mt-2">Daily Invoice Report</h3>
+      <h3 class="ms-3 mt-2">Item Wise Sales Report</h3>
       <label class="ms-4 mt-3 me-lg-auto"></label>
       <button mat-button class="saveBtn me-2" (click)="exportExcel()">
         Export to Excel
@@ -30,7 +30,7 @@
           matInput
           [matDatepicker]="picker1"
           [(ngModel)]="startDate"
-          (ngModelChange)="getDailyInvoice(startDate, endDate)"
+          (ngModelChange)="getReport(startDate, endDate)"
         />
         <mat-datepicker-toggle
           matSuffix
@@ -42,11 +42,12 @@
     <div class="col-md-3">
       <mat-form-field class="w-100" appearance="fill">
         <mat-label>End Date</mat-label>
+        <!-- [(ngModel)]="formFields[11].value" -->
         <input
           matInput
           [matDatepicker]="picker2"
           [(ngModel)]="endDate"
-          (ngModelChange)="getDailyInvoice(startDate, endDate)"
+          (ngModelChange)="getReport(startDate, endDate)"
         />
         <mat-datepicker-toggle
           matSuffix
@@ -60,7 +61,7 @@
 <div class="container mt-5" id="section">
   <div class="row d-none">
     <div class="col-md-6 text-left">
-      <div class="h1Report">Daily Invoice Report</div>
+      <div class="h1Report">Item Wise Sales Report</div>
     </div>
     <div class="col-md-6 text-right">
       <div class="h1Report txtDarkGrey">{{ lblBusinessName }}</div>
@@ -91,25 +92,27 @@
           <thead>
             <tr class="bg-light sticky-top">
               <th class="text-center border-bottom-green">Sr#</th>
-              <th class="text-center border-bottom-green">Invoice No.</th>
-              <th class="text-center border-bottom-green">
-                Total Sale Price (Rs)
-              </th>
+              <th class="border-bottom-green">Category Name</th>
+              <th class="text-center border-bottom-green">Quantity</th>
+              <th class="text-center border-bottom-green">Cost Price</th>
+              <th class="text-center border-bottom-green">Sale Price</th>
               <th class="text-center border-bottom-green">
                 Total Cost Price (Rs)
               </th>
-              <th class="text-center border-bottom-green">Margin Amount</th>
-              <th class="text-center border-bottom-green">Discoount</th>
+              <th class="text-center border-bottom-green">
+                Total Sale Price (Rs)
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of reportList; let i = index">
               <td class="text-center">{{ i + 1 }}</td>
-              <td class="text-center">{{ item.invoiceNo }}</td>
-              <td class="text-center">{{ item.salePrice | number }}</td>
+              <td>{{ item.productName }}</td>
+              <td class="text-center">{{ item.qty }}</td>
               <td class="text-center">{{ item.costPrice | number }}</td>
-              <td class="text-center">{{ item.margin }}</td>
-              <td class="text-center">{{ item.discount }}</td>
+              <td class="text-center">{{ item.salePrice | number }}</td>
+              <td class="text-center">{{ item.totalCostPrice | number }}</td>
+              <td class="text-center">{{ item.totalSalePrice | number }}</td>
             </tr>
           </tbody>
         </table>
@@ -117,43 +120,43 @@
     </div>
   </div>
 
-  <div class="row mt-2 mb-2 d-none">
-    <div class="col-md-3">
-      <div class="borderTopGrey borderBottomGrey pb-01">
-        <div class="borderBottomGrey h2Report"><b>GRAND TOTAL</b></div>
-      </div>
-    </div>
-  </div>
-  <div class="row mt-2 mb-2 d-none">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="h3Report">
-            <b>Total Sale Price: </b>{{ lblTotalSale | number }}
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="h3Report">
-            <b>Total Purchase Price: </b> {{ lblTotalCost | number }}
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="h3Report">
-            <b>Total Discount Price: </b> {{ lblTotalDiscoount | number }}
-          </div>
+  <!-- <div class="row mt-2 mb-2 d-none">
+      <div class="col-md-3">
+        <div class="borderTopGrey borderBottomGrey pb-01">
+          <div class="borderBottomGrey h2Report"><b>GRAND TOTAL</b></div>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="borderTopGrey borderBottomGrey pb-02">
-        <div class="borderBottomGrey h1Total">
-          <b>Total Margin: </b> {{ lblTotalMargin | number }}
+    <div class="row mt-2 mb-2 d-none">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="h3Report">
+              <b>Total Sale Price: </b>{{ lblTotalSale | number }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="h3Report">
+              <b>Total Purchase Price: </b> {{ lblTotalCost | number }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="h3Report">
+              <b>Total Discount Price: </b> {{ lblTotalDiscoount | number }}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+      <div class="col-md-6">
+        <div class="borderTopGrey borderBottomGrey pb-02">
+          <div class="borderBottomGrey h1Total">
+            <b>Total Margin: </b> {{ lblGrandTotal | number }}
+          </div>
+        </div>
+      </div>
+    </div> -->
 </div>

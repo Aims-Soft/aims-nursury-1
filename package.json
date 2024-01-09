@@ -1,6 +1,6 @@
 {
   "name": "aims-pos",
-  "version": "0.0.41",
+  "version": "0.0.54",
   "license": "MIT",
   "scripts": {
     "start": "nx serve",

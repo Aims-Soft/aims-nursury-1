@@ -9,6 +9,7 @@ import {
   MenuItemInterface,
 } from '@aims-pos/shared/interface';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
 
 declare var $: any;
 
@@ -275,5 +276,17 @@ export class SharedServicesGlobalDataModule {
 
   bpsMask(): any {
     return [/\d/, /\d/];
+  }
+
+  // export in excel call from any child page
+  exportExcel(elementName: any, fileName: any) {
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(
+      document.getElementById(elementName)
+    );
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, fileName + '.xlsx');
   }
 }
