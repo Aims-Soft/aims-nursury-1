@@ -29,9 +29,9 @@ export class UploadProductComponent implements OnInit {
   formFields: MyFormField[] = [
     {
       value: this.pageFields.json,
-      msg: 'Import Data',
-      type: 'textbox',
-      required: true,
+      msg: '',
+      type: 'hidden',
+      required: false,
     },
     {
       value: this.pageFields.userID,
@@ -70,6 +70,7 @@ export class UploadProductComponent implements OnInit {
   businessList: any = [];
   branchList: any = [];
 
+  base64Str: any;
   excelData: any = [];
   importedDataList: any = [];
 
@@ -150,6 +151,20 @@ export class UploadProductComponent implements OnInit {
         }
       );
   }
+  // getBase64(file: any): Promise<string> {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => {
+  //       const base64Str = (reader.result as string).split(',')[1];
+  //       resolve(base64Str);
+  //     };
+  //     reader.onerror = (error) => {
+  //       console.log('Error: ', error);
+  //       reject(error);
+  //     };
+  //   });
+  // }
 
   importDataExcel(event: any) {
     this.importedDataList = [];
@@ -169,6 +184,9 @@ export class UploadProductComponent implements OnInit {
 
       this.excelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]]);
 
+      //setting max char limit
+      const maxLength = 20;
+
       for (var i = 0; i < this.excelData.length; i++) {
         // for (var i = 3; i < 4; i++) {
         const costPrice = parseFloat(this.excelData[i].cost_price);
@@ -181,29 +199,34 @@ export class UploadProductComponent implements OnInit {
           this.importedDataList.push({
             product_category: this.excelData[i].product_category,
             product_sub_category: this.excelData[i].product_sub_category,
-            product_name: this.excelData[i].product_name,
+            product_name: this.excelData[i].product_name.substring(0, 50),
             cost_price: costPrice,
             sale_price: salePrice,
             product_barcode: this.excelData[i].product_barcode,
           });
         }
       }
-
       this.formFields[0].value = JSON.stringify(this.importedDataList);
     };
   }
 
   save() {
+    // this.formFields[1].value = '9';
+    // this.formFields[4].value = '4';
+    // this.formFields[3].value = '3';
+
     this.dataService
       .savetHttp(
         this.pageFields,
         this.formFields,
-        'core-api/Product/saveProductImport'
+        // 'core-api/Product/saveProductImport'
+        // 'core-api/Product/saveProductFromExcel'
+        'core-api/Product/saveProductFromJson'
       )
       .subscribe(
         (response: any) => {
           console.log(response);
-          if (response.message == 'Success') {
+          if (response.message == -1) {
             this.valid.apiInfoResponse('Record saved successfully');
             this.reset();
           } else {
