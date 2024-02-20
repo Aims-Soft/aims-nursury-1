@@ -213,7 +213,8 @@ export class UploadProductComponent implements OnInit {
   save() {
     // this.formFields[1].value = '9';
     // this.formFields[4].value = '4';
-    // this.formFields[3].value = '3';
+    // this.formFields[3].value = 3;
+    // this.formFields[2].value = 1;
 
     this.dataService
       .savetHttp(
@@ -225,8 +226,7 @@ export class UploadProductComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          console.log(response);
-          if (response.message == -1) {
+          if (response == -1 || response.message == 'Success') {
             this.valid.apiInfoResponse('Record saved successfully');
             this.reset();
           } else {
