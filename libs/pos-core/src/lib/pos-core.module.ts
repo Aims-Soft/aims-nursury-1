@@ -67,12 +67,21 @@ import { ProductImageUpdateComponent } from './product/product-image-update/prod
 import { AddCustoomerComponent } from './sale/add-custoomer/add-custoomer.component';
 import { PrintKotSaleComponent } from './sale/print-kot-sale/print-kot-sale.component';
 import { UploadProductComponent } from './upload-product/upload-product.component';
+import { CounterComponent } from './counter/counter.component';
+import { OpeningComponent } from './opening/opening.component';
+import { CounterInfoComponent } from './opening/counter-info/counter-info.component';
+import { ClosureComponent } from './opening/closure/closure.component';
+import { PackageDetailsComponent } from './package-details/package-details.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
 };
 
 export const posCoreRoutes: Route[] = [
+  { path: 'counter', component: CounterComponent },
+  { path: 'opening', component: OpeningComponent },
+  { path: 'package', component: PackageDetailsComponent },
+
   { path: 'product', component: ProductComponent },
   { path: 'sale', component: SaleComponent },
   { path: 'purchase', component: PurchaseComponent },
@@ -133,6 +142,8 @@ export const posCoreRoutes: Route[] = [
     EmployeeProfileTableComponent,
     DesignationTableComponent,
     ProductImageUploadingComponent,
+    CounterComponent,
+    PackageDetailsComponent,
   ],
   declarations: [
     ProductComponent,
@@ -186,6 +197,11 @@ export const posCoreRoutes: Route[] = [
     AddCustoomerComponent,
     PrintKotSaleComponent,
     UploadProductComponent,
+    CounterComponent,
+    OpeningComponent,
+    CounterInfoComponent,
+    ClosureComponent,
+    PackageDetailsComponent,
   ],
   providers: [
     {

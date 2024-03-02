@@ -291,9 +291,26 @@
                 <table class="table">
                   <tbody>
                     <tr>
-                      <td class="col-8">
-                        {{ item.productName }}
-                      </td>
+                      <ng-container>
+                        <td
+                          class="col-8 text-warning"
+                          *ngIf="item.ptype === 'product'"
+                        >
+                          {{ item.productName }}
+                        </td>
+                        <td
+                          class="col-8 text-black"
+                          *ngIf="item.ptype != 'product'"
+                        >
+                          {{ item.productName }}
+                          <mat-icon
+                            (click)="getProductOfPackage(item.productID)"
+                            data-bs-toggle="modal"
+                            data-bs-target="#prodModal"
+                            >add_shopping_cart</mat-icon
+                          >
+                        </td>
+                      </ng-container>
                       <td class="col-2">
                         {{ item.salePrice }}
                       </td>
@@ -964,3 +981,55 @@
   <!-- modal-dialog -->
 </div>
 <!--modal-->
+
+<div class="modal fade" id="prodModal" role="dialog" data-bs-backdrop="false">
+  <div class="modal-dialog modal-lg mat-elevation-z20" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex flex-row-reverse bg-dark-grey">
+        <!-- <h4 class="modal-title align-self-center text-white">Sale Return</h4> -->
+        <div class="cancelIcon cursorPointer" data-bs-dismiss="modal"></div>
+      </div>
+
+      <div class="modal-body overflow-hidden">
+        <div class="container justify-content-center">
+          <perfect-scrollbar
+            class="mx-4"
+            style="height: 22.5em; max-width: 90%"
+          >
+            <table class="table table-sm table-striped">
+              <thead>
+                <tr class="">
+                  <!-- <th class="text-secondary">Sr#</th> -->
+                  <th class="text-secondary">Product Name</th>
+                  <th class="text-secondary">Category Name</th>
+                  <th class="text-secondary">Brand Name</th>
+                  <th class="text-secondary">Sale Price</th>
+                  <th class="text-secondary">Expiray Date</th>
+                  <th class="text-secondary">Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!--  -->
+                <tr *ngFor="let item of packageProdList; let i = index">
+                  <td>
+                    <mat-checkbox (change)="onCheckboxChange(item)">
+                      {{ item.productName }}</mat-checkbox
+                    >
+                  </td>
+                  <td>{{ item.categoryName }}</td>
+                  <td>{{ item.brandName }}</td>
+                  <td>{{ item.salePrice }}</td>
+                  <td>{{ item.expDate | date }}</td>
+                  <td>{{ item.qty }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </perfect-scrollbar>
+        </div>
+      </div>
+    </div>
+    <!-- modal-content -->
+  </div>
+  <!-- modal-dialog -->
+</div>
+<!-- modal-dialog -->

@@ -1,0 +1,71 @@
+<div class="bg-dark-light">
+  <div class="container">
+    <div
+      class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+    >
+      <div class="openingCounter"></div>
+      <h3 class="ms-3 mt-2">Opened Counters</h3>
+      <label class="ms-4 mt-3 me-lg-auto"></label>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between border-bottom border-2 border-dark">
+  <div class="ms-5 ps-5 mt-4"><h4>Counter Details</h4></div>
+  <mat-form-field class="w-25 me-1">
+    <mat-label>Search..</mat-label>
+    <input matInput placeholder="Search" [(ngModel)]="tableSearch" />
+  </mat-form-field>
+</div>
+
+<div class="d-flex mt-2">
+  <perfect-scrollbar
+    class="bg-grey mx-4"
+    style="height: 34.5em; max-width: 100%"
+  >
+    <table class="table">
+      <thead>
+        <tr class="">
+          <th class="text-dark col-1">Sr#</th>
+          <th class="text-dark col-2">Manager Name</th>
+          <th class="text-dark col-2">User Name</th>
+          <th class="text-dark col-2">Counter Number</th>
+          <th class="text-dark col-1">Open Time</th>
+          <th class="text-dark col-1">Close Time</th>
+          <th class="text-dark col-1">Date</th>
+          <th class="text-dark col-3">Opeing Amount</th>
+          <th class="text-dark col-1">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--  -->
+        <tr
+          *ngFor="
+            let item of tableData
+              | search
+                : 'counterName,counterNo,userName,openingTime,closingTime,shiftDate,openingBalance,status'
+                : tableSearch;
+            let i = index
+          "
+        >
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.counterName }}</td>
+          <td>{{ item.userName }}</td>
+          <td>{{ item.counterNo }}</td>
+          <td>{{ item.openingTime }}</td>
+          <td>{{ item.closingTime }}</td>
+          <td>{{ item.shiftDate | date }}</td>
+          <td>{{ item.openingBalance }}/</td>
+          <td
+            [ngClass]="{
+              'text-red': item.status === 'Open',
+              'text-green': item.status !== 'Open'
+            }"
+          >
+            {{ item.status }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </perfect-scrollbar>
+</div>

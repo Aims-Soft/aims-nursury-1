@@ -338,3 +338,52 @@
   background-position: center;
   background-size: cover;
 }
+
+.counnterSaleIcon {
+  background: url(../assets/images/icons/counterIcon.svg);
+  height: 2em;
+  width: 2em;
+  background-position: center;
+  background-size: cover;
+}
+.pencilEditIcon {
+  background: url(../assets/images/icons/pencilEit.svg);
+  height: 1.2em;
+  width: 1.2em;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+}
+.deleteIconFill {
+  background: url(../assets/images/icons/deleteFill.svg);
+  height: 1.2em;
+  width: 1.2em;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+}
+.openingCounter {
+  background: url(../assets/images/icons/openingCounter.svg);
+  height: 2em;
+  width: 2em;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.bracketLeft {
+  background: url(../assets/images/icons/bracketLeft.svg);
+  height: 5em;
+  width: 1.5em;
+  background-position: center;
+  background-size: cover;
+  // cursor: pointer;
+}
+.bracketRight {
+  background: url(../assets/images/icons/bracketRight.svg);
+  height: 5em;
+  width: 1.5em;
+  background-position: center;
+  background-size:cover;
+  // cursor: pointer;
+}

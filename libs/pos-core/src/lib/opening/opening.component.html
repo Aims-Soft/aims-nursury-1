@@ -1,0 +1,120 @@
+<mat-tab-group mat-align-tabs="center" [selectedIndex]="1">
+  <mat-tab label="Opening">
+    <div class="bg-dark-light">
+      <div class="container">
+        <div
+          class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+        >
+          <div class="openingCounter"></div>
+          <h3 class="ms-3 mt-2">Opening Counter</h3>
+          <label class="ms-4 mt-3 me-lg-auto"></label>
+        </div>
+      </div>
+    </div>
+    <div class="row border-bottom border-2 border-dark">
+      <div class="col-md-2 text-end mt-4"><h4>Amount Details</h4></div>
+      <div class="col-md-3">
+        <mat-form-field class="w-75">
+          <mat-label>Counter Number</mat-label>
+          <mat-select [(ngModel)]="formFields[1].value">
+            <mat-option
+              *ngFor="let item of counterList"
+              [value]="item.counterID"
+              >{{ item.counterName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="w-75">
+          <mat-label>User</mat-label>
+          <mat-select [(ngModel)]="formFields[6].value">
+            <mat-option *ngFor="let item of usersList" [value]="item.userID"
+              >{{ item.empName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field>
+          <mat-label>Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="formFields[3].value"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <!-- <label for="meeting-time">Choose a time for your meeting:</label> -->
+        <input
+          type="time"
+          id="meeting-time"
+          name="meeting-time"
+          class="inpt mt-3"
+          [(ngModel)]="formFields[4].value"
+        />
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-3">
+          <mat-form-field class="w-100">
+            <mat-label>Enter opening Amount</mat-label>
+            <input
+              matInput
+              placeholder="Enter opening Amount"
+              [(ngModel)]="formFields[5].value"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <button mat-button class="resetBtn mt-2" (click)="save()">
+            Open Counter
+          </button>
+        </div>
+        <div class="col-md-3">
+          <h3>{{ lblTotalAmout }}/</h3>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <perfect-scrollbar class="ms-4" style="height: 32.5em; max-width: 40%">
+        <table class="table table-sm table-striped">
+          <thead>
+            <tr class="">
+              <th class="text-secondary">PKR</th>
+              <th class="text-secondary">Quantity</th>
+              <th class="text-secondary">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!--  -->
+            <tr *ngFor="let item of tableList">
+              <td>{{ item.denomination }}</td>
+              <td>
+                <input
+                  type="text"
+                  class="tblInpt"
+                  [(ngModel)]="item.quantity"
+                  (ngModelChange)="displaySum(item)"
+                  name=""
+                  id=""
+                />
+              </td>
+              <td>{{ sum(item) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </perfect-scrollbar>
+    </div>
+  </mat-tab>
+  <mat-tab label="Closure"> <aims-pos-closure></aims-pos-closure> </mat-tab>
+  <mat-tab label="Counter Info">
+    <aims-pos-counter-info></aims-pos-counter-info>
+  </mat-tab>
+</mat-tab-group>

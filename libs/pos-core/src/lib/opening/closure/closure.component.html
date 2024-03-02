@@ -1,0 +1,264 @@
+<div class="bg-dark-light">
+  <div class="container">
+    <div
+      class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+    >
+      <div class="openingCounter"></div>
+      <h3 class="ms-3 mt-2">Opening Counter</h3>
+      <label class="ms-4 mt-3 me-lg-auto"></label>
+    </div>
+  </div>
+</div>
+<div class="row border-bottom border-2 border-dark">
+  <div class="col-md-2 text-end mt-4"><h4>Amount Details</h4></div>
+  <div class="col-md-3">
+    <mat-form-field class="w-75">
+      <mat-label>Counter Number</mat-label>
+      <mat-select [(ngModel)]="formFields[2].value">
+        <mat-option *ngFor="let item of counterList" [value]="item.counterID"
+          >{{ item.counterName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-3">
+    <mat-form-field class="w-75">
+      <mat-label>User</mat-label>
+      <mat-select [(ngModel)]="formFields[3].value">
+        <mat-option *ngFor="let item of usersList" [value]="item.userID"
+          >{{ item.empName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-2">
+    <mat-form-field>
+      <mat-label>Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [(ngModel)]="formFields[4].value"
+        (dateChange)="getClosingReconciliation(cmbUser, cmbcounterID)"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="col-md-2">
+    <!-- <label for="meeting-time">Choose a time for your meeting:</label> -->
+    <input
+      type="time"
+      id="meeting-time"
+      name="meeting-time"
+      class="inpt mt-3"
+      [(ngModel)]="formFields[5].value"
+    />
+  </div>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-3">
+      <mat-form-field class="w-100">
+        <mat-label>Enter opening Amount</mat-label>
+        <input matInput placeholder="Enter opening Amount" />
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <!-- <button mat-button class="resetBtn mt-2">Open Counter</button> -->
+    </div>
+    <div class="col-md-3">
+      <h3>{{ lblTotalAmout | number }}/</h3>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6 mt-1">
+    <perfect-scrollbar class="mx-4" style="height: 32.5em; max-width: 100%">
+      <table class="table table-sm table-striped">
+        <thead>
+          <tr class="">
+            <th class="text-secondary">PKR</th>
+            <th class="text-secondary">Quantity</th>
+            <th class="text-secondary">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--  -->
+          <tr *ngFor="let item of tableList">
+            <td>{{ item.denomination }}</td>
+            <td>
+              <input
+                type="text"
+                class="tblInpt"
+                [(ngModel)]="item.quantity"
+                (ngModelChange)="displaySum(item)"
+                name=""
+                id=""
+              />
+            </td>
+            <td>{{ sum(item) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </perfect-scrollbar>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <!------This is bracket container-->
+
+      <div class="container">
+        <div class="row">
+          <div class="col-6 mt-5 pt-3">
+            <div class="d-flex">
+              <div class="bracketLeft ms-5"></div>
+              <div class="container">
+                <div class="d-flex justify-content-between">
+                  <label class="fs-5">Opening Amount:</label>
+                  <label class="fs-5 fw-bold">10000/</label>
+                </div>
+                <div class="d-flex mt-2 justify-content-between">
+                  <label class="fs-5">Closing Amount:</label>
+                  <label class="fs-5 fw-bold">10000/</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 mt-5 pt-3">
+            <div class="bracketRight">
+              <div class="row ms-5">
+                <div class="col-12 ms-5">
+                  <label class="fs-5 text-nowrap">
+                    Reconciliation Amount
+                  </label>
+                </div>
+                <div class="col-12 ms-5">
+                  <label class="fs-5 text-nowrap ms-5"> 1000/ </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 mt-5 pt-3">
+            <div class="d-flex">
+              <div class="bracketLeft ms-5"></div>
+              <div class="container">
+                <div class="d-flex justify-content-between">
+                  <label class="fs-5">Opening Amount:</label>
+                  <label class="fs-5 fw-bold">10000/</label>
+                </div>
+                <div class="d-flex mt-2 justify-content-between">
+                  <label class="fs-5">Closing Amount:</label>
+                  <label class="fs-5 fw-bold">10000/</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 mt-5 pt-3">
+            <div class="bracketRight">
+              <div class="row ms-5">
+                <div class="col-12 ms-5">
+                  <label class="fs-5 text-nowrap">
+                    Reconciliation Amount
+                  </label>
+                </div>
+                <div class="col-12 ms-5">
+                  <label class="fs-5 text-nowrap ms-5"> 1000/ </label>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+              <div class="d-flex ms-5 justify-content-center">
+                <button mat-button class="resetBtn mt-2" (click)="save()">
+                  Closing
+                </button>
+                <button
+                  mat-button
+                  class="saveBtn ms-2 mt-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#detailModal"
+                  (click)="getDetails(cmbUser)"
+                >
+                  Details
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="container-md">
+            <div class="col-6 ms-5 mt-4">
+              <!-- <div class="col-3"></div> -->
+              <div class="col-8 ms-5">
+                <div class="d-flex justify-content-between">
+                  <label class="fs-5 text-start text-nowrap"
+                    >Difference Amount</label
+                  >
+                  <label class="fs-5 fw-bold text-end">35/</label>
+                </div>
+              </div>
+              <mat-form-field class="w-100 border-0">
+                <mat-label>Remarks</mat-label>
+                <textarea
+                  matInput
+                  rows="5"
+                  cols="30"
+                  placeholder="Remarks"
+                  [(ngModel)]="formFields[9].value"
+                ></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---Modal-->
+<div class="modal fade" id="detailModal" role="dialog" data-bs-backdrop="false">
+  <div class="modal-dialog modal-lg mat-elevation-z20" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex flex-row-reverse bg-dark-grey">
+        <!-- <h4 class="modal-title align-self-center text-white">Sale Return</h4> -->
+        <div class="cancelIcon cursorPointer" data-bs-dismiss="modal"></div>
+      </div>
+
+      <div class="modal-body overflow-hidden">
+        <div class="container justify-content-center">
+          <perfect-scrollbar
+            class="mx-4"
+            style="height: 22.5em; max-width: 90%"
+          >
+            <table class="table table-sm table-striped">
+              <thead>
+                <tr class="">
+                  <th class="text-secondary">Sr#</th>
+                  <th class="text-secondary">Bar Code</th>
+                  <th class="text-secondary">Item Name</th>
+                  <th class="text-secondary">Quantity</th>
+                  <th class="text-secondary">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of modalData; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.barcode1 }}</td>
+                  <td>{{ item.productName }}</td>
+                  <td>{{ item.qty }}</td>
+                  <td>{{ item.salePrice }}</td>
+                </tr>
+                <!--  -->
+              </tbody>
+            </table>
+          </perfect-scrollbar>
+        </div>
+        <div class="d-flex justify-content-end">
+          <label class="fs-5 me-4">Total Sale Price</label>
+          <label class="fs-5 fw-bold ms-4">{{ lblTotalSalePrice }}</label>
+        </div>
+      </div>
+    </div>
+    <!-- modal-content -->
+  </div>
+  <!-- modal-dialog -->
+</div>

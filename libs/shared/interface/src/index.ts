@@ -42,6 +42,10 @@ export * from './lib/config/employee-interface';
 export * from './lib/config/bank-interface';
 export * from './lib/config/payment-interface';
 export * from './lib/config/designation-interface';
+export * from './lib/config/counter-interface';
+export * from './lib/config/opening-interface';
+export * from './lib/config/package-interface';
+export * from './lib/config/closing-interface';
 
 //export bachat-online classes
 export * from './lib/bachat-online/checkout-interface';

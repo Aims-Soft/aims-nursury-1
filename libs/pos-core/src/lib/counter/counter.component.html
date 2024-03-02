@@ -1,0 +1,86 @@
+<div class="bg-dark-light">
+  <div class="container">
+    <div
+      class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+    >
+      <div class="counnterSaleIcon"></div>
+      <h3 class="ms-3 mt-2">Add Counter</h3>
+      <label class="ms-4 mt-3 me-lg-auto">Add new counter here..</label>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2 text-end mt-4"><h4>Counter Details</h4></div>
+  <div class="col-md-3">
+    <mat-form-field class="w-100">
+      <mat-label>Counter Name</mat-label>
+      <input
+        matInput
+        placeholder="Counter Name"
+        [(ngModel)]="formFields[3].value"
+      />
+    </mat-form-field>
+  </div>
+  <div class="col-md-3">
+    <mat-form-field class="w-100">
+      <mat-label>Counter Number</mat-label>
+      <input
+        matInput
+        placeholder="Counter Number"
+        [(ngModel)]="formFields[4].value"
+      />
+    </mat-form-field>
+  </div>
+  <div class="col-md-3">
+    <mat-form-field class="w-100">
+      <mat-label>Grace Amount</mat-label>
+      <input
+        matInput
+        placeholder="Grace Amount"
+        [(ngModel)]="formFields[5].value"
+      />
+    </mat-form-field>
+  </div>
+  <div class="col-md-1">
+    <button mat-button class="resetBtn mt-2" (click)="save()">Add</button>
+  </div>
+</div>
+<div
+  class="d-flex border border-top border-3 border-gray justify-content-center"
+>
+  <perfect-scrollbar class="" style="height: 32.5em; max-width: 75%">
+    <table class="table table-striped">
+      <thead>
+        <tr class="">
+          <th class="text-secondary">Sr#</th>
+          <th class="text-secondary">Counter Name</th>
+          <th class="text-secondary">Counter Number</th>
+          <th class="text-secondary">Grace Amount</th>
+
+          <th class="text-secondary text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--  -->
+        <tr *ngFor="let item of tableData; let i = index">
+          <td>{{ i + 1 }}</td>
+
+          <td>{{ item.counterName }}</td>
+          <td>{{ item.counterNo }}</td>
+          <td>{{ item.grassAmount }}</td>
+          <td class="d-flex align-content-center justify-content-end">
+            <div
+              class="pencilEditIcon mt-1 cursor-pointer"
+              (click)="edit(item)"
+            ></div>
+            |
+            <div
+              class="deleteIconFill mt-1 cursor-pointer"
+              (click)="delete(item)"
+            ></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </perfect-scrollbar>
+</div>

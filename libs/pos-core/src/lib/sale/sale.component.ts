@@ -58,6 +58,8 @@ export class SaleComponent implements OnInit {
   lblCustomerName: any = '';
   lblBusinessTypeID: any = '';
 
+  checkStatus: boolean = false;
+
   pageFields: SaleInterface = {
     invoiceNo: '0', //0
     userID: '', //1
@@ -249,6 +251,7 @@ export class SaleComponent implements OnInit {
   bankList: any = [];
   partyList: any = [];
   orderList: any = [];
+  packageProdList: any = [];
 
   orderJsonList: any = [];
 
@@ -385,7 +388,7 @@ export class SaleComponent implements OnInit {
   getProduct() {
     this.dataService
       .getHttp(
-        'core-api/Product/getProduct?companyID=' +
+        'core-api/Product/getpackageProduct?companyID=' +
           this.globalService.getCompanyID() +
           '&branchID=' +
           this.globalService.getBranchID() +
@@ -398,6 +401,7 @@ export class SaleComponent implements OnInit {
       .subscribe(
         (response: any) => {
           // this.productList = response;
+          // console.log(response);
           this.productList = [];
           for (var i = 0; i < response.length; i++) {
             var img = '';
@@ -429,6 +433,7 @@ export class SaleComponent implements OnInit {
               locationID: response[i].locationID,
               packing: response[i].packing,
               packingSalePrice: response[i].packingSalePrice,
+              ptype: response[i].ptype,
             });
           }
         },
@@ -437,6 +442,43 @@ export class SaleComponent implements OnInit {
         }
       );
   }
+  getProductOfPackage(packageID: any) {
+    // console.log(packageID);
+
+    this.dataService
+      .getHttp(
+        'core-api/Product/getProductOfPackage?branchID=' +
+          this.globalService.getBranchID() +
+          '&companyID=' +
+          this.globalService.getCompanyID() +
+          '&userID=' +
+          this.globalService.getUserId().toString() +
+          '&moduleId=' +
+          this.moduleId +
+          '&branchID=' +
+          this.globalService.getBranchID() +
+          '&packageID=' +
+          packageID,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          // console.log(response);
+          this.packageProdList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
+  newList: any[] = [];
+
+  onCheckboxChange(item: any) {
+    this.newList.push(item);
+    this.checkStatus = true;
+  }
+
   getParty() {
     this.dataService
       .getHttp(
@@ -744,7 +786,11 @@ export class SaleComponent implements OnInit {
         });
       }
     }
-    this.formFields[10].value = JSON.stringify(prodTableData);
+    if (this.checkStatus === true) {
+      this.formFields[10].value = JSON.stringify(this.newList);
+    } else {
+      this.formFields[10].value = JSON.stringify(prodTableData);
+    }
 
     if (prodTableData.length == 0) {
       this.valid.apiInfoResponse('enter products');

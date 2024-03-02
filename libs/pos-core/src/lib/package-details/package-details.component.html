@@ -1,0 +1,115 @@
+<div class="bg-dark-light">
+  <div class="container">
+    <div
+      class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
+    >
+      <div class="openingCounter"></div>
+      <h3 class="ms-3 mt-2">Packages</h3>
+      <label class="ms-4 mt-3 me-lg-auto"></label>
+    </div>
+  </div>
+</div>
+
+<div class="row border-bottom border-2 border-dark">
+  <div class="col-md-2 text-end mt-4"><h4>Package Details</h4></div>
+
+  <div class="col-md-5">
+    <mat-form-field class="w-100">
+      <mat-label>Search By Name</mat-label>
+      <mat-select
+        #searchName
+        [(ngModel)]="formFields[3].value"
+        multiple
+        (selectionChange)="jsonFunc(formFields[3].value)"
+      >
+        <mat-option>
+          <ngx-mat-select-search
+            [(ngModel)]="searchProduct"
+            [noEntriesFoundLabel]="'Not found'"
+            placeholderLabel="Search..."
+            name="search"
+          >
+          </ngx-mat-select-search>
+        </mat-option>
+        <!-- <mat-option>
+          <tr>
+            <td class="col-6" colspan="6">productName</td>
+            <td class="col-3" colspan="3">SalePrice</td>
+            <td class="col-3" colspan="3">Quantity</td>
+          </tr>
+        </mat-option> -->
+        <mat-option>
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="col-8">Product Name</th>
+                <th class="col-2">SalePrice</th>
+                <th class="col-2">Quantity</th>
+              </tr>
+            </thead>
+          </table>
+        </mat-option>
+        <mat-option
+          *ngFor="
+            let item of productList
+              | search: 'productName,salePrice,qty':searchProduct
+          "
+          [value]="item.productID"
+        >
+          <!-- <tr>
+            <td class="col-3" colspan="3">{{item.productName}}</td>
+            <td class="col-3" colspan="3">--SalePrice={{item.salePrice}}</td>
+            <td class="col-3" colspan="3">--Quantity={{ item.qty}}</td>
+          </tr> -->
+          <table class="table">
+            <tbody>
+              <tr>
+                <td class="col-8">
+                  {{ item.productName }}
+                </td>
+                <td class="col-2">
+                  {{ item.salePrice }}
+                </td>
+                <td class="col-2">
+                  {{ item.qty }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-3">
+    <mat-form-field class="w-75">
+      <mat-label>Package Name</mat-label>
+      <input matInput type="text" [(ngModel)]="formFields[2].value" />
+    </mat-form-field>
+  </div>
+  <div class="col-md-2">
+    <button mat-button class="resetBtn mt-2" (click)="save()">Save</button>
+  </div>
+</div>
+<div class="container">
+  <perfect-scrollbar class="mx-4" style="height: 32.5em; max-width: 100%">
+    <table class="table table-striped">
+      <thead>
+        <tr class="">
+          <th class="text-secondary">Sr#</th>
+          <th class="text-secondary">Product Name</th>
+          <th class="text-secondary">Package Title</th>
+          <th class="text-secondary">Package Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--  -->
+        <tr *ngFor="let item of packageList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.productName }}</td>
+          <td>{{ item.packageTitle }}</td>
+          <td>{{ item.packageDate | date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </perfect-scrollbar>
+</div>
