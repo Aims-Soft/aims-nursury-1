@@ -387,3 +387,21 @@
   background-size:cover;
   // cursor: pointer;
 }
+
+.deleteIcon {
+  background: url(../assets/images/icons/deleteFill.svg);
+  height: 1.4em;
+  width: 1.4em;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.pencilIcon {
+  background: url(../assets/images/icons/pencilEit.svg);
+  height: 1.4em;
+  width: 1.4em;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+}

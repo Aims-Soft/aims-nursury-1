@@ -8,4 +8,5 @@ export interface PackageInterface {
   userID: '';
   moduleId: '';
   json: '';
+  barcode: '';
 }

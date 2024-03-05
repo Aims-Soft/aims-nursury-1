@@ -17,6 +17,7 @@ import { Component, OnInit } from '@angular/core';
 export class PackageDetailsComponent implements OnInit {
   productList: any;
   packageList: any;
+  packageDetailList: any;
 
   searchProduct: any;
   cmbProduct: any;
@@ -39,6 +40,7 @@ export class PackageDetailsComponent implements OnInit {
     companyID: '', //6
     branchID: '', //7
     moduleId: '', //8
+    barcode: '', //9
   };
   formFields: MyFormField[] = [
     {
@@ -95,6 +97,12 @@ export class PackageDetailsComponent implements OnInit {
       type: 'hidden',
       required: false,
     },
+    {
+      value: this.pageFields.barcode,
+      msg: 'enter barcode',
+      type: 'textbox',
+      required: true,
+    },
   ];
 
   ngOnInit(): void {
@@ -128,6 +136,32 @@ export class PackageDetailsComponent implements OnInit {
         (response: any) => {
           console.log(response);
           this.packageList = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
+  getPackageDetails(packageID: any) {
+    this.dataService
+      .getHttp(
+        'core-api/Package/getPackageDetails?businessID=' +
+          this.globalService.getBusinessID() +
+          '&companyID=' +
+          this.globalService.getCompanyID() +
+          '&userID=' +
+          this.globalService.getUserId() +
+          '&moduleId=' +
+          localStorage.getItem('moduleId') +
+          '&packageID=' +
+          packageID,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          console.log(response);
+          this.packageDetailList = response;
         },
         (error: any) => {
           console.log(error);
@@ -227,6 +261,57 @@ export class PackageDetailsComponent implements OnInit {
             } else {
               this.valid.apiInfoResponse('Record updated successfully');
             }
+          } else {
+            this.valid.apiErrorResponse(response.message.toString());
+          }
+        },
+        (error: any) => {
+          this.error = error;
+          this.valid.apiErrorResponse(this.error);
+        }
+      );
+  }
+
+  delete() {
+    var pageFields = {
+      packageID: '',
+      userID: '',
+      moduleId: '',
+    };
+
+    var formFields: MyFormField[] = [
+      {
+        value: pageFields.packageID,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
+      {
+        value: pageFields.userID,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
+      {
+        value: pageFields.moduleId,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
+    ];
+    this.dataService
+      .deleteHttp(
+        this.pageFields,
+        this.formFields,
+        'core-api/Package/deletePackage'
+      )
+      .subscribe(
+        (response: any) => {
+          // console.log(response);
+          if (response.message == 'Success') {
+            this.getProduct();
+            this.getPackageList();
+            this.valid.apiInfoResponse('Record deleted successfully');
           } else {
             this.valid.apiErrorResponse(response.message.toString());
           }
