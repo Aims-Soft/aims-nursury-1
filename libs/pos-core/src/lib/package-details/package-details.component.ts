@@ -226,6 +226,11 @@ export class PackageDetailsComponent implements OnInit {
       );
   }
   jsonList: any[] = [];
+  getProductById(productId: number) {
+    console.log(
+      this.productList.find((product: any) => product.productID === productId)
+    );
+  }
 
   jsonFunc(item: any | any[]) {
     if (Array.isArray(item)) {
@@ -239,6 +244,13 @@ export class PackageDetailsComponent implements OnInit {
         productID: item,
       });
     }
+  }
+  edit(item: any) {
+    console.log(item);
+    this.getProductById(item.productID);
+    this.formFields[2].value = item.packageTitle;
+    this.formFields[3].value = item.productID;
+    this.formFields[9].value = item.barcode;
   }
 
   save() {
@@ -272,39 +284,45 @@ export class PackageDetailsComponent implements OnInit {
       );
   }
 
-  delete() {
-    var pageFields = {
-      packageID: '',
+  delete(item: any) {
+    var pageField = {
+      packageTitle: '',
+      packageID: '0',
       userID: '',
       moduleId: '',
     };
-
-    var formFields: MyFormField[] = [
+    var formField: MyFormField[] = [
       {
-        value: pageFields.packageID,
+        value: pageField.packageTitle,
         msg: '',
         type: 'hidden',
         required: false,
       },
       {
-        value: pageFields.userID,
+        value: pageField.packageID,
         msg: '',
         type: 'hidden',
         required: false,
       },
       {
-        value: pageFields.moduleId,
+        value: pageField.userID,
+        msg: '',
+        type: 'hidden',
+        required: false,
+      },
+      {
+        value: pageField.moduleId,
         msg: '',
         type: 'hidden',
         required: false,
       },
     ];
+    formField[0].value = item.packageTitle;
+    formField[1].value = item.packageID;
+    formField[2].value = this.globalService.getUserId().toString();
+    formField[3].value = localStorage.getItem('moduleId');
     this.dataService
-      .deleteHttp(
-        this.pageFields,
-        this.formFields,
-        'core-api/Package/deletePackage'
-      )
+      .deleteHttp(pageField, formField, 'core-api/Package/deletePackage')
       .subscribe(
         (response: any) => {
           // console.log(response);
