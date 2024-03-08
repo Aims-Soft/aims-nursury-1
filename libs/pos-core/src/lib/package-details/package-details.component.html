@@ -52,19 +52,21 @@
           >
           </ngx-mat-select-search>
         </mat-option>
+  
         <mat-option>
-          <table class="table">
+          <table class="table table-sm">
             <thead>
               <tr>
-                <th class="col-8">Product Name</th>
-                <th class="col-2">SalePrice</th>
-                <th class="col-2">Quantity</th>
+                <th class="col-sm-8 lh-1">Product Name</th>
+                <th class="col-sm-2 lh-1">SalePrice</th>
+                <th class="col-sm-2 lh-1">Quantity</th>
               </tr>
             </thead>
           </table>
         </mat-option>
+        <cdk-virtual-scroll-viewport itemSize="48" style="height: 400px; ">
         <mat-option
-          *ngFor="
+          *cdkVirtualFor="
             let item of productList
               | search: 'productName,salePrice,qty':searchProduct
           "
@@ -87,6 +89,7 @@
             </tbody>
           </table>
         </mat-option>
+      </cdk-virtual-scroll-viewport>
       </mat-select>
     </mat-form-field>
   </div>

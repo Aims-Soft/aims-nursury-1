@@ -1,4 +1,7 @@
 import { SharedHelpersFieldValidationsModule } from '@aims-pos/shared/helpers/field-validations';
+import { TableVirtualScrollDataSource } from 'ng-cdk-table-virtual-scroll';
+
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { MyFormField, SaleInterface } from '@aims-pos/shared/interface';
 import { SharedServicesDataModule } from '@aims-pos/shared/services/data';
 import { SharedServicesGlobalDataModule } from '@aims-pos/shared/services/global-data';
@@ -293,6 +296,12 @@ export class SaleComponent implements OnInit {
   //   }
   // }
 
+  /////////////////
+
+  // dataSource = new TableVirtualScrollDataSource();
+
+  /////////////////
+
   setFocusOnInput() {
     if (this.txtFocusCode && this.txtFocusCode.nativeElement) {
       this.txtFocusCode.nativeElement.focus();
@@ -357,6 +366,11 @@ export class SaleComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+
+  trackItem(index: number, item: any) {
+    return item.productID;
   }
 
   getBranch() {
@@ -436,6 +450,7 @@ export class SaleComponent implements OnInit {
               ptype: response[i].ptype,
             });
           }
+          // console.log(this.productList)
         },
         (error: any) => {
           console.log(error);
@@ -1346,6 +1361,8 @@ export class SaleComponent implements OnInit {
             this.printSale.lblGrandBal = response[0].grandbal;
             this.printSale.lblOldBal = response[0].oldbal;
             this.printSale.lblNewBal = response[0].newbal;
+            this.printSale.lblGrandTotal =
+              response[0].cashReceived - response[0].change;
           }
           const extractedData = response.map((item: any) => ({
             productName: item.productName,
@@ -1354,7 +1371,7 @@ export class SaleComponent implements OnInit {
             total: item.totalsalePrice,
           }));
           this.printSale.tableData = extractedData;
-          setTimeout(() => this.globalService.printData(printSection), 200);
+          setTimeout(() => this.globalService.printData(printSection), 250);
         },
         (error: any) => {
           console.log(error);

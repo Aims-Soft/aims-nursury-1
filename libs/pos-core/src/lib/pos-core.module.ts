@@ -7,8 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { SearchPipe } from '@aims-pos/shared/interface';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { TextMaskModule } from 'angular2-text-mask';
+import { TableVirtualScrollDataSource } from 'ng-cdk-table-virtual-scroll';
 
 import { ProductComponent } from './product/product.component';
 import { SaleComponent } from './sale/sale.component';
@@ -110,6 +112,7 @@ export const posCoreRoutes: Route[] = [
 
 @NgModule({
   imports: [
+    ScrollingModule,
     CommonModule,
     RouterModule.forChild(posCoreRoutes),
     MaterialModule,
@@ -121,6 +124,7 @@ export const posCoreRoutes: Route[] = [
     ChartModule,
   ],
   exports: [
+    ScrollingModule,
     RouterModule,
     ProductTableComponent,
     CategoryTableComponent,

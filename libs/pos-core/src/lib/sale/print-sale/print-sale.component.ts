@@ -29,6 +29,9 @@ export class PrintSaleComponent implements OnInit {
   lblBusinessName: any = '';
   lblContactNumber: any = '';
   currentUser!: UserInterface;
+  lblGrandTotal: any = 0;
+
+  
 
   constructor(
     private dataService: SharedServicesDataModule,
@@ -42,6 +45,8 @@ export class PrintSaleComponent implements OnInit {
     this.lblName = this.currentUser.fullName;
     this.lblBranchID = this.globalService.getBranchID();
   }
+
+
   getBusniessName() {
     this.dataService
       .getHttp(
@@ -53,6 +58,7 @@ export class PrintSaleComponent implements OnInit {
         (response: any) => {
           this.lblBusinessName = response[0].businessFullName;
           this.lblContactNumber = response[0].mobileNo;
+          // this.lblGrandTotal = this.lblCash - this.lblChange
           // this.bankList = response;
         },
         (error: any) => {

@@ -241,6 +241,7 @@
             />
           </mat-form-field>
         </div>
+        <!----------------------->
         <div class="col-md-8">
           <mat-form-field class="w-100">
             <mat-label>Search By Name</mat-label>
@@ -258,48 +259,35 @@
                 >
                 </ngx-mat-select-search>
               </mat-option>
-              <!-- <mat-option>
-                <tr>
-                  <td class="col-6" colspan="6">productName</td>
-                  <td class="col-3" colspan="3">SalePrice</td>
-                  <td class="col-3" colspan="3">Quantity</td>
-                </tr>
-              </mat-option> -->
+        
               <mat-option>
-                <table class="table">
-                  <thead>
+                <table class="table table-sm">
+                  <thead class="fs-6">
                     <tr>
-                      <th class="col-8">Product Name</th>
-                      <th class="col-2">SalePrice</th>
-                      <th class="col-2">Quantity</th>
+                      <th class="col-8 lh-1">Product Name</th>
+                      <th class="col-2 lh-1">SalePrice</th>
+                      <th class="col-2 lh-1" >Quantity</th>
                     </tr>
                   </thead>
                 </table>
               </mat-option>
+              <cdk-virtual-scroll-viewport itemSize="48" style="height: 400px; ">
               <mat-option
-                *ngFor="
-                  let item of productList
-                    | search: 'productName,salePrice,qty':searchProduct
-                "
-                [value]="item.productID"
+              *cdkVirtualFor="let item of productList| search: 'productName,salePrice,qty': searchProduct; trackBy: trackItem"
+              [value]="item.productID"
               >
-                <!-- <tr>
-                  <td class="col-3" colspan="3">{{item.productName}}</td>
-                  <td class="col-3" colspan="3">--SalePrice={{item.salePrice}}</td>
-                  <td class="col-3" colspan="3">--Quantity={{ item.qty}}</td>
-                </tr> -->
-                <table class="table">
-                  <tbody>
+                <table class="table table-sm ">
+                  <tbody class="fs-6">
                     <tr>
                       <ng-container>
                         <td
-                          class="col-8 text-warning"
+                          class="col-md-8 text-warning"
                           *ngIf="item.ptype === 'product'"
                         >
                           {{ item.productName }}
                         </td>
                         <td
-                          class="col-8 text-black"
+                          class="col-md-8 text-black "
                           *ngIf="item.ptype != 'product'"
                         >
                           {{ item.productName }}
@@ -311,19 +299,23 @@
                           >
                         </td>
                       </ng-container>
-                      <td class="col-2">
+                      <td class="col-md-2 ">
                         {{ item.salePrice }}
                       </td>
-                      <td class="col-2">
+                      <td class="col-md-8 ">
                         {{ item.qty }}
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </mat-option>
+            </cdk-virtual-scroll-viewport>
             </mat-select>
           </mat-form-field>
         </div>
+        
+        <!----------------------->
+        
       </div>
       <div class="row bg-light-grey pt-2">
         <aims-pos-product-sale-table
