@@ -368,7 +368,6 @@ export class SaleComponent implements OnInit {
       );
   }
 
-
   trackItem(index: number, item: any) {
     return item.productID;
   }
@@ -458,8 +457,6 @@ export class SaleComponent implements OnInit {
       );
   }
   getProductOfPackage(packageID: any) {
-    // console.log(packageID);
-
     this.dataService
       .getHttp(
         'core-api/Product/getProductOfPackage?branchID=' +
@@ -478,7 +475,6 @@ export class SaleComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          // console.log(response);
           this.packageProdList = response;
         },
         (error: any) => {
@@ -490,8 +486,7 @@ export class SaleComponent implements OnInit {
   newList: any[] = [];
 
   onCheckboxChange(item: any) {
-    this.newList.push(item);
-    this.checkStatus = true;
+    this.pushPackageProduct(item.productID);
   }
 
   getParty() {
@@ -515,26 +510,9 @@ export class SaleComponent implements OnInit {
         }
       );
   }
-  // getParty() {
-  //   this.dataService
-  //     .getHttp(
-  //       'core-api/Party/getParty?companyID=' +
-  //         this.globalService.getCompanyID() +
-  //         '&businessID=' +
-  //         this.globalService.getBusinessID(),
-  //       ''
-  //     )
-  //     .subscribe(
-  //       (response: any) => {
-  //         this.partyList = response;
-  //       },
-  //       (error: any) => {
-  //         console.log(error);
-  //       }
-  //     );
-  // }
 
   pushProductByCode(item: any, e: any) {
+    // this.getProductOfPackage(item);
     if (e.ctrlKey == true) {
       this._txtCash.nativeElement.focus();
       this.formFields[7].value = '';
@@ -543,14 +521,12 @@ export class SaleComponent implements OnInit {
     if (e.keyCode == 13) {
       return;
     }
-
     var data = this.productList.filter(
       (x: { barcode1: any; barcode2: any; barcode3: any }) =>
         x.barcode1 == item.toString() &&
         (x.barcode2 == '' || x.barcode2 == null) &&
         (x.barcode3 == '' || x.barcode3 == null)
     );
-
     if (data.length == 0 && item.toString() != '') {
       data = this.productList.filter(
         (x: { barcode1: any; barcode2: any; barcode3: any }) =>
@@ -638,48 +614,12 @@ export class SaleComponent implements OnInit {
     this.txtCode = '';
   }
 
-  pushProduct(item: any) {
+  pushPackageProduct(item: any) {
     var data = this.productList.filter(
       (x: { productID: any }) => x.productID == item
     );
-
-    if (this.productSaleTable.tableData.length == 0) {
-      this.productSaleTable.tableData.push({
-        barcode1: data[0].barcode1,
-        barcode2: data[0].barcode2,
-        barcode3: data[0].barcode3,
-        productID: data[0].productID,
-        productName: data[0].productName,
-        qty: 1,
-        costPrice: data[0].costPrice,
-        salePrice: data[0].salePrice,
-        locationID: data[0].locationID,
-        total: data[0].salePrice,
-        packing: data[0].packing,
-        packingSalePrice: data[0].packingSalePrice,
-        status: '',
-      });
-    } else {
-      var found = false;
-      var index = 0;
-      for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
-        if (this.productSaleTable.tableData[i].productID == item) {
-          found = true;
-          index = i;
-          i = this.productSaleTable.tableData.length + 1;
-        }
-      }
-
-      if (found == true) {
-        if (this.productSaleTable.tableData[index].status == 'deleted') {
-          this.productSaleTable.tableData[index].status = '';
-        } else {
-          this.productSaleTable.tableData[index].qty += 1;
-          this.productSaleTable.tableData[index].total =
-            this.productSaleTable.tableData[index].salePrice *
-            this.productSaleTable.tableData[index].qty;
-        }
-      } else {
+    if (data[0].ptype !== 'package') {
+      if (this.productSaleTable.tableData.length == 0) {
         this.productSaleTable.tableData.push({
           barcode1: data[0].barcode1,
           barcode2: data[0].barcode2,
@@ -695,9 +635,114 @@ export class SaleComponent implements OnInit {
           packingSalePrice: data[0].packingSalePrice,
           status: '',
         });
+      } else {
+        var found = false;
+        var index = 0;
+        for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
+          if (this.productSaleTable.tableData[i].productID == item) {
+            found = true;
+            index = i;
+            i = this.productSaleTable.tableData.length + 1;
+          }
+        }
+
+        if (found == true) {
+          if (this.productSaleTable.tableData[index].status == 'deleted') {
+            this.productSaleTable.tableData[index].status = '';
+          } else {
+            this.productSaleTable.tableData[index].qty += 1;
+            this.productSaleTable.tableData[index].total =
+              this.productSaleTable.tableData[index].salePrice *
+              this.productSaleTable.tableData[index].qty;
+          }
+        } else {
+          this.productSaleTable.tableData.push({
+            barcode1: data[0].barcode1,
+            barcode2: data[0].barcode2,
+            barcode3: data[0].barcode3,
+            productID: data[0].productID,
+            productName: data[0].productName,
+            qty: 1,
+            costPrice: data[0].costPrice,
+            salePrice: data[0].salePrice,
+            locationID: data[0].locationID,
+            total: data[0].salePrice,
+            packing: data[0].packing,
+            packingSalePrice: data[0].packingSalePrice,
+            status: '',
+          });
+        }
       }
     }
+    this.lblTotal = 0;
+    for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
+      this.lblTotal += this.productSaleTable.tableData[i].total;
+    }
+    if (this.formFields[7].value > 0) {
+      this.formFields[8].value -= this.lblTotal;
+    }
+  }
 
+  pushProduct(item: any) {
+    var data = this.productList.filter(
+      (x: { productID: any }) => x.productID == item
+    );
+    if (data[0].ptype !== 'package') {
+      if (this.productSaleTable.tableData.length == 0) {
+        this.productSaleTable.tableData.push({
+          barcode1: data[0].barcode1,
+          barcode2: data[0].barcode2,
+          barcode3: data[0].barcode3,
+          productID: data[0].productID,
+          productName: data[0].productName,
+          qty: 1,
+          costPrice: data[0].costPrice,
+          salePrice: data[0].salePrice,
+          locationID: data[0].locationID,
+          total: data[0].salePrice,
+          packing: data[0].packing,
+          packingSalePrice: data[0].packingSalePrice,
+          status: '',
+        });
+      } else {
+        var found = false;
+        var index = 0;
+        for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
+          if (this.productSaleTable.tableData[i].productID == item) {
+            found = true;
+            index = i;
+            i = this.productSaleTable.tableData.length + 1;
+          }
+        }
+
+        if (found == true) {
+          if (this.productSaleTable.tableData[index].status == 'deleted') {
+            this.productSaleTable.tableData[index].status = '';
+          } else {
+            this.productSaleTable.tableData[index].qty += 1;
+            this.productSaleTable.tableData[index].total =
+              this.productSaleTable.tableData[index].salePrice *
+              this.productSaleTable.tableData[index].qty;
+          }
+        } else {
+          this.productSaleTable.tableData.push({
+            barcode1: data[0].barcode1,
+            barcode2: data[0].barcode2,
+            barcode3: data[0].barcode3,
+            productID: data[0].productID,
+            productName: data[0].productName,
+            qty: 1,
+            costPrice: data[0].costPrice,
+            salePrice: data[0].salePrice,
+            locationID: data[0].locationID,
+            total: data[0].salePrice,
+            packing: data[0].packing,
+            packingSalePrice: data[0].packingSalePrice,
+            status: '',
+          });
+        }
+      }
+    }
     this.lblTotal = 0;
     for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
       this.lblTotal += this.productSaleTable.tableData[i].total;
@@ -801,11 +846,7 @@ export class SaleComponent implements OnInit {
         });
       }
     }
-    if (this.checkStatus === true) {
-      this.formFields[10].value = JSON.stringify(this.newList);
-    } else {
-      this.formFields[10].value = JSON.stringify(prodTableData);
-    }
+    this.formFields[10].value = JSON.stringify(prodTableData);
 
     if (prodTableData.length == 0) {
       this.valid.apiInfoResponse('enter products');
@@ -1318,7 +1359,6 @@ export class SaleComponent implements OnInit {
 
   getKeyUpOrderDetail(e: any) {
     if (e.keyCode == 13) {
-      console.log(this.orderList);
       var data = this.orderList.filter(
         (x: any) => x.orderID == this.formFields[23].value
       );

@@ -290,8 +290,8 @@
                           class="col-md-8 text-black "
                           *ngIf="item.ptype != 'product'"
                         >
-                          {{ item.productName }}
-                          <mat-icon
+                        <span>{{ item.productName }}</span>
+                        <mat-icon
                             (click)="getProductOfPackage(item.productID)"
                             data-bs-toggle="modal"
                             data-bs-target="#prodModal"
@@ -994,25 +994,23 @@
                   <!-- <th class="text-secondary">Sr#</th> -->
                   <th class="text-secondary">Product Name</th>
                   <th class="text-secondary">Category Name</th>
-                  <th class="text-secondary">Brand Name</th>
-                  <th class="text-secondary">Sale Price</th>
-                  <th class="text-secondary">Expiray Date</th>
+                  <th class="text-secondary">Price</th>
                   <th class="text-secondary">Quantity</th>
+                  <th class="text-secondary">Add</th>
+
                 </tr>
               </thead>
               <tbody>
                 <!--  -->
                 <tr *ngFor="let item of packageProdList; let i = index">
                   <td>
-                    <mat-checkbox (change)="onCheckboxChange(item)">
-                      {{ item.productName }}</mat-checkbox
-                    >
+                      {{ item.productName }}
                   </td>
                   <td>{{ item.categoryName }}</td>
-                  <td>{{ item.brandName }}</td>
                   <td>{{ item.salePrice }}</td>
-                  <td>{{ item.expDate | date }}</td>
                   <td>{{ item.qty }}</td>
+                  <td><mat-icon (click)="onCheckboxChange(item)" class="cursorPointer">add_circle</mat-icon>
+                  </td>
                 </tr>
               </tbody>
             </table>
