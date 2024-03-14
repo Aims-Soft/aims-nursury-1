@@ -483,6 +483,36 @@ export class SaleComponent implements OnInit {
       );
   }
 
+  getProdOfPackage(packageID: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.dataService
+        .getHttp(
+          'core-api/Product/getProductOfPackage?branchID=' +
+            this.globalService.getBranchID() +
+            '&companyID=' +
+            this.globalService.getCompanyID() +
+            '&userID=' +
+            this.globalService.getUserId().toString() +
+            '&moduleId=' +
+            this.moduleId +
+            '&branchID=' +
+            this.globalService.getBranchID() +
+            '&packageID=' +
+            packageID,
+          ''
+        )
+        .subscribe(
+          (response: any) => {
+            resolve(response);
+            this.packageProdList = response;
+          },
+          (error: any) => {
+            reject(error);
+          }
+        );
+    });
+  }
+
   newList: any[] = [];
 
   onCheckboxChange(item: any) {
@@ -512,7 +542,6 @@ export class SaleComponent implements OnInit {
   }
 
   pushProductByCode(item: any, e: any) {
-    // this.getProductOfPackage(item);
     if (e.ctrlKey == true) {
       this._txtCash.nativeElement.focus();
       this.formFields[7].value = '';
@@ -603,6 +632,53 @@ export class SaleComponent implements OnInit {
           status: '',
         });
       }
+    }
+    if (data.length !== 0 && data[0].ptype === 'package') {
+      this.getProdOfPackage(data[0].productID)
+        .then((packageProdList: any[]) => {
+          for (const packageProduct of packageProdList) {
+            const item = packageProduct.barcode1; // Assuming item is defined elsewhere in the code
+
+            // Find if the product already exists in the tableData
+            const existingProductIndex =
+              this.productSaleTable.tableData.findIndex((product: any) =>
+                [product.barcode1, product.barcode2, product.barcode3].includes(
+                  item
+                )
+              );
+
+            if (existingProductIndex !== -1) {
+              const existingProduct =
+                this.productSaleTable.tableData[existingProductIndex];
+              if (existingProduct.status === 'deleted') {
+                existingProduct.status = '';
+              } else {
+                existingProduct.qty += 1;
+                existingProduct.total =
+                  existingProduct.salePrice * existingProduct.qty;
+              }
+            } else {
+              this.productSaleTable.tableData.push({
+                barcode1: packageProduct.barcode1,
+                barcode2: packageProduct.barcode2,
+                barcode3: packageProduct.barcode3,
+                productID: packageProduct.productID,
+                productName: packageProduct.productName,
+                qty: 1,
+                costPrice: packageProduct.costPrice,
+                salePrice: packageProduct.salePrice,
+                locationID: packageProduct.locationID,
+                total: packageProduct.salePrice,
+                packing: packageProduct.packing,
+                packingSalePrice: packageProduct.packingSalePrice,
+                status: '',
+              });
+            }
+          }
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
     }
 
     this.lblTotal = 0;

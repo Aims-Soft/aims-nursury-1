@@ -146,8 +146,8 @@ export class PackageDetailsComponent implements OnInit {
   getPackageDetails(packageID: any) {
     this.dataService
       .getHttp(
-        'core-api/Package/getPackageDetails?businessID=' +
-          this.globalService.getBusinessID() +
+        'core-api/Product/getProductOfPackage?branchID=' +
+          this.globalService.getBranchID() +
           '&companyID=' +
           this.globalService.getCompanyID() +
           '&userID=' +

@@ -119,7 +119,7 @@
           <td class="text-start">{{ item.packageDate | date }}</td>
           <td>
             <div class="d-flex justify-content-end gap-1">
-              <!-- <div class="pencilIcon" (click)="edit(item)"></div> -->
+              <div class="pencilIcon" (click)="edit(item)"></div>
               <div
                 class="cursor-pointer"
                 (click)="getPackageDetails(item.packageID)"
@@ -166,12 +166,14 @@
                 <tr class="">
                   <th class="text-secondary">Sr#</th>
                   <th class="text-secondary">Product Name</th>
+                  <th class="text-secondary">Sale Price</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of packageDetailList; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.productName }}</td>
+                  <td>{{item.salePrice}}</td>
                 </tr>
               </tbody>
             </table>

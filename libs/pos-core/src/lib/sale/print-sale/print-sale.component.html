@@ -84,19 +84,19 @@
   <thead>
     <tr>
       <!-- <th class="col-1 text-center">Sr</th> -->
-      <th class="col-6">Description</th>
-      <th class="col-1 text-center borderBlack">Qty</th>
-      <th class="col-2 text-end borderBlack">Price</th>
-      <th class="col-2 text-end borderBlack">Total</th>
+      <th class="col-6 lh-1">Description</th>
+      <th class="col-1 text-center borderBlack lh-1">Qty</th>
+      <th class="col-2 text-end borderBlack lh-1">Price</th>
+      <th class="col-2 text-end borderBlack lh-1">Total</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of tableData; let i = index">
       <!-- <td class="col-1 text-center">{{ i + 1 }}</td> -->
-      <td class="col-6">{{ item.productName }}</td>
-      <td class="col-1 text-center borderBlack">{{ item.qty }}</td>
-      <td class="col-2 text-end borderBlack">{{ item.salePrice }}</td>
-      <td class="col-2 text-end borderBlack">{{ item.total }}</td>
+      <td class="col-6 lh-1">{{ item.productName }}</td>
+      <td class="col-1 text-center borderBlack lh-1">{{ item.qty }}</td>
+      <td class="col-2 text-end borderBlack lh-1">{{ item.salePrice }}</td>
+      <td class="col-2 text-end borderBlack lh-1">{{ item.total }}</td>
     </tr>
   </tbody>
 </table>
@@ -142,8 +142,8 @@
             <td class="text-end">{{ lblGrandTotal | number }}</td>
           </tr>
           <tr>
-            <td class="fw-bold">Discount</td>
-            <td class="fw-bold text-end">{{ lblDiscount | number }}</td>
+            <td class="fw-bold bg-dark text-white">Discount</td>
+            <td class="fw-bold text-end bg-dark text-white">{{ lblDiscount | number }}</td>
           </tr>
           <tr>
             <td class="fw-bold single-line">Cash</td>
