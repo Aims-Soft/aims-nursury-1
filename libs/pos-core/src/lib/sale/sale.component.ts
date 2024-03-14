@@ -556,14 +556,22 @@ export class SaleComponent implements OnInit {
         (x.barcode2 == '' || x.barcode2 == null) &&
         (x.barcode3 == '' || x.barcode3 == null)
     );
-    if (data.length == 0 && item.toString() != '') {
+    if (
+      data.length == 0 &&
+      item.toString() != '' &&
+      data[0].ptype != 'package'
+    ) {
       data = this.productList.filter(
         (x: { barcode1: any; barcode2: any; barcode3: any }) =>
           x.barcode2 == item.toString() &&
           (x.barcode3 == '' || x.barcode3 == null)
       );
 
-      if (data.length == 0 && item.toString() != '') {
+      if (
+        data.length == 0 &&
+        item.toString() != '' &&
+        data[0].ptype != 'package'
+      ) {
         var data = this.productList.filter(
           (x: { barcode1: any; barcode2: any; barcode3: any }) =>
             x.barcode3 == item.toString()
@@ -574,48 +582,8 @@ export class SaleComponent implements OnInit {
         }
       }
     }
-    if (this.productSaleTable.tableData.length == 0) {
-      this.productSaleTable.tableData.push({
-        barcode1: data[0].barcode1,
-        barcode2: data[0].barcode2,
-        barcode3: data[0].barcode3,
-        productID: data[0].productID,
-        productName: data[0].productName,
-        qty: 1,
-        costPrice: data[0].costPrice,
-        salePrice: data[0].salePrice,
-        locationID: data[0].locationID,
-        total: data[0].salePrice,
-        packing: data[0].packing,
-        packingSalePrice: data[0].packingSalePrice,
-        status: '',
-      });
-    } else {
-      var found = false;
-      var index = 0;
-      for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
-        if (item != '') {
-          if (
-            this.productSaleTable.tableData[i].barcode1 == item ||
-            this.productSaleTable.tableData[i].barcode2 == item ||
-            this.productSaleTable.tableData[i].barcode3 == item
-          ) {
-            found = true;
-            index = i;
-            i = this.productSaleTable.tableData.length + 1;
-          }
-        }
-      }
-      if (found == true) {
-        if (this.productSaleTable.tableData[index].status == 'deleted') {
-          this.productSaleTable.tableData[index].status = '';
-        } else {
-          this.productSaleTable.tableData[index].qty += 1;
-          this.productSaleTable.tableData[index].total =
-            this.productSaleTable.tableData[index].salePrice *
-            this.productSaleTable.tableData[index].qty;
-        }
-      } else {
+    if (data.length !== 0 && data[0].ptype != 'package') {
+      if (this.productSaleTable.tableData.length == 0) {
         this.productSaleTable.tableData.push({
           barcode1: data[0].barcode1,
           barcode2: data[0].barcode2,
@@ -631,15 +599,57 @@ export class SaleComponent implements OnInit {
           packingSalePrice: data[0].packingSalePrice,
           status: '',
         });
+      } else {
+        var found = false;
+        var index = 0;
+        for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
+          if (item != '') {
+            if (
+              this.productSaleTable.tableData[i].barcode1 == item ||
+              this.productSaleTable.tableData[i].barcode2 == item ||
+              this.productSaleTable.tableData[i].barcode3 == item
+            ) {
+              found = true;
+              index = i;
+              i = this.productSaleTable.tableData.length + 1;
+            }
+          }
+        }
+        if (found == true) {
+          if (this.productSaleTable.tableData[index].status == 'deleted') {
+            this.productSaleTable.tableData[index].status = '';
+          } else {
+            this.productSaleTable.tableData[index].qty += 1;
+            this.productSaleTable.tableData[index].total =
+              this.productSaleTable.tableData[index].salePrice *
+              this.productSaleTable.tableData[index].qty;
+          }
+        } else {
+          this.productSaleTable.tableData.push({
+            barcode1: data[0].barcode1,
+            barcode2: data[0].barcode2,
+            barcode3: data[0].barcode3,
+            productID: data[0].productID,
+            productName: data[0].productName,
+            qty: 1,
+            costPrice: data[0].costPrice,
+            salePrice: data[0].salePrice,
+            locationID: data[0].locationID,
+            total: data[0].salePrice,
+            packing: data[0].packing,
+            packingSalePrice: data[0].packingSalePrice,
+            status: '',
+          });
+        }
       }
     }
+
     if (data.length !== 0 && data[0].ptype === 'package') {
       this.getProdOfPackage(data[0].productID)
-        .then((packageProdList: any[]) => {
+        .then((packageProdList) => {
+          // Handle package product list
           for (const packageProduct of packageProdList) {
-            const item = packageProduct.barcode1; // Assuming item is defined elsewhere in the code
-
-            // Find if the product already exists in the tableData
+            const item = packageProduct.barcode1;
             const existingProductIndex =
               this.productSaleTable.tableData.findIndex((product: any) =>
                 [product.barcode1, product.barcode2, product.barcode3].includes(
@@ -658,6 +668,7 @@ export class SaleComponent implements OnInit {
                   existingProduct.salePrice * existingProduct.qty;
               }
             } else {
+              // Add new product to the sale table
               this.productSaleTable.tableData.push({
                 barcode1: packageProduct.barcode1,
                 barcode2: packageProduct.barcode2,
@@ -675,6 +686,15 @@ export class SaleComponent implements OnInit {
               });
             }
           }
+          this.lblTotal = 0;
+          console.log(this.productSaleTable.tableData);
+          if (this.productSaleTable.tableData.length > 0) {
+            for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
+              this.lblTotal += this.productSaleTable.tableData[i].total;
+            }
+            this.formFields[8].value = -this.lblTotal;
+            this.txtCode = '';
+          }
         })
         .catch((error: any) => {
           console.error(error);
@@ -682,10 +702,12 @@ export class SaleComponent implements OnInit {
     }
 
     this.lblTotal = 0;
-    for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
-      this.lblTotal += this.productSaleTable.tableData[i].total;
+    console.log(this.productSaleTable.tableData);
+    if (this.productSaleTable.tableData.length > 0) {
+      for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
+        this.lblTotal += this.productSaleTable.tableData[i].total;
+      }
     }
-
     this.formFields[8].value = -this.lblTotal;
     this.txtCode = '';
   }
