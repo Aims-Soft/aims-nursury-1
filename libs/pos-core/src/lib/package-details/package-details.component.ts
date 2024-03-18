@@ -248,6 +248,7 @@ export class PackageDetailsComponent implements OnInit {
   edit(item: any) {
     console.log(item);
     this.getProductById(item.productID);
+    this.formFields[0].value = item.packageID;
     this.formFields[2].value = item.packageTitle;
     this.formFields[3].value = item.productID;
     this.formFields[9].value = item.barcode;
