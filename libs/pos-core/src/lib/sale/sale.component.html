@@ -259,63 +259,68 @@
                 >
                 </ngx-mat-select-search>
               </mat-option>
-        
+
               <mat-option>
                 <table class="table table-sm">
                   <thead class="fs-6">
                     <tr>
-                      <th class="col-8 lh-1">Product Name</th>
-                      <th class="col-2 lh-1">SalePrice</th>
-                      <th class="col-2 lh-1" >Quantity</th>
+                      <th class="col-6 lh-sm">Product Name</th>
+                      <th class="col-2 lh-sm">Category</th>
+                      <th class="col-2 lh-sm">SalePrice</th>
+                      <th class="col-2 lh-sm">Quantity</th>
                     </tr>
                   </thead>
                 </table>
               </mat-option>
-              <cdk-virtual-scroll-viewport itemSize="48" style="height: 400px; ">
-              <mat-option
-              *cdkVirtualFor="let item of productList| search: 'productName,salePrice,qty': searchProduct; trackBy: trackItem"
-              [value]="item.productID"
-              >
-                <table class="table table-sm ">
-                  <tbody class="fs-6">
-                    <tr>
-                      <ng-container>
-                        <td
-                          class="col-md-8 text-dark"
-                          *ngIf="item.ptype === 'product'"
-                        >
-                          {{ item.productName }}
-                        </td>
-                        <td
-                          class="col-md-8 text-black "
-                          *ngIf="item.ptype != 'product'"
-                        >
-                        <span>{{ item.productName }}</span>
-                        <mat-icon
-                            (click)="getProductOfPackage(item.productID)"
-                            data-bs-toggle="modal"
-                            data-bs-target="#prodModal"
-                            >add_shopping_cart</mat-icon
+              <cdk-virtual-scroll-viewport itemSize="48" style="height: 400px">
+                <mat-option
+                  *cdkVirtualFor="
+                    let item of productList
+                      | search: 'productName,salePrice,qty':searchProduct;
+                    trackBy: trackItem
+                  "
+                  [value]="item.productID"
+                >
+                  <table class="table table-sm">
+                    <tbody class="fs-6">
+                      <tr>
+                        <ng-container>
+                          <td
+                            class="col-md-6 text-dark"
+                            *ngIf="item.ptype === 'product'"
                           >
+                            {{ item.productName }}
+                          </td>
+                          <td
+                            class="col-md-6 text-black"
+                            *ngIf="item.ptype != 'product'"
+                          >
+                            <span>{{ item.productName }}</span>
+                            <mat-icon
+                              (click)="getProductOfPackage(item.productID)"
+                              data-bs-toggle="modal"
+                              data-bs-target="#prodModal"
+                              >add_shopping_cart</mat-icon
+                            >
+                          </td>
+                        </ng-container>
+                        <td class="col-md-2">{{ item.categoryName }}</td>
+                        <td class="col-md-2">
+                          {{ item.salePrice }}
                         </td>
-                      </ng-container>
-                      <td class="col-md-2 ">
-                        {{ item.salePrice }}
-                      </td>
-                      <td class="col-md-8 ">
-                        {{ item.qty }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </mat-option>
-            </cdk-virtual-scroll-viewport>
+                        <td class="col-md-8">
+                          {{ item.qty }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </mat-option>
+              </cdk-virtual-scroll-viewport>
             </mat-select>
           </mat-form-field>
         </div>
-        
+
         <!----------------------->
-        
       </div>
       <div class="row bg-light-grey pt-2">
         <aims-pos-product-sale-table
@@ -997,19 +1002,23 @@
                   <th class="text-secondary">Price</th>
                   <th class="text-secondary">Quantity</th>
                   <th class="text-secondary">Add</th>
-
                 </tr>
               </thead>
               <tbody>
                 <!--  -->
                 <tr *ngFor="let item of packageProdList; let i = index">
                   <td>
-                      {{ item.productName }}
+                    {{ item.productName }}
                   </td>
                   <td>{{ item.categoryName }}</td>
                   <td>{{ item.salePrice }}</td>
                   <td>{{ item.qty }}</td>
-                  <td><mat-icon (click)="onCheckboxChange(item)" class="cursorPointer">add_circle</mat-icon>
+                  <td>
+                    <mat-icon
+                      (click)="onCheckboxChange(item)"
+                      class="cursorPointer"
+                      >add_circle</mat-icon
+                    >
                   </td>
                 </tr>
               </tbody>

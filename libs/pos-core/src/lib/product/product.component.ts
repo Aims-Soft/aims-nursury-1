@@ -574,7 +574,7 @@ export class ProductComponent implements OnInit {
     if (this.formFields[36].value == '') {
       this.formFields[36].value = new Date();
     }
-    console.log(this.formFields);
+    // console.log(this.formFields);
     if (this.formFields[0].value == '0') {
       this.dataService
         .savetHttp(
@@ -584,7 +584,7 @@ export class ProductComponent implements OnInit {
         )
         .subscribe(
           (response: any) => {
-            console.log(response);
+            // console.log(response);
             if (response.message == 'Success') {
               this.valid.apiInfoResponse('Record saved successfully');
 
@@ -611,7 +611,7 @@ export class ProductComponent implements OnInit {
         )
         .subscribe(
           (response: any) => {
-            console.log(response);
+            // console.log(response);
             if (response.message == 'Success') {
               this.valid.apiInfoResponse('Record updated successfully');
 
