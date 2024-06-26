@@ -10,7 +10,9 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./print-sale.component.scss'],
 })
 export class PrintSaleComponent implements OnInit {
-  @Input() customerName: string;
+  @Input() customerName: any;
+  imgUrl: any;
+  companyID: any;
 
   lblBranchID: any = 0;
   lblInvoice: any = '';
@@ -31,8 +33,6 @@ export class PrintSaleComponent implements OnInit {
   currentUser!: UserInterface;
   lblGrandTotal: any = 0;
 
-  
-
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -46,7 +46,6 @@ export class PrintSaleComponent implements OnInit {
     this.lblBranchID = this.globalService.getBranchID();
   }
 
-
   getBusniessName() {
     this.dataService
       .getHttp(
@@ -56,6 +55,8 @@ export class PrintSaleComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
+          this.imgUrl = `http://135.181.62.34:7060/assets/ui/company/${this.globalService.getCompanyID()}.svg`;
+
           this.lblBusinessName = response[0].businessFullName;
           this.lblContactNumber = response[0].mobileNo;
           // this.lblGrandTotal = this.lblCash - this.lblChange
