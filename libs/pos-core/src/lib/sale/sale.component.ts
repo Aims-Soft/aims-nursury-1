@@ -448,7 +448,6 @@ export class SaleComponent implements OnInit {
               packingSalePrice: response[i].packingSalePrice,
               ptype: response[i].ptype,
               categoryName: response[i].categoryName,
-
             });
           }
           // console.log(this.productList)
@@ -1017,7 +1016,7 @@ export class SaleComponent implements OnInit {
             this.printSale.lblSubTotal = this.lblTotal;
             this.printSale.lblChange = this.formFields[8].value;
 
-            // setTimeout(() => this.globalService.printData(printSection), 200);
+            setTimeout(() => this.globalService.printData(printSection), 200);
             this.resetBank();
             this.reset();
             this.getInvoice();

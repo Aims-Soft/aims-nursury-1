@@ -7,13 +7,16 @@
       </div>
       <div class="col-md-8">
         <h3 class="text-start fw-bold">{{ lblBusinessName }}</h3>
-        <h5 class="text-start">Ph# {{ lblContactNumber }}</h5>
+        <h5 class="text-start">Mobile# {{ lblContactNumber }}</h5>
+        <h5 class="text-start" *ngIf="lblContactNumber2 != undefined">
+          Ph# {{ lblContactNumber2 }}
+        </h5>
       </div>
     </div>
   </div>
   <div class="col-md-6">
     <h6 class="text-end fw-bold">Invoice: {{ lblInvoice }}</h6>
-    <h6 class="text-end fw-bold">Counter: {{ lblContactNumber }}</h6>
+    <h6 class="text-end fw-bold">Counter: {{ lblName }}</h6>
     <h6 class="text-end fw-bold">
       Customer: {{ customerName ? customerName : 'N/A' }}
     </h6>

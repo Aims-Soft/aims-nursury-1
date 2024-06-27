@@ -30,6 +30,8 @@ export class PrintSaleComponent implements OnInit {
   tableData: any = [];
   lblBusinessName: any = '';
   lblContactNumber: any = '';
+  lblContactNumber2: any = '';
+
   currentUser!: UserInterface;
   lblGrandTotal: any = 0;
 
@@ -55,10 +57,13 @@ export class PrintSaleComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
+          console.log(response);
           this.imgUrl = `http://135.181.62.34:7060/assets/ui/company/${this.globalService.getCompanyID()}.svg`;
 
           this.lblBusinessName = response[0].businessFullName;
           this.lblContactNumber = response[0].mobileNo;
+          this.lblContactNumber2 = response[0].phoneNo;
+
           // this.lblGrandTotal = this.lblCash - this.lblChange
           // this.bankList = response;
         },
