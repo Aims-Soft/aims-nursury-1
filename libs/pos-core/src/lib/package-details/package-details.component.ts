@@ -191,12 +191,12 @@ export class PackageDetailsComponent implements OnInit {
             var img = '';
             if (response[i].applicationedoc == '') {
               img =
-                'http://135.181.62.34:7060/assets/ui/productPictures2/noImage.png';
+                'http://localhost:7060/assets/ui/productPictures2/noImage.png';
               // img =
               //   'https://image.sungreenfresh.com:7061/assets/ui/productPictures/noImage.png';
             } else {
               img =
-                'http://135.181.62.34:7060/assets/ui/productPictures/' +
+                'http://localhost:7060/assets/ui/productPictures/' +
                 response[i].productID +
                 '.png';
             }

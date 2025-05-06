@@ -232,9 +232,7 @@ export class CompanyComponent implements OnInit {
 
     if (item.applicationedoc != '') {
       this.productPic =
-        'http://135.181.62.34:7060/assets/ui/company/' +
-        item.companyID +
-        '.png';
+        'http://localhost:7060/assets/ui/company/' + item.companyID + '.png';
     }
     // this.formFields[11].value = item.;
     // this.formFields[12].value = item.;

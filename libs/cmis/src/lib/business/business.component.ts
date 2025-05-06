@@ -230,9 +230,7 @@ export class BusinessComponent implements OnInit {
 
     if (item.businessedoc != null) {
       this.productPic =
-        'http://135.181.62.34:7060/assets/ui/business/' +
-        item.businessID +
-        '.png';
+        'http://localhost:7060/assets/ui/business/' + item.businessID + '.png';
     }
   }
 

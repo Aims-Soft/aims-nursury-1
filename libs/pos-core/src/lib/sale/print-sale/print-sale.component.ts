@@ -58,7 +58,7 @@ export class PrintSaleComponent implements OnInit {
       .subscribe(
         (response: any) => {
           console.log(response);
-          this.imgUrl = `http://135.181.62.34:7060/assets/ui/company/${this.globalService.getCompanyID()}.svg`;
+          this.imgUrl = `http://localhost:7060/assets/ui/company/${this.globalService.getCompanyID()}.svg`;
 
           this.lblBusinessName = response[0].businessFullName;
           this.lblContactNumber = response[0].mobileNo;
