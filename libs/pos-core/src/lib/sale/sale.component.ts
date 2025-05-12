@@ -994,6 +994,7 @@ export class SaleComponent implements OnInit {
       this.formFields[18].value = null;
     }
     this.formFields[21].value = this.globalService.getBusinessTypeID();
+    this.formFields[11].value = this.globalService.getCompanyID();
 
     this.formFields[22].value = JSON.stringify(this.orderJsonList);
 
@@ -1006,7 +1007,6 @@ export class SaleComponent implements OnInit {
             this.valid.apiInfoResponse('Record saved successfully');
 
             this.printSale.tableData = prodTableData;
-
             this.printSale.lblInvoice = response.invoiceNo;
             this.printSale.lblDate = date;
             this.printSale.lblGTotal = this.lblTotal;
