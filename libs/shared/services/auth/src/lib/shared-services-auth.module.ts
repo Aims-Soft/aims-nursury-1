@@ -54,7 +54,7 @@ handleError(error: HttpErrorResponse) {
 }
 
   login(email: string, password: string) {
-    debugger;
+    // debugger;
     return this.http
       .post<UserInterface>(environment.apiUrl + 'auth-api/auth', {
         Loginname: email,

@@ -1,0 +1,41 @@
+/* Matching the screenshot colors */
+.custom-green {
+    background-color: #adcc3e !important;
+}
+
+/* Card layout for sticky footer */
+.card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Table container scroll */
+.table-responsive {
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+/* Specific text sizing for POS look */
+.smaller {
+    font-size: 11px;
+}
+
+.form-select, .form-control {
+    border-color: #dee2e6;
+    font-size: 0.85rem;
+}
+
+/* Remove default focus outlines for a cleaner app look */
+.btn:focus, .form-control:focus {
+    box-shadow: none;
+}
+
+/* List group scroll styling */
+.list-group::-webkit-scrollbar {
+    width: 4px;
+}
+.list-group::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}

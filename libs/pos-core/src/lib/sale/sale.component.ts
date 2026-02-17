@@ -17,6 +17,7 @@ import { PrintSaleComponent } from './print-sale/print-sale.component';
 import { ProductSaleTableComponent } from './product-sale-table/product-sale-table.component';
 import { MatSelect } from '@angular/material/select';
 import { PrintKotSaleComponent } from './print-kot-sale/print-kot-sale.component';
+import { DatePipe } from '@angular/common';
 declare var $: any;
 
 @Component({
@@ -60,6 +61,9 @@ export class SaleComponent implements OnInit {
   percentage: number = 0;
   lblCustomerName: any = '';
   lblBusinessTypeID: any = '';
+
+  startDate : any = new Date();
+  endDate : any = new Date();
 
   checkStatus: boolean = false;
 
@@ -263,7 +267,8 @@ export class SaleComponent implements OnInit {
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
-    private valid: SharedHelpersFieldValidationsModule
+    private valid: SharedHelpersFieldValidationsModule,
+    private datePipe : DatePipe
   ) {}
   // ngAfterViewInit(): void {
   //   $('#noUnderlineInput').parent().find('.mat-form-field-underline').hide();
@@ -285,7 +290,7 @@ export class SaleComponent implements OnInit {
     this.getProduct();
     this.getParty();
     this.getBank();
-    this.getInvoice();
+    this.getInvoice(this.startDate,this.endDate);
     this.getOrder();
   }
   // @HostListener('window:keydown', ['$event'])
@@ -953,8 +958,8 @@ export class SaleComponent implements OnInit {
     }
 
     if (
-      (this.formFields[7].value == '' || this.formFields[7].value == null) &&
-      this.formFields[16].value == 0
+      (this.formFields[7].value == '' || this.formFields[7].value == null || this.formFields[7].value == '0') &&
+      (this.formFields[16].value == '' || this.formFields[16].value == null || this.formFields[16].value == '0')
     ) {
       this.valid.apiInfoResponse('enter cash');
       // this.formFields[8].value = 0 - this.lblTotal;
@@ -1019,7 +1024,7 @@ export class SaleComponent implements OnInit {
             setTimeout(() => this.globalService.printData(printSection), 200);
             this.resetBank();
             this.reset();
-            this.getInvoice();
+            this.getInvoice(this.startDate,this.endDate);
             this.getOrder();
             setTimeout(() => this._txtFocusCode.nativeElement.focus(), 1000);
           } else {
@@ -1411,7 +1416,24 @@ export class SaleComponent implements OnInit {
     $('#customerModal').modal('hide');
   }
 
-  getInvoice() {
+
+  resetInvoiceDates(){
+    this.startDate = new Date();
+    this.endDate = new Date();
+
+
+    this.getInvoice(this.startDate,this.endDate);
+
+
+  }
+
+  getInvoice(startDate:any,endDate:any) {
+
+    var fromDate = this.datePipe.transform(startDate, 'yyyy-MM-dd');
+    var toDate = this.datePipe.transform(endDate, 'yyyy-MM-dd');
+
+
+
     this.dataService
       .getHttp(
         'report-api/FMISReport/getInvoiceDetail?companyID=' +
@@ -1421,7 +1443,11 @@ export class SaleComponent implements OnInit {
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
-          this.moduleId,
+          this.moduleId +
+          '&startDate=' +
+          fromDate +
+          '&endDate=' +
+          toDate ,
         ''
       )
       .subscribe(
