@@ -10,7 +10,485 @@
 </div> -->
 
 <!-- Add / update -->
-<div
+
+<div class="container-fluid d-flex flex-column p-0 bg-white vh-100 overflow-hidden">
+  <div class="row g-0 flex-grow-1 h-100">
+    <div class="col-md-3 border-end bg-white d-flex flex-column h-100 overflow-hidden">
+      <div class="p-3">
+        <div class="d-flex gap-3 mb-3">
+          <button
+            class="mt-2"
+            [ngClass]="{
+              resetBtnZaki:
+                formFields[12].value == 4 || formFields[13].value == 5,
+              resetBtn: formFields[12].value != 4 || formFields[13].value != 5
+            }"
+            mat-raised-button
+            matTooltip="Search By Code"
+          >
+            F4
+          </button>
+          <button
+            class="mt-2"
+            [ngClass]="{
+              resetBtnZaki:
+                formFields[12].value == 4 || formFields[13].value == 5,
+              resetBtn: formFields[12].value != 4 || formFields[13].value != 5
+            }"
+            mat-raised-button
+            matTooltip="Search By Name"
+          >
+            F8
+          </button>
+          <button
+            class="mt-2"
+            [ngClass]="{
+              resetBtnZaki:
+                formFields[12].value == 4 || formFields[13].value == 5,
+              resetBtn: formFields[12].value != 4 || formFields[13].value != 5
+            }"
+            mat-raised-button
+            matTooltip="Product Quantity"
+          >
+            F9
+          </button>
+          <button
+            class="mt-2"
+            [ngClass]="{
+              resetBtnZaki:
+                formFields[12].value == 4 || formFields[13].value == 5,
+              resetBtn: formFields[12].value != 4 || formFields[13].value != 5
+            }"
+            mat-raised-button
+            matTooltip="Cash"
+          >
+            Shift
+          </button>
+        </div>
+        <h6
+          class="fw-bold text-uppercase small mb-2"
+          style="letter-spacing: 1px"
+        >
+          Quick Inventory
+        </h6>
+
+        <div class="input-group mb-0">
+          <mat-form-field class="w-100 density-compact" appearance="outline">
+            <mat-label>Search Product...</mat-label>
+            <input matInput [(ngModel)]="searchProduct" autocomplete="off" />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+
+
+
+        </div>
+      </div>
+
+
+      <div class="bg-light border-bottom px-3 py-2 shadow-sm">
+        <div class="row w-100 align-items-center g-2">
+
+          <div class="col-5 fw-bold text-muted small">
+            PRODUCT NAME
+          </div>
+
+          <div class="col-3 fw-bold text-muted small text-wrap">
+            CATEGORY
+          </div>
+
+          <div class="col-2 fw-bold text-muted small text-center">
+            PRICE
+          </div>
+
+          <div class="col-2 fw-bold text-muted small text-end">
+            QTY
+          </div>
+
+         </div>
+      </div>
+
+
+      <!-- Only this container will scroll - removed max-height, using flex properties only -->
+      <div
+        class="list-group list-group-flush overflow-auto flex-grow-1 scroll-area"
+        style="min-height: 0;"
+      >
+      <button
+  *ngFor="
+    let item of productList
+      | search: 'productName,salePrice,qty':searchProduct;
+    trackBy: trackItem
+  "
+  class="list-group-item list-group-item-action border-0 px-3 py-2"
+  (click)="pushProduct(item.productID)"
+>
+
+  <div class="row w-100 align-items-start g-2">
+
+    <!-- COLUMN 1: Product Name + Code -->
+    <div class="col-5">
+      <div class="fw-bold small text-wrap">
+        {{ item.productName }}
+      </div>
+      <!-- <div class="text-muted small">
+        #{{ item.productID }}
+      </div> -->
+    </div>
+
+    <!-- COLUMN 2: Category -->
+    <div class="col-3 small text-muted text-wrap">
+      {{ item.categoryName }}
+    </div>
+
+    <!-- COLUMN 3: Price -->
+    <div class="col-2 text-center">
+      <span class="text-success fw-bold small">
+        {{ item.salePrice | number:'1.2-2' }}
+      </span>
+    </div>
+
+    <!-- COLUMN 4: Qty -->
+    <div class="col-2 text-end">
+      <span class="badge rounded-pill bg-light text-dark border">
+        {{ item.qty }}
+      </span>
+    </div>
+
+  </div>
+
+</button>
+
+      </div>
+    </div>
+
+
+    <div class="col-md-9 d-flex flex-column h-100 bg-light p-3">
+      <div
+        class="card shadow-sm border-0 flex-grow-1 overflow-hidden d-flex flex-column"
+      >
+        <div
+          class="card-header bg-white d-flex justify-content-between align-items-center border-0 pt-3"
+        >
+          <div class="d-flex align-items-center">
+            <div class="me-2">
+              <div class="productSaleIcon"></div>
+            </div>
+            <div>
+              <h3 class="mb-0 fw-bold">Product Sale</h3>
+              <small class="text-muted"
+                >View, edit and manage your sales here.</small
+              >
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <button
+              mat-button
+              class="saleReturnBtn me-2"
+              (click)="checkSaleReturn()"
+            >
+              Sale Return
+            </button>
+            <button
+              mat-button
+              [ngClass]="{
+                resetBtnZaki:
+                  formFields[12].value == 4 || formFields[13].value == 5,
+                resetBtn: formFields[12].value != 4 || formFields[13].value != 5
+              }"
+              (click)="reset()"
+            >
+              Reset
+            </button>
+            <button
+              mat-button
+              class="ms-2 saleReturnBtn"
+              data-bs-toggle="modal"
+              data-bs-target="#printModal"
+            >
+              Record
+            </button>
+    
+            <button
+              *ngIf="lblBusinessTypeID == 3 && lblOrder == ''"
+              mat-button
+              class="ms-2 kotBtn"
+              (click)="saveOrder('#print-kot')"
+            >
+              Place Order
+            </button>
+
+            <button
+              mat-button
+              class="ms-2"
+              [ngClass]="{
+                resetBtnZaki:
+                  formFields[12].value == 4 || formFields[13].value == 5,
+                resetBtn: formFields[12].value != 4 || formFields[13].value != 5
+              }"
+              data-bs-toggle="modal"
+              data-bs-target="#placeOrderModal"
+              *ngIf="lblBusinessTypeID == 3"
+            >
+              Order Placed
+            </button>
+            <button
+              *ngIf="lblBusinessTypeID == 3 && lblOrder != ''"
+              mat-button
+              class="ms-2 customerBillBtn"
+              (click)="save('#print-data')"
+            >
+              Customer Bill
+            </button>
+            <button
+              mat-button
+              class="saveBtn ms-2"
+              (click)="save('#print-data')"
+              *ngIf="lblBusinessTypeID != 3"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row" *ngIf="roleID == 1">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <mat-form-field class="w-100">
+                  <mat-label>Company</mat-label>
+                  <mat-select
+                    [(ngModel)]="formFields[11].value"
+                    (ngModelChange)="getBusiness()"
+                  >
+                    <mat-option
+                      *ngFor="let item of companyList"
+                      [value]="item.companyID"
+                      >{{ item.companyFullName }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="w-100">
+                  <mat-label>Business</mat-label>
+                  <mat-select
+                    [(ngModel)]="formFields[12].value"
+                    (ngModelChange)="getBranch()"
+                  >
+                    <mat-option
+                      *ngFor="let item of businessList"
+                      [value]="item.businessID"
+                      >{{ item.businessFullName }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="w-100">
+                  <mat-label>Branch</mat-label>
+                  <mat-select [(ngModel)]="formFields[13].value">
+                    <mat-option
+                      *ngFor="let item of branchList"
+                      [value]="item.branchID"
+                      >{{ item.branchName }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <mat-label>Customer Name</mat-label>
+                <mat-select [(ngModel)]="formFields[3].value">
+                  <mat-option
+                    *ngFor="let item of partyList"
+                    [value]="item.partyID"
+                  >
+                    <table class="table">
+                      <td class="col-6">
+                        {{ item.partyName }}
+                      </td>
+                      <td class="col-6">
+                        {{ item.type }}
+                      </td>
+                    </table>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-1">
+              <button
+                mat-mini-fab
+                class="mt-2 bg-dark text-white"
+                data-bs-toggle="modal"
+                data-bs-target="#customerModal"
+              >
+                <mat-icon class="text-center mb-3">add</mat-icon>
+              </button>
+            </div>
+            <div class="col-md-7">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  [(ngModel)]="formFields[9].value"
+                  placeholder="Remarks"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="w-100">
+                <input
+                  placeholder="Search By Code"
+                  [(ngModel)]="txtCode"
+                  (keyup)="pushProductByCode(txtCode, $event)"
+                  autofocus
+                  #txtFocusCode
+                  matInput
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row bg-light-grey pt-2">
+            <aims-pos-product-sale-table
+              (eventEmitter)="totalBill()"
+            ></aims-pos-product-sale-table>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row mt-2 justify-content-center">
+              <div class="col-md-2">
+                <div
+                  class="mt-4 bg-light d-flex flex-column align-items-center mat-elevation-z5"
+                >
+                  <label class="h2-sale-discount pt-3">PERCENTAGE</label>
+                  <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-2">
+                    <input
+                      matInput
+                      class="blue-text"
+                      [(ngModel)]="percentage"
+                      (keyup)="changeValue()"
+                      (ngModelChange)="calculateTotalAmount(1)"
+                      type="text"
+                      maxlength="2"
+                    />
+                  </mat-form-field>
+                </div>
+
+              </div>
+              <div class="col-md-2">
+                <div
+                  class="mt-4 bg-light d-flex flex-column align-items-center mat-elevation-z5"
+                >
+                  <label class="h2-sale-discount pt-3">DISCOUNT</label>
+                  <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-2">
+                    <input
+                      matInput
+                      class="blue-text"
+                      [(ngModel)]="formFields[6].value"
+                      (keyup)="changeValue()"
+                      (ngModelChange)="calculateTotalAmount(2)"
+                      type="number"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="col-md-1">
+                  <mat-checkbox
+                    class="ms-5"
+                    [(ngModel)]="chkApplied"
+                    (change)="Generated(chkApplied)"
+                    >Bank</mat-checkbox
+                  >
+                </div>
+                <div
+                  class="bg-light d-flex flex-column align-items-center mat-elevation-z5"
+                >
+                  <label class="h3-sale-cash pt-3">CASH</label>
+                  <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-1">
+                    <input
+                      matInput
+                      class="blue-text"
+                      [(ngModel)]="formFields[7].value"
+                      (keyup)="
+                        changeValue(); getKeyPressed($event, '#print-data')
+                      "
+                      type="number"
+                      #txtCash
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div
+                  class="mt-4 d-flex flex-column align-items-center mat-elevation-z5"
+                  [ngClass]="{
+                    'bg-red':
+                      formFields[12].value == 4 || formFields[13].value == 5,
+                    '
+              bg-light-green':
+                      formFields[12].value != 4 || formFields[13].value != 5
+                  }"
+                >
+                  <label class="h2-sale-discount pt-4 text-white">CHANGE</label>
+                  <label class="h1-digit text-center mt-1 mb-2 pb-1">{{
+                    formFields[8].value
+                  }}</label>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div
+                  class="mt-4 d-flex flex-column align-items-center mat-elevation-z5"
+                  [ngClass]="{
+                    'bg-red':
+                      formFields[12].value == 4 || formFields[13].value == 5,
+                    '
+              bg-light-green':
+                      formFields[12].value != 4 || formFields[13].value != 5
+                  }"
+                >
+                  <label class="h3-sale-cash pt-4 text-white">TOTAL</label>
+                  <label class="text-center mt-1 mb-2 h1-digit">
+                    {{ lblTotal }}
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div
+                  class="mt-4 d-flex flex-column align-items-center mat-elevation-z5"
+                  [ngClass]="{
+                    'bg-red':
+                      formFields[12].value == 4 || formFields[13].value == 5,
+                    '
+              bg-light-green':
+                      formFields[12].value != 4 || formFields[13].value != 5
+                  }"
+                >
+                  <label class="h3-sale-cash pt-4 text-white">BANK</label>
+                  <label class="text-center mt-1 mb-2 h1-digit">{{
+                    lblBankAmount
+                  }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+</div>
+
+<!-- <div
   [ngClass]="{
     'bg-gold': formFields[12].value == 4 || formFields[13].value == 5,
     '
@@ -47,7 +525,6 @@
       >
         Record
       </button>
-      <!-- printKot.print('#print-data')" -->
       <button
         *ngIf="lblBusinessTypeID == 3 && lblOrder == ''"
         mat-button
@@ -86,14 +563,7 @@
       >
         Save
       </button>
-      <!-- <button
-        *ngIf="formFields[12].value === 4 && formFields[13].value === 5"
-        mat-button
-        class="ms-1 saleReturnBtn ps-5 pe-5"
-        (click)="save('kotCustomerBill')"
-      >
-        Cusomter Bill
-      </button> -->
+
     </div>
   </div>
 </div>
@@ -241,7 +711,6 @@
             />
           </mat-form-field>
         </div>
-        <!----------------------->
         <div class="col-md-8">
           <mat-form-field class="w-100">
             <mat-label>Search By Name</mat-label>
@@ -320,7 +789,6 @@
           </mat-form-field>
         </div>
 
-        <!----------------------->
       </div>
       <div class="row bg-light-grey pt-2">
         <aims-pos-product-sale-table
@@ -523,13 +991,7 @@
                 />
               </mat-form-field>
             </div>
-            <!-- <div class="">
-                <label class="">PERCENTAGE</label>
-                <mat-form-field class="text-center">
-                  <input id="noUnderlineInput" matInput [(ngModel)]="percentage" (keyup)="changeValue()"
-                    (ngModelChange)="calculateTotalAmount(1)" type="text" maxlength="2" />
-                </mat-form-field>
-              </div> -->
+
           </div>
           <div class="col-md-2">
             <div
@@ -628,7 +1090,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <aims-pos-print-sale
   [customerName]="lblCustomerName"
@@ -781,59 +1243,55 @@
         <h5 class="modal-title fs-5 fw-bold text-white mt-2" id="printModal">
           Saved Invoice
         </h5>
-        <mat-icon class="text-white cursorPointer" data-bs-dismiss="modal"
-         (click)="resetInvoiceDates()" >close</mat-icon
+        <mat-icon
+          class="text-white cursorPointer"
+          data-bs-dismiss="modal"
+          (click)="resetInvoiceDates()"
+          >close</mat-icon
         >
       </div>
       <div class="modalbody bg-light">
         <div class="row">
           <!-- <div class="col-md-6 mt-3"><strong></strong></div> -->
 
+          <div class="col-md-2">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Start Date</mat-label>
+              <!-- [(ngModel)]="formFields[11].value" -->
+              <input
+                matInput
+                [matDatepicker]="picker1"
+                [(ngModel)]="startDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>End Date</mat-label>
+              <!-- [(ngModel)]="formFields[11].value" -->
+              <input matInput [matDatepicker]="picker2" [(ngModel)]="endDate" />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker2"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
 
-             <div class="col-md-2">
-      <mat-form-field class="w-100" appearance="fill">
-        <mat-label>Start Date</mat-label>
-        <!-- [(ngModel)]="formFields[11].value" -->
-        <input
-          matInput
-          [matDatepicker]="picker1"
-          [(ngModel)]="startDate"
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="picker1"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-      </mat-form-field>
-    </div>
-    <div class="col-md-2">
-      <mat-form-field class="w-100" appearance="fill">
-        <mat-label>End Date</mat-label>
-        <!-- [(ngModel)]="formFields[11].value" -->
-        <input
-          matInput
-          [matDatepicker]="picker2"
-          [(ngModel)]="endDate"
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="picker2"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
-      </mat-form-field>
-    </div>
-
-    <div class="col-md-2">
-
+          <div class="col-md-2">
             <button
-        mat-button
-        class="ms-2 mt-2 saleReturnBtn"
-        (click)="getInvoice(startDate,endDate)"
-      >
-        Search
-      </button>
-
-</div>
+              mat-button
+              class="ms-2 mt-2 saleReturnBtn"
+              (click)="getInvoice(startDate, endDate)"
+            >
+              Search
+            </button>
+          </div>
 
           <div class="col-md-4 mt-2 ms-auto">
             <mat-form-field class="w-100">

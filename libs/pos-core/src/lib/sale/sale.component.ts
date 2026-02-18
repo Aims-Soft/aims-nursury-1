@@ -307,6 +307,21 @@ export class SaleComponent implements OnInit {
 
   /////////////////
 
+products = [
+    { name: '7up - 1.5 Ltr', code: '35780999111' },
+    { name: 'Coca Cola - 1 Ltr', code: '12543678912' },
+    // Add 50+ items here to test the scrolling
+  ];
+
+  // Mock cart for the table
+  cart = [
+    { name: '7up - 1.5 Ltr', qty: 1, price: 180 },
+    { name: '7up - 1.5 Ltr', qty: 1, price: 180 },
+    { name: '7up - 1.5 Ltr', qty: 1, price: 180 }
+  ];
+
+
+
   setFocusOnInput() {
     if (this.txtFocusCode && this.txtFocusCode.nativeElement) {
       this.txtFocusCode.nativeElement.focus();
