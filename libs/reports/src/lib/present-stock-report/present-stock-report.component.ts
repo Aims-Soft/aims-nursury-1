@@ -16,6 +16,7 @@ export class PresentStockReportComponent implements OnInit {
   stocktList: any = [];
   moduleId: string | null;
   lblBusinessName: any = '';
+  txtSearch:any;
   constructor(
     private global: SharedServicesGlobalDataModule,
     private globalService: SharedServicesGlobalDataModule,

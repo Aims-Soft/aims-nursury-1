@@ -83,7 +83,15 @@
             <div class="col-md-4">
               <mat-form-field class="w-100 pt-3 pe-4">
                 <mat-select class="matInput" [(ngModel)]="formFields[5].value" placeholder="Select designation">
-                  <mat-option *ngFor="let item of designationList" [value]="item.designationID">
+                                     <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="designationSearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+                  <mat-option *ngFor="let item of designationList  | search: 'desginationName':designationSearch" [value]="item.designationID">
                     {{ item.desginationName }}
                   </mat-option>
                 </mat-select>
@@ -119,7 +127,15 @@
             <div class="col-md-4">
               <mat-form-field class="w-100 pt-3 pe-4">
                 <mat-select class="matInput" [(ngModel)]="formFields[8].value" placeholder="Enter City">
-                  <mat-option *ngFor="let item of cityList" [value]="item.cityID">
+                                     <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="citySearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+                  <mat-option *ngFor="let item of cityList | search: 'cityName':citySearch" [value]="item.cityID">
                     {{ item.cityName }}
                   </mat-option>
                 </mat-select>

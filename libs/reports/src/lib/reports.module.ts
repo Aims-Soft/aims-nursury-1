@@ -29,6 +29,7 @@ import { DailyInvoiceReportComponent } from './daily-invoice-report/daily-invoic
 import { CashReportComponent } from './cash-report/cash-report.component';
 import { CreditReportComponent } from './credit-report/credit-report.component';
 import { ItemWiseSaleReportComponent } from './item-wise-sale-report/item-wise-sale-report.component';
+import { SharedInterfaceModule } from '@aims-pos/shared/interface';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -62,6 +63,7 @@ export const reportsRoutes: Route[] = [
     NgxMatSelectSearchModule,
     PerfectScrollbarModule,
     NgxPrintModule,
+    SharedInterfaceModule
   ],
   declarations: [
     DailySaleReportComponent,

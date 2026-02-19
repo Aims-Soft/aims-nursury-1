@@ -3,7 +3,12 @@
         <div class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2">
             <div class="SavedEmployeesIcon"></div>
             <h3 class="ms-3 mt-2">Saved Bank Info</h3>
-            <label class=" ms-4 mt-3 me-lg-auto"></label>
+
+             <mat-form-field class="w-25 ms-auto">
+            <input matInput placeholder="Search..." [(ngModel)]="txtSearch" />
+            <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <!-- <label class=" ms-4 mt-3 me-lg-auto"></label> -->
         </div>
     </div>
 </div>
@@ -21,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of tableData; let i=index">
+                <tr *ngFor="let item of tableData | filter: txtSearch; let i=index">
                     <td>{{i+1}}</td>
                     <td>{{item.bankName}}</td>
                     <td>{{item.branchCode}}</td>

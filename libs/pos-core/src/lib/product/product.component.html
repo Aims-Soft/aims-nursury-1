@@ -93,8 +93,18 @@
                   [(ngModel)]="cmbCategory"
                   (ngModelChange)="getSubCategory(cmbCategory)"
                 >
+
+                <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="categorySearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+
                   <mat-option
-                    *ngFor="let item of categoryList"
+                    *ngFor="let item of categoryList | search: 'categoryName':categorySearch"
                     [value]="item.categoryID"
                   >
                     {{ item.categoryName }}
@@ -106,8 +116,18 @@
               <mat-form-field class="w-100">
                 <mat-label>Sub Category</mat-label>
                 <mat-select [(ngModel)]="cmbSubCategory">
+
+                <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="subCategorySearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+
                   <mat-option
-                    *ngFor="let item of subCategoryList"
+                    *ngFor="let item of subCategoryList  | search: 'categoryName':subCategorySearch"
                     [value]="item.categoryID"
                   >
                     {{ item.categoryName }}

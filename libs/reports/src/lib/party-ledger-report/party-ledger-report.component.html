@@ -33,7 +33,17 @@
           placeholder="Select party name"
           (ngModelChange)="getPartyName(cmbParty)"
         >
-          <mat-option *ngFor="let item of partyList" [value]="item.partyID">
+
+                  <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="partySearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+
+          <mat-option *ngFor="let item of partyList | search:'partyName':partySearch" [value]="item.partyID">
             {{ item.partyName }}
           </mat-option>
         </mat-select>
@@ -46,7 +56,18 @@
           [(ngModel)]="cmbCOA"
           placeholder="Select account head"
         >
-          <mat-option *ngFor="let item of coaList" [value]="item.coaID">
+
+
+          <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="coaSearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+
+          <mat-option *ngFor="let item of coaList | search:'coaTitle':coaSearch" [value]="item.coaID">
             {{ item.coaTitle }}
           </mat-option>
         </mat-select>

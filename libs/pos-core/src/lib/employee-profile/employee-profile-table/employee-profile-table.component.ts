@@ -16,6 +16,8 @@ export class EmployeeProfileTableComponent implements OnInit {
   error: any;
   tableData: any = [];
   moduleId: string | null;
+  txtSearch:any;
+
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,

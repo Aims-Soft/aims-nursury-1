@@ -143,8 +143,17 @@
                   [(ngModel)]="formFields[8].value"
                   placeholder="Enter City"
                 >
+
+                   <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="citySearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
                   <mat-option
-                    *ngFor="let item of cityList"
+                    *ngFor="let item of cityList | search: 'cityName':citySearch"
                     [value]="item.cityID"
                   >
                     {{ item.cityName }}

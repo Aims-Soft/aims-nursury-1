@@ -13,6 +13,7 @@ export class CashReportComponent implements OnInit {
   lblBusinessName: any = '';
 
   invoiceDate: any = '';
+  txtSearch: any;
 
   moduleId: string | null;
   reportList: any = [];

@@ -79,7 +79,17 @@
               placeholder="Select party name"
               autofocus
             >
-              <mat-option *ngFor="let item of partyList" [value]="item.partyID">
+
+                  <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="partySearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+
+              <mat-option *ngFor="let item of partyList | search: 'partyName':partySearch" [value]="item.partyID">
                 {{ item.partyName }}
               </mat-option>
             </mat-select>
@@ -103,8 +113,19 @@
               [(ngModel)]="formFields[5].value"
               placeholder="Select category"
             >
+
+
+                <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="categorySearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+
               <mat-option
-                *ngFor="let item of categoryList"
+                *ngFor="let item of categoryList  | search: 'categoryName':categorySearch"
                 [value]="item.coaID"
               >
                 {{ item.coaTitle }}
@@ -117,7 +138,16 @@
               [(ngModel)]="formFields[6].value"
               placeholder="Select chart of account"
             >
-              <mat-option *ngFor="let item of coaList" [value]="item.coaID">
+
+               <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="coaSearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let item of coaList  | search: 'coaTitle':coaSearch" [value]="item.coaID">
                 {{ item.coaTitle }}
               </mat-option>
             </mat-select>

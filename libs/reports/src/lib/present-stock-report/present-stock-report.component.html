@@ -6,6 +6,10 @@
       <div class="BankDetailsIcon"></div>
       <h3 class="ms-3 mt-2">Present Stock Position</h3>
       <label class="ms-4 mt-3 me-lg-auto"></label>
+
+
+
+
       <!-- <button mat-button class="resetBtn me-2" styleSheetFile="assets/printstyles.css" printSectionId="section" ngxPrint [disabled]="reportList.length == 0">Print</button> -->
       <button mat-button class="saveBtn me-2" (click)="exportExcel()">
         Export to Excel</button
@@ -23,25 +27,31 @@
   </div>
 </div>
 <div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <mat-form-field class="w-100 pt-3" appearance="fill">
-        <mat-label>Report Date</mat-label>
-        <!-- (ngModelChange)="" -->
-        <input
-          matInput
-          [matDatepicker]="picker1"
-          [(ngModel)]="reportDate"
-          (ngModelChange)="getDailyStockReport()"
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="picker1"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-      </mat-form-field>
-    </div>
+  <div class="row align-items-center">
+  <!-- Datepicker on left -->
+  <div class="col-md-4">
+    <mat-form-field class="w-100 pt-3" appearance="fill">
+      <mat-label>Report Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker1"
+        [(ngModel)]="reportDate"
+        (ngModelChange)="getDailyStockReport()"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
   </div>
+
+  <!-- Search box on right -->
+  <div class="col-md-4 offset-md-4 text-end pt-3">
+    <mat-form-field appearance="fill">
+      <input matInput placeholder="Search..." [(ngModel)]="txtSearch" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+</div>
+
 </div>
 <div class="container mt-5" id="section">
   <div class="row d-none">
@@ -91,7 +101,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of stocktList; let i = index">
+            <tr *ngFor="let item of stocktList | filter:txtSearch; let i = index">
               <td class="text-center">{{ i + 1 }}</td>
               <td class="">{{ item.productName }}</td>
               <td class="text-center">{{ item.stockin | number }}</td>

@@ -53,8 +53,17 @@
           [(ngModel)]="formFields[4].value"
           placeholder="Select category here"
         >
+
+                  <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="categorySearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
           <mat-option
-            *ngFor="let item of categoryList"
+            *ngFor="let item of categoryList | search: 'categoryName':categorySearch"
             [value]="item.categoryID"
           >
             {{ item.categoryName }}

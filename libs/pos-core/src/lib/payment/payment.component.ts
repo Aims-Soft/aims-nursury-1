@@ -14,6 +14,9 @@ export class PaymentComponent implements OnInit {
   @ViewChild(PaymentTableComponent) paymentTable: any;
 
   roleID: any = 0;
+  partySearch: any;
+  categorySearch: any;
+  coaSearch: any;
 
   pageFields: PaymentInterface = {
     invoiceNo: '0', //0

@@ -40,6 +40,7 @@ export class PurchaseComponent implements OnInit {
   txtAdvanceTaxAmount: any = 0;
   txtSaleTax: any = 0;
   txtSaleTaxAmount: any = 0;
+  supplierSearch:any;
 
   pageFields: SaleInterface = {
     invoiceNo: '0', //0

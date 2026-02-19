@@ -6,7 +6,7 @@ import { MaterialModule } from '@aims-pos/material';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { SearchPipe } from '@aims-pos/shared/interface';
+import { SearchPipe, SharedInterfaceModule } from '@aims-pos/shared/interface';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { TextMaskModule } from 'angular2-text-mask';
@@ -122,6 +122,7 @@ export const posCoreRoutes: Route[] = [
     PerfectScrollbarModule,
     TextMaskModule,
     ChartModule,
+    SharedInterfaceModule
   ],
   exports: [
     ScrollingModule,
@@ -172,7 +173,7 @@ export const posCoreRoutes: Route[] = [
     BrandComponent,
     BrandTableComponent,
     ProductSaleTableComponent,
-    SearchPipe,
+    // SearchPipe,
     PrintSaleComponent,
     OpeningBalanceComponent,
     OpeningBalanceTableComponent,

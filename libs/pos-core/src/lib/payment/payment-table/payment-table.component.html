@@ -2,6 +2,10 @@
     <div class="d-flex flex-row mt-4 mb-3 align-items-center">
         <div class="SavedPaymentsIcon"></div>
         <h3 class="ms-3 mt-2">Saved Payments</h3>
+           <mat-form-field class="w-25 ms-auto">
+      <input matInput placeholder="Search..." [(ngModel)]="txtSearch" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
     </div>
     <div class="table-responsive">
     <perfect-scrollbar class="bg-light-grey" style="height: 31.5em; max-width: 100%;">
@@ -17,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of tableData; let i=index">
+            <tr *ngFor="let item of tableData | filter: txtSearch; let i=index">
                 <td class="text-center col-1">{{i+1}}</td>
                 <td>{{item.invoiceNo}}</td>
                 <td>{{item.invoiceDate | date:'MMM-dd-yyyy'}}</td>

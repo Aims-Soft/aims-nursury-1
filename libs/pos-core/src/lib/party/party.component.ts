@@ -14,6 +14,7 @@ export class PartyComponent implements OnInit {
   @ViewChild(PartyTableComponent) partyTable: any;
 
   roleID: any = 0;
+  citySearch: any;
 
   pageFields: PartyInterface = {
     partyID: '0', //0

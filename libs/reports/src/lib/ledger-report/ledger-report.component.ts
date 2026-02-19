@@ -22,6 +22,7 @@ export class LedgerReportComponent implements OnInit {
   coaList: any = [];
   reportList: any = [];
   moduleId: string | null;
+  coaSearch:any;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,

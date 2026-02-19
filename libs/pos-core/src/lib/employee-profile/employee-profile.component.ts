@@ -14,6 +14,8 @@ export class EmployeeProfileComponent implements OnInit {
   @ViewChild(EmployeeProfileTableComponent) employeeTable: any;
 
   roleID: any = 0;
+  citySearch: any;
+  designationSearch: any;
 
   pageFields: EmployeeInterface = {
     partyID: '0', //0

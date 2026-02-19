@@ -33,7 +33,19 @@
           placeholder="Select account head"
           (ngModelChange)="getAccountHead(cmbCOA)"
         >
-          <mat-option *ngFor="let item of coaList" [value]="item.coaID">
+
+
+                  <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="coaSearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+
+
+          <mat-option *ngFor="let item of coaList | search:'coaTitle':coaSearch" [value]="item.coaID">
             {{ item.coaTitle }}
           </mat-option>
         </mat-select>

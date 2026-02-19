@@ -14,6 +14,7 @@ export class SubCategoryComponent implements OnInit {
   @ViewChild(SubCategoryTableComponent) subCategoryTable: any;
 
   roleID: any = 0;
+  categorySearch: any;
 
   pageFields: SubCategoryInterface = {
     categoryID: '0', //0

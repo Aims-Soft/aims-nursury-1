@@ -22,8 +22,8 @@
   </div>
 </div>
 <div class="container">
-  <div class="row mt-2">
-    <div class="col-md-3">
+  <div class="row mt-2 align-items-center">
+    <div class="col-md-4">
       <mat-form-field class="w-100" appearance="fill">
         <mat-label>Date</mat-label>
         <!-- [(ngModel)]="formFields[11].value" -->
@@ -40,6 +40,13 @@
         <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
     </div>
+      <!-- Search box on right -->
+  <div class="col-md-4 offset-md-4 text-end pt-3">
+    <mat-form-field appearance="fill">
+      <input matInput placeholder="Search..." [(ngModel)]="txtSearch" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
   </div>
 </div>
 <div class="container mt-5" id="section">
@@ -85,7 +92,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of reportList; let i = index">
+            <tr *ngFor="let item of reportList | filter:txtSearch; let i = index">
               <td class="text-center">{{ i + 1 }}</td>
               <td>{{ item.invoiceNo }}</td>
               <td class="text-center">{{ item.partyName }}</td>

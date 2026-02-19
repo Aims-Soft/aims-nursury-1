@@ -22,6 +22,8 @@ export class PartyLedgerReportComponent implements OnInit {
   partyList: any = [];
   reportList: any = [];
   moduleId: string | null;
+  partySearch: any;
+  coaSearch: any;
 
   constructor(
     private dataService: SharedServicesDataModule,

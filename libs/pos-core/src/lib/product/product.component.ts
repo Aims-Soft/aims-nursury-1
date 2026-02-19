@@ -21,6 +21,8 @@ export class ProductComponent implements OnInit {
   cmbBarcode: any;
   cmbCategory: any;
   cmbSubCategory: any;
+  categorySearch : any;
+  subCategorySearch : any;
 
   pageFields: ProductInterface = {
     productID: '0', //0
