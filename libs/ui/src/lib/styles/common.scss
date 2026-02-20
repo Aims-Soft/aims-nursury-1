@@ -480,9 +480,13 @@ button {
 }
 .scroll-verticle {
   overflow-x: hidden !important;
-  overflow-y: scroll;
+  overflow-y: hidden !important;
+  scrollbar-gutter: stable both-edges !important;
 }
 
+.scroll-verticle:hover {
+  overflow-y: scroll !important;
+}
 .scroll-horizontal {
   overflow-x: auto;
   overflow-y: hidden !important;
