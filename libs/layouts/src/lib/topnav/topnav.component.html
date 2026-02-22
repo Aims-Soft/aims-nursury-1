@@ -1,60 +1,61 @@
 <div class="header">
-    <mat-toolbar class="mat-toolbar">
-      <button
-        mat-icon-button
-        class="example-icon"
-        (click)="onToggleDrawer()"
-        aria-label="icon-button with menu icon"
-      >
-        <mat-icon class="text-white">{{ menu_btn }}</mat-icon>
-      </button>
-      <!-- <img
+  <mat-toolbar class="mat-toolbar">
+    <button
+      mat-icon-button
+      class="example-icon"
+      (click)="onToggleDrawer()"
+      aria-label="icon-button with menu icon"
+    >
+      <mat-icon class="text-white">{{ menu_btn }}</mat-icon>
+    </button>
+    <!-- <img
         [src]="logoUrl"
         alt=""
         width="55px"
         height="auto"
       /> -->
-      <span class="title"> {{ title }}</span>
-      <span class="example-spacer"></span>
-  
-      <!-- user menu -->
-      <span class="usernameTxt">
-        {{ userName }}
-      </span>
-      <button
-        mat-icon-button
-        class="example-icon favorite-icon"
-        [matMenuTriggerFor]="userMenu"
-        aria-label="Example icon-button with heart icon"
-      >
-        <mat-icon class="text-white">person</mat-icon>
-      </button>
-      <mat-menu #userMenu="matMenu">
-        <button mat-menu-item (click)="logout()">
-          <mat-icon class="txtClrLightGreen">exit_to_app</mat-icon>
-          <span class="txtClrDarkGrey h6">Log out</span>
-        </button> </mat-menu
-      ><!-- end user menu -->
-  
-      <button
-        mat-icon-button
-        class="example-icon"
-        aria-label="Example icon-button with share icon"
-        [matMenuTriggerFor]="menu"
-      >
-        <mat-icon class="text-white">apps</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <div *ngFor="let item of applicationModulesList">
-          <button mat-menu-item (click)="setSidebarMenu(item)">
-            <div class="d-flex flex-row">
-              <div [class]="item.moduleIcon"></div>
-              <span class="txtClrDarkGrey h6 ps-2">{{ item.applicationModuleTitle }}</span>
-            </div>
-            <!-- <mat-icon class="txtClrLightGreen">{{item.moduleIcon}}</mat-icon> -->
-          </button>
-        </div>
-      </mat-menu>
-    </mat-toolbar>
-  </div>
-  
+    <span class="title"> {{ title }}</span>
+    <span class="example-spacer"></span>
+
+    <!-- user menu -->
+    <span class="usernameTxt">
+      {{ userName }}
+    </span>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon"
+      [matMenuTriggerFor]="userMenu"
+      aria-label="Example icon-button with heart icon"
+    >
+      <mat-icon class="text-white">person</mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon class="txtClrLightGreen">exit_to_app</mat-icon>
+        <span class="txtClrDarkGrey h6">Log out</span>
+      </button> </mat-menu
+    ><!-- end user menu -->
+
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+      [matMenuTriggerFor]="menu"
+    >
+      <mat-icon class="text-white">apps</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <div *ngFor="let item of applicationModulesList">
+        <button mat-menu-item (click)="setSidebarMenu(item)">
+          <div class="d-flex flex-row">
+            <div [class]="item.moduleIcon"></div>
+            <span class="txtClrDarkGrey h6 ps-2">{{
+              item.applicationModuleTitle
+            }}</span>
+          </div>
+          <!-- <mat-icon class="txtClrLightGreen">{{item.moduleIcon}}</mat-icon> -->
+        </button>
+      </div>
+    </mat-menu>
+  </mat-toolbar>
+</div>

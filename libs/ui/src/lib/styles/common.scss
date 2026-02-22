@@ -21,8 +21,8 @@
 }
 body,
 html {
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
   background: var(--dark-light) !important;
   // background-color: var(--light);
   // background-image: linear-gradient(to right top, #f8f9fa, #f4f6f9, #f1f2f8, #f0eef6, #f1e9f3, #f0e9f3, #f0e8f3, #efe8f3, #edebf6, #ebeff7, #ebf1f8, #edf4f8);
@@ -78,6 +78,9 @@ button {
   outline: none !important;
 }
 
+.custom-vh {
+  height: 93vh !important;
+}
 /********************** headings ************************/
 .h1-page-header {
   padding-left: 0.5em;
@@ -256,18 +259,18 @@ button {
 /****************** buttons ***********************/
 
 .resetBtn {
-  position: fixed;
-  right: 0;
-  height: 40px;
+  height: 2em !important;
+  // min-width: 8em !important;
+  padding: 0px 15px 0px !important;
   background-color: var(--light-green) !important;
   color: white;
-  border-radius: 0 !important;
+  border-radius: 8px !important;
+  border-color: transparent !important;
+  font-size: 0.9em !important;
 }
 .resetBtn:hover {
-  height: 40px;
   background-color: #adb961 !important;
   color: white;
-  border-radius: 0 !important;
   transition: all 0.5s ease-in-out;
 }
 
@@ -287,20 +290,21 @@ button {
   transition: all 0.5s ease-in-out;
 }
 .saleReturnBtn {
-  position: fixed;
   right: 0;
-  height: 40px;
+  height: 2em !important;
   background-color: var(--white) !important;
   color: var(--dark-grey);
   font-weight: bold;
-  border-radius: 0 !important;
+  border-radius: 8px !important;
+  border-color: transparent !important;
+  padding: 0px 15px 0px !important;
+  font-size: 0.9em !important;
 }
 .saleReturnBtn:hover {
-  height: 40px;
+  height: 2em !important;
   background-color: #a7a7a7 !important;
   color: var(--white);
   font-weight: bold;
-  border-radius: 0 !important;
   transition: all 0.5s ease-in-out;
 }
 
@@ -317,7 +321,7 @@ button {
 .kotBtn {
   // position: fixed;
   right: 0;
-  height: 40px;
+  height: 2em !important;
   width: 7em;
   background-color: var(--dark-grey) !important;
   color: white;
@@ -335,18 +339,18 @@ button {
 }
 
 .saveBtn {
-  position: fixed;
   right: 0;
-  height: 40px;
+  height: 2em !important;
+  padding: 0px 15px 0px !important;
   background-color: var(--dark-grey) !important;
   color: white;
-  border-radius: 0 !important;
+  border-radius: 8px !important;
+  border-color: transparent !important;
+  font-size: 0.9em !important;
 }
 .saveBtn:hover {
-  height: 40px;
   background-color: #888a7c !important;
   color: white;
-  border-radius: 0 !important;
   transition: all 0.5s ease-in-out;
 }
 
@@ -480,7 +484,7 @@ button {
 }
 .scroll-verticle {
   overflow-x: hidden !important;
-  overflow-y: hidden !important;
+  overflow-y: auto !important;
   scrollbar-gutter: stable both-edges !important;
 }
 
@@ -492,8 +496,8 @@ button {
   overflow-y: hidden !important;
 }
 .no-scroll {
-  width: 100% !important;
-  height: 100% !important;
+  // width: 100% !important;
+  // height: 100% !important;
   overflow: hidden !important;
 }
 /*
@@ -599,6 +603,26 @@ button.mat-raised-button.uploadbtn {
   color: white !important;
 }
 
+// mat-form-field
+.myFormField .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+.myFromField .mat-form-field-infix {
+  padding: 0.4em 0 !important;
+}
+
+.myFormField .mat-input-element {
+  padding: 0 !important;
+  height: 20px;
+}
+.myFormField .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.4em 0 !important;
+}
+
+.myFormField .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0 !important;
+}
 /*************** end Angular Material ************/
 
 /************* Image Avatars ***************/
@@ -964,4 +988,25 @@ button.mat-raised-button.uploadbtn {
   -webkit-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.72);
   -moz-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.72);
   transition: all 0.5s ease-in-out;
+}
+
+/********************** tables **************************/
+.myTable tr {
+  height: 0.5em !important;
+  border-bottom: 1px solid #999 !important;
+}
+
+.myTable tr th {
+  color: var(--text-third) !important;
+  font-size: 0.9em !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  background-color: var(--white) !important;
+}
+
+.myTable tr td {
+  color: var(--text-primary) !important;
+  font-size: 0.9em !important;
+  padding-top: 5px !important;
+  padding-bottom: 3px !important;
 }
