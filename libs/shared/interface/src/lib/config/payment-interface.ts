@@ -5,8 +5,8 @@ export interface PaymentInterface {
   partyID: '';
   type: '';
   coaID: '';
-  amount: '';
-  discount: '';
+  amount: '0';
+  discount: '0';
   description: '';
   userID: '';
   companyid: '';

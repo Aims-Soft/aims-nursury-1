@@ -1,5 +1,5 @@
 <div class="bg-dark-light">
-  <div class="container">
+  <div class="container-fluid">
     <div
       class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
     >
@@ -9,10 +9,10 @@
     </div>
   </div>
 </div>
-
+<div class="container-fluid">
 <div class="row border-bottom border-2 border-dark">
   <!-- <div class="col-md-2 text-end mt-4"><h4>Package Details</h4></div> -->
-  <div class="col-md-2"></div>
+  <!-- <div class="col-md-2"></div> -->
   <div class="col-md-2">
     <mat-form-field class="w-100">
       <mat-label>Package Name</mat-label>
@@ -98,7 +98,8 @@
     <button mat-button class="resetBtn mt-2" (click)="save()">Save</button>
   </div>
 </div>
-<div class="container">
+</div>
+<div class="container-fluid">
   <perfect-scrollbar class="mx-4" style="height: 32.5em; max-width: 100%">
     <table class="table table-striped">
       <thead>

@@ -621,6 +621,7 @@ export class PurchaseComponent implements OnInit {
     }
 
     this.formFields[8].value = -this.lblTotal;
+     this.changeValue();
   }
 
   changeValue() {

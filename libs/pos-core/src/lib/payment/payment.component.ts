@@ -26,8 +26,8 @@ export class PaymentComponent implements OnInit {
     invoiceDate: '', //4
     categoryID: '', //5
     coaID: '', //6
-    amount: '', //7
-    discount: '', //8
+    amount: '0', //7
+    discount: '0', //8
     description: '', //9
     companyid: '', //10
     businessid: '', //11
@@ -329,7 +329,7 @@ export class PaymentComponent implements OnInit {
       this.formFields[12].value = this.globalService.getBranchID();
     }
 
-    if (this.formFields[8].value == '') {
+    if (this.formFields[8].value == '' || this.formFields[8].value == '0' ) {
       this.formFields[8].value = '0';
     }
 
@@ -391,8 +391,8 @@ export class PaymentComponent implements OnInit {
     this.formFields = this.valid.resetFormFields(this.formFields);
 
     this.formFields[0].value = '0';
-    this.formFields[7].value = '';
-    this.formFields[8].value = '';
+    this.formFields[7].value = '0';
+    this.formFields[8].value = '0';
     this.formFields[9].value = '';
     this.formFields[10].value = '';
     this.formFields[11].value = '';

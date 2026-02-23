@@ -1,7 +1,7 @@
 <mat-tab-group mat-align-tabs="center" [selectedIndex]="tabIndex" (selectedIndexChange)="changeTabHeader($event)">
   <mat-tab label="Add Employee">
     <div class="bg-dark-light">
-      <div class="container">
+      <div class="container-fluid">
         <div class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2">
           <div class="AddEmployeeIcon"></div>
           <h3 class="ms-3 mt-2">New Employee</h3>
@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="container mt-2">
+    <div class="container-fluid mt-2">
       <div class="row" *ngIf="roleID == 1">
         <div class="col-md-3 pe-4">
           <h4 class="mb-3">Company</h4>
@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <div class="container mt-2">
+    <div class="container-fluid mt-2">
       <div class="row">
         <div class="col-md-3 pe-4">
           <h4 class="mb-3">General</h4>
@@ -116,7 +116,7 @@
       </div>
     </div>
 
-    <div class="container mt-2">
+    <div class="container-fluid mt-2">
       <div class="row">
         <div class="col-md-3 pe-4">
           <h4 class="mb-3">Contact</h4>
@@ -165,7 +165,7 @@
       </div>
     </div>
 
-    <div class="container mt-2">
+    <div class="container-fluid mt-2">
       <div class="row">
         <div class="col-md-3 pe-4">
           <h4 class="mb-3">Remarks</h4>

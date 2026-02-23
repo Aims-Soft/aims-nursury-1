@@ -157,9 +157,10 @@ export class CategoryComponent implements OnInit {
   }
 
   reset() {
-    this.formFields = this.valid.resetFormFields(this.formFields);
+    // this.formFields = this.valid.resetFormFields(this.formFields);
 
     this.formFields[0].value = '0';
+    this.formFields[4].value = '';
   }
 
   edit(item: any) {

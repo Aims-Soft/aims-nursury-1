@@ -43,6 +43,7 @@ export class SubCategoryTableComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.tableData = response.reverse();
+          console.log(this.tableData,'tableData')
         },
         (error: any) => {
           console.log(error);

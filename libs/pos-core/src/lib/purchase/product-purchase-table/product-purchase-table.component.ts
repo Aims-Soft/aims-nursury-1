@@ -66,6 +66,8 @@ export class ProductPurchaseTableComponent implements OnInit {
 
   delete(index: any) {
     this.tableData.splice(index, 1);
+    this.calculateTotal();
+    this.eventEmitter.emit(this.lblTotal);
   }
 
   onADTChange(index: any, item: any) {
