@@ -247,7 +247,15 @@
         <mat-form-field class="w-100 density-compact" appearance="outline">
           <mat-label>Customer Name</mat-label>
           <mat-select [(ngModel)]="formFields[3].value">
-            <mat-option *ngFor="let item of partyList" [value]="item.partyID">
+              <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="customerSearch"
+                  name="search"
+                  [placeholderLabel]="'Search...'"
+                  [noEntriesFoundLabel]="'Not found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+            <mat-option *ngFor="let item of partyList | search:'partyName':customerSearch" [value]="item.partyID">
               <table class="table">
                 <td class="col-6">
                   {{ item.partyName }}

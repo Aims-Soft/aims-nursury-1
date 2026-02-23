@@ -61,7 +61,7 @@ export class SaleComponent implements OnInit {
   percentage: number = 0;
   lblCustomerName: any = '';
   lblBusinessTypeID: any = '';
-
+  customerSearch :any;
   startDate : any = new Date();
   endDate : any = new Date();
 
