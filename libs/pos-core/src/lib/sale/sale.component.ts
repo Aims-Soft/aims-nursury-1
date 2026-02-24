@@ -834,16 +834,23 @@ products = [
           }
         }
 
-        if (found == true) {
-          if (this.productSaleTable.tableData[index].status == 'deleted') {
-            this.productSaleTable.tableData[index].status = '';
-          } else {
-            this.productSaleTable.tableData[index].qty += 1;
-            this.productSaleTable.tableData[index].total =
-              this.productSaleTable.tableData[index].salePrice *
-              this.productSaleTable.tableData[index].qty;
-          }
-        } else {
+              if (found == true) {
+
+              if (this.productSaleTable.tableData[index].status == 'deleted') {
+                // Just restore
+                this.productSaleTable.tableData[index].status = '';
+              } else {
+                // Increase qty only if already active
+                this.productSaleTable.tableData[index].qty =
+                  Number(this.productSaleTable.tableData[index].qty) + 1;
+              }
+
+              // Always recalculate total
+              this.productSaleTable.tableData[index].total =
+                Number(this.productSaleTable.tableData[index].salePrice) *
+                Number(this.productSaleTable.tableData[index].qty);
+            }
+        else {
           this.productSaleTable.tableData.push({
             barcode1: data[0].barcode1,
             barcode2: data[0].barcode2,
@@ -864,11 +871,16 @@ products = [
     }
     this.lblTotal = 0;
     for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
-      this.lblTotal += this.productSaleTable.tableData[i].total;
+        if (this.productSaleTable.tableData[i].status != 'deleted') {
+        this.lblTotal += this.productSaleTable.tableData[i].total;
+      }
+      // this.lblTotal += this.productSaleTable.tableData[i].total;
     }
-    if (this.formFields[7].value > 0) {
-      this.formFields[8].value -= this.lblTotal;
-    }
+//     if (this.formFields[7].value > 0) {
+//   this.formFields[8].value =
+//     Number(this.formFields[7].value) - Number(this.lblTotal);
+// }
+this.changeValue()
   }
 
   totalBill() {
@@ -883,11 +895,13 @@ products = [
       //   this.lblTotal += currentTotal;
       // }
     }
-    if (this.formFields[7].value > 0) {
-      // this.formFields[8].value -= this.lblTotal - this.formFields[7].value;
-      // this.formFields[8].value = Math.max(calculatedValue, 0);
-      this.formFields[8].value = this.formFields[7].value - this.lblTotal;
-    }
+    // if (this.formFields[7].value > 0) {
+    //   // this.formFields[8].value -= this.lblTotal - this.formFields[7].value;
+    //   // this.formFields[8].value = Math.max(calculatedValue, 0);
+    //   this.formFields[8].value = this.formFields[7].value - this.lblTotal;
+    // }
+
+    this.changeValue();
   }
 
   changeValue() {
