@@ -15,6 +15,7 @@
   --golden: #ffc300;
   --white: #ffffff;
   --blue: #005877;
+  --footer-color: #efefef;
   // --nha-light-blue: #87CEFA;
   // --nha-light-blue: #DFF2FA;
   --nha-light-blue: black;
@@ -262,14 +263,14 @@ button {
   height: 2em !important;
   // min-width: 8em !important;
   padding: 0px 15px 0px !important;
-  background-color: var(--light-green) !important;
+  background-color: var(--dark-grey) !important;
   color: white;
   border-radius: 8px !important;
   border-color: transparent !important;
   font-size: 0.9em !important;
 }
 .resetBtn:hover {
-  background-color: #adb961 !important;
+  background-color: #888a7c !important;
   color: white;
   transition: all 0.5s ease-in-out;
 }
@@ -342,14 +343,14 @@ button {
   right: 0;
   height: 2em !important;
   padding: 0px 15px 0px !important;
-  background-color: var(--dark-grey) !important;
+  background-color: var(--light-green) !important;
   color: white;
   border-radius: 8px !important;
   border-color: transparent !important;
   font-size: 0.9em !important;
 }
 .saveBtn:hover {
-  background-color: #888a7c !important;
+  background-color: #adb961 !important;
   color: white;
   transition: all 0.5s ease-in-out;
 }
@@ -1009,4 +1010,35 @@ button.mat-raised-button.uploadbtn {
   font-size: 0.9em !important;
   padding-top: 5px !important;
   padding-bottom: 3px !important;
+}
+
+.stickyfooter {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+}
+.bg-darktone1 {
+  background-color: var(--footer-color) !important;
+}
+
+
+/* Smaller buttons instead of mat-mini-fab */
+.qty-btn-small {
+  min-width: 24px !important;
+  height: 24px !important;
+  width: 24px !important;
+  border-radius: 12px !important; /* square/rounded instead of big circle */
+  padding: 0 !important;
+  background-color: #adbf35 !important; /* your light green */
+  color: #fff !important;
+  line-height: 1;
+}
+
+/* Small input */
+.qty-input {
+  width: 40px;
+  text-align: center;
+  padding: 2px;
+  font-size: 14px;
+  overflow-x: auto; /* scroll if number too long */
 }

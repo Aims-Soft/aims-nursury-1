@@ -106,6 +106,14 @@ export class ProductSaleTableComponent implements OnInit {
     }
   }
 
+  updateQty(index: number, item: any, delta: number) {
+  // Increment/decrement quantity
+  item.qty = Math.max(1, parseInt(item.qty) + delta);
+
+  // Call existing totalBill method
+  this.totalBill(index, item.qty, item);
+}
+
   totalBill(index: any, qty: any, item: any) {
     this.tableData[index].total =
       parseInt(this.tableData[index].salePrice) * parseFloat(qty);

@@ -23,6 +23,7 @@
         class="ms-2 saleReturnBtn"
         data-bs-toggle="modal"
         data-bs-target="#purchaseModal"
+        (click)="getInvoiceOnClick()"
       >
         Record
       </button>
@@ -405,8 +406,46 @@
       </div>
       <div class="modalbody bg-light">
         <div class="row">
-          <div class="col-md-6 mt-3"><strong></strong></div>
-          <div class="col-md-6 mt-2 ms-auto">
+          <!-- <div class="col-md-6 mt-3"><strong></strong></div> -->
+            <div class="col-md-2">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Start Date</mat-label>
+              <!-- [(ngModel)]="formFields[11].value" -->
+              <input
+                matInput
+                [matDatepicker]="picker1"
+                [(ngModel)]="startDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>End Date</mat-label>
+              <!-- [(ngModel)]="formFields[11].value" -->
+              <input matInput [matDatepicker]="picker2" [(ngModel)]="endDate" />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker2"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <button
+              mat-button
+              class="ms-2 mt-2 saleReturnBtn"
+              (click)="getInvoice(startDate, endDate)"
+            >
+              Search
+            </button>
+          </div>
+          <div class="col-md-4 mt-2 ms-auto">
             <mat-form-field class="w-100">
               <input
                 class="text-capitalize"
@@ -463,6 +502,13 @@
                 </td>
               </tr>
             </tbody>
+          <tfoot class="stickyfooter bg-darktone1" *ngIf="invoiceList.length > 0">
+            <tr>
+              <td colspan="4" class="fw-bold text-center border-right-dark">Total</td>
+              <td class="text-end fw-bold">{{ totalInvoiceAmount | number }}</td>
+              <td></td> <!-- Empty cell for Action column -->
+            </tr>
+        </tfoot>
           </table>
         </perfect-scrollbar>
       </div>

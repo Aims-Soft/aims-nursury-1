@@ -21,6 +21,23 @@ export class ProductPurchaseTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+  
+  updateQty(index: number, item: any, delta: number) {
+  // Update quantity
+  item.qty = Math.max(1, parseInt(item.qty) + delta);
+
+  // Recalculate dependent values (cost, ADT, ST, total)
+  const costPrice = parseFloat(item.costPrice) || 0;
+  item.adtAmount = (item.adtPer * item.qty * costPrice) / 100;
+  item.stAmount = (item.stPer * item.qty * costPrice) / 100;
+  item.total = item.qty * costPrice + item.adtAmount + item.stAmount;
+
+  // Update footer totals
+  this.calculateTotal();
+
+  // Emit event if needed
+  this.eventEmitter.emit();
+}
 
   totalBill(index: any, item: any) {
     this.tableData[index].adtAmount =

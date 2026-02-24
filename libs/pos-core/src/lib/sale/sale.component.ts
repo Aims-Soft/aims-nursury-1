@@ -39,7 +39,7 @@ export class SaleComponent implements OnInit {
   @ViewChild(ProductSaleTableComponent) productSaleTable: any;
   @ViewChild(PrintSaleComponent) printSale: any;
   @ViewChild(PrintKotSaleComponent) printKot: any;
-
+  @ViewChild('searchProductInput') searchProductInput!: ElementRef;
   @ViewChild('txtCash') _txtCash: ElementRef;
   @ViewChild('txtFocusCode') _txtFocusCode: ElementRef;
 
@@ -64,7 +64,7 @@ export class SaleComponent implements OnInit {
   customerSearch :any;
   startDate : any = new Date();
   endDate : any = new Date();
-
+  totalInvoiceAmount : number = 0;
   checkStatus: boolean = false;
 
   pageFields: SaleInterface = {
@@ -336,9 +336,17 @@ products = [
     } else if (event.key === 'Shift') {
       event.preventDefault();
       this.setFocusOnCash();
-    } else if (event.key === 'F8') {
-      this.openProductDropdown();
-    }
+     } 
+    //else if (event.key === 'F8') {
+    //   this.openProductDropdown();
+    // }
+    else if (event.key === 'F8') {
+    event.preventDefault();
+
+    setTimeout(() => {
+      this.searchProductInput.nativeElement.focus();
+    }, 0);
+  }
   }
   setFocusOnCash() {
     if (this.txtCash && this.txtCash.nativeElement) {
@@ -1039,6 +1047,8 @@ this.changeValue()
           // console.log(response);
           if (response.message == 'Success') {
             this.valid.apiInfoResponse('Record saved successfully');
+            
+
 
             this.printSale.tableData = prodTableData;
             this.printSale.lblInvoice = response.invoiceNo;
@@ -1056,6 +1066,10 @@ this.changeValue()
             this.getInvoice(this.startDate,this.endDate);
             this.getOrder();
             setTimeout(() => this._txtFocusCode.nativeElement.focus(), 1000);
+
+            this.getProduct();
+            
+
           } else {
             this.valid.apiErrorResponse(response.toString());
           }
@@ -1446,7 +1460,7 @@ this.changeValue()
   }
 
 
-  resetInvoiceDates(){
+  getInvoiceOnClick(){
     this.startDate = new Date();
     this.endDate = new Date();
 
@@ -1482,6 +1496,13 @@ this.changeValue()
       .subscribe(
         (response: any) => {
           this.invoiceList = response;
+
+          this.totalInvoiceAmount = 0;
+          // Sum the 'amount' column
+          this.totalInvoiceAmount = this.invoiceList.reduce(
+            (sum: number, invoice: any) => sum + Number(invoice.amount || 0),
+            0
+          );
         },
         (error: any) => {
           console.log(error);

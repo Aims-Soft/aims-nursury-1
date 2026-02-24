@@ -34,6 +34,12 @@
           <!-- <td>{{item.barcode1}}</td> -->
           <td>{{ item.productName }}</td>
           <td>
+                     <div class="d-flex align-items-center justify-content-center">
+  <!-- Decrement Button -->
+    <button mat-button class="qty-btn-small" (click)="updateQty(i, item, -1)">
+      <mat-icon>remove</mat-icon>
+    </button>
+
             <mat-form-field class="w-100 custom-width" floatLabel="never">
               <input
                 class="text-right"
@@ -42,6 +48,11 @@
                 matInput
               />
             </mat-form-field>
+                <!-- Increment Button -->
+    <button mat-button class="qty-btn-small" (click)="updateQty(i, item, 1)">
+      <mat-icon>add</mat-icon>
+    </button>
+    </div>
           </td>
           <!-- <td>{{item.costPrice}}</td> -->
           <td>

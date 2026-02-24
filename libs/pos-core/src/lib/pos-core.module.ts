@@ -74,6 +74,10 @@ import { OpeningComponent } from './opening/opening.component';
 import { CounterInfoComponent } from './opening/counter-info/counter-info.component';
 import { ClosureComponent } from './opening/closure/closure.component';
 import { PackageDetailsComponent } from './package-details/package-details.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -122,7 +126,11 @@ export const posCoreRoutes: Route[] = [
     PerfectScrollbarModule,
     TextMaskModule,
     ChartModule,
-    SharedInterfaceModule
+    SharedInterfaceModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   exports: [
     ScrollingModule,
