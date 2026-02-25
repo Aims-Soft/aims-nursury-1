@@ -36,6 +36,7 @@ export class ItemWiseSaleReportComponent implements OnInit {
     this.getBusniessName();
     // this.currentDate = new Date();
     this.moduleId = localStorage.getItem('moduleId');
+    this.global.setHeaderTitle('Item Wise Sales Report');
   }
 
   getBusniessName() {

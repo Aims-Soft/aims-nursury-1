@@ -95,6 +95,7 @@ export class SubCategoryComponent implements OnInit {
     this.formFields[1].value = this.globalService.getUserId().toString();
     this.formFields[7].value = this.globalService.getBranchID();
     this.roleID = this.globalService.getRoleId();
+    this.globalService.setHeaderTitle('Sub-Category');
     this.getCompany();
     this.getCategory();
   }

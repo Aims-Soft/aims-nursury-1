@@ -28,7 +28,7 @@ export class CreditReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBusniessName();
-
+    this.globalService.setHeaderTitle('Credit Report');
     this.moduleId = localStorage.getItem('moduleId');
   }
 

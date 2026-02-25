@@ -34,6 +34,7 @@ export class PartyLedgerReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.moduleId = localStorage.getItem('moduleId');
+    this.globalService.setHeaderTitle('Party Ledger Report');
     this.getParty();
     this.getChartOfAccount();
   }

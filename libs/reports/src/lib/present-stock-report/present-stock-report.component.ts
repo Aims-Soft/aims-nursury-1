@@ -16,7 +16,7 @@ export class PresentStockReportComponent implements OnInit {
   stocktList: any = [];
   moduleId: string | null;
   lblBusinessName: any = '';
-  txtSearch:any;
+  txtSearch: any;
   constructor(
     private global: SharedServicesGlobalDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -29,6 +29,7 @@ export class PresentStockReportComponent implements OnInit {
     this.getBusniessName();
     // this.dtpCurrentDate = new Date();
     this.moduleId = localStorage.getItem('moduleId');
+    this.global.setHeaderTitle('Present Stock Report');
   }
   getBusniessName() {
     this.dataService

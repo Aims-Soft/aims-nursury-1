@@ -28,7 +28,7 @@ export class CashReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBusniessName();
-
+    this.globalService.setHeaderTitle('Cash Report');
     this.moduleId = localStorage.getItem('moduleId');
   }
 

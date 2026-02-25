@@ -35,6 +35,7 @@ export class DailySaleReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBusniessName();
+    this.global.setHeaderTitle('Daily Sale Report');
     // this.currentDate = new Date();
     this.moduleId = localStorage.getItem('moduleId');
   }

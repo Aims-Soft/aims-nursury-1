@@ -100,7 +100,7 @@ export class BranchComponent implements OnInit {
 
   ngOnInit(): void {
     this.formFields[1].value = this.globalService.getUserId().toString();
-
+    this.globalService.setHeaderTitle('Branch');
     this.getBusiness();
   }
 

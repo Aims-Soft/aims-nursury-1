@@ -22,7 +22,7 @@ export class LedgerReportComponent implements OnInit {
   coaList: any = [];
   reportList: any = [];
   moduleId: string | null;
-  coaSearch:any;
+  coaSearch: any;
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
@@ -32,6 +32,7 @@ export class LedgerReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.moduleId = localStorage.getItem('moduleId');
+    this.globalService.setHeaderTitle('Ledger Report');
     this.getChartOfAccount();
   }
 
