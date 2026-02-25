@@ -261,7 +261,7 @@
                   matInput
                   class="blue-text mb-n05"
                   [(ngModel)]="formFields[7].value"
-                  (keyup)="changeValue()"
+                  (ngModelChange)="changeValue()"
                   type="number"
                 />
               </mat-form-field>
@@ -534,8 +534,10 @@
       </div>
       <div class="row mt-3">
         <div class="col-md-4">
+          <div class="ps-2">   <!-- padding start -->
           <label class="fs-5">Invoice No: </label>
           <label class="fs-5 fw-bold ms-3">{{ lblPInvoiceNo }}</label>
+        </div>
         </div>
         <div class="col-md-8">
           <label class="fs-5">Invoice Date: </label>
@@ -544,8 +546,10 @@
       </div>
       <div class="row">
         <div class="col-md-12">
+          <div class="ps-2">   <!-- padding start -->
           <label class="fs-5">Party Name: </label>
           <label class="fs-5 fw-bold ms-3">{{ lblPartyName }}</label>
+        </div>
         </div>
       </div>
       <div class="modalbody bg-light">

@@ -629,7 +629,8 @@ export class PurchaseComponent implements OnInit {
       this.lblTotal += this.productPurchaseTable.tableData[i].total;
     }
 
-    this.formFields[8].value = -this.lblTotal;
+    // this.formFields[8].value = -this.lblTotal;
+    this.changeValue()
 
     this.productPurchaseTable.calculateTotal();
   }

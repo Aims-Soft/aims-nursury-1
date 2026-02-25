@@ -16,12 +16,11 @@
     >
       <td class="text-center">{{ i + 1 }}</td>
       <td class="col-6">{{ item.productName }}</td>
-      <td class="col-1 myFormField">
+      <!-- <td class="col-1 myFormField">
          <div class="d-flex">
-  <!-- Decrement Button -->
-    <button mat-button class="qty-btn-small" (click)="updateQty(i, item, -1)">
-      <mat-icon>remove</mat-icon>
-    </button>
+        <button mat-button class="qty-btn-small" (click)="updateQty(i, item, -1)">
+          <mat-icon>remove</mat-icon>
+        </button>
 
         <mat-form-field
           class="density-compact"
@@ -38,11 +37,31 @@
              style="width:50px"
           />
         </mat-form-field>
-        <!-- Increment Button -->
-    <button mat-button class="qty-btn-small" (click)="updateQty(i, item, 1)">
-      <mat-icon>add</mat-icon>
-    </button>
-    </div>
+          <button mat-button class="qty-btn-small" (click)="updateQty(i, item, 1)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </td> -->
+
+      <td class="col-1 myFormField">
+        <div class="d-flex justify-content-center">
+
+          <mat-form-field
+            class="density-compact  qty-field"
+            appearance="outline"
+            floatLabel="never"
+          >
+            <input
+              type="number"
+               min="1"
+              class="text-right"
+              [(ngModel)]="item.qty"
+              (ngModelChange)="totalBill(i, item.qty, item)"
+              matInput
+            />
+          </mat-form-field>
+
+        </div>
       </td>
       <td class="col-2">{{ item.salePrice }}</td>
       <td class="col-2">{{ item.total }}</td>

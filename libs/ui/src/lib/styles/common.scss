@@ -1022,23 +1022,23 @@ button.mat-raised-button.uploadbtn {
 }
 
 
-/* Smaller buttons instead of mat-mini-fab */
-.qty-btn-small {
-  min-width: 24px !important;
-  height: 24px !important;
-  width: 24px !important;
-  border-radius: 12px !important; /* square/rounded instead of big circle */
-  padding: 0 !important;
-  background-color: #adbf35 !important; /* your light green */
-  color: #fff !important;
-  line-height: 1;
-}
+// /* Smaller buttons instead of mat-mini-fab */
+// .qty-btn-small {
+//   min-width: 24px !important;
+//   height: 24px !important;
+//   width: 24px !important;
+//   border-radius: 12px !important; /* square/rounded instead of big circle */
+//   padding: 0 !important;
+//   background-color: #adbf35 !important; /* your light green */
+//   color: #fff !important;
+//   line-height: 1;
+// }
 
-/* Small input */
-.qty-input {
-  width: 40px;
-  text-align: center;
-  padding: 2px;
-  font-size: 14px;
-  overflow-x: auto; /* scroll if number too long */
-}
+// /* Small input */
+// .qty-input {
+//   width: 40px;
+//   text-align: center;
+//   padding: 2px;
+//   font-size: 14px;
+//   overflow-x: auto; /* scroll if number too long */
+// }

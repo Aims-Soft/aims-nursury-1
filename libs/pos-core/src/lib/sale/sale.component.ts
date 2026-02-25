@@ -1576,6 +1576,7 @@ this.changeValue()
             this.printSale.lblGrandBal = response[0].grandbal;
             this.printSale.lblOldBal = response[0].oldbal;
             this.printSale.lblNewBal = response[0].newbal;
+            this.printSale.lblPayableAmountTotal = response[0].subtotal - response[0].discount;
             this.printSale.lblGrandTotal =
               response[0].cashReceived - response[0].change;
           }

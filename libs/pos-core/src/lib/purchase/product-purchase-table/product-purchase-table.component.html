@@ -33,12 +33,11 @@
           <td class="text-center">{{ i + 1 }}</td>
           <!-- <td>{{item.barcode1}}</td> -->
           <td>{{ item.productName }}</td>
-          <td>
-                     <div class="d-flex align-items-center justify-content-center">
-  <!-- Decrement Button -->
-    <button mat-button class="qty-btn-small" (click)="updateQty(i, item, -1)">
-      <mat-icon>remove</mat-icon>
-    </button>
+          <!-- <td>
+               <div class="d-flex align-items-center justify-content-center">
+            <button mat-button class="qty-btn-small" (click)="updateQty(i, item, -1)">
+              <mat-icon>remove</mat-icon>
+            </button>
 
             <mat-form-field class="w-100 custom-width" floatLabel="never">
               <input
@@ -48,12 +47,28 @@
                 matInput
               />
             </mat-form-field>
-                <!-- Increment Button -->
-    <button mat-button class="qty-btn-small" (click)="updateQty(i, item, 1)">
-      <mat-icon>add</mat-icon>
-    </button>
-    </div>
-          </td>
+                <button mat-button class="qty-btn-small" (click)="updateQty(i, item, 1)">
+                  <mat-icon>add</mat-icon>
+                </button>
+                </div>
+          </td> -->
+
+          <td>
+          <div class="d-flex align-items-center justify-content-center">
+
+            <mat-form-field class="w-100 custom-width" floatLabel="never">
+              <input
+                type="number"
+                min="1"
+                class="text-right"
+                [(ngModel)]="item.qty"
+                (ngModelChange)="totalBill(i, item.qty); calculateTotal()"
+                matInput
+              />
+            </mat-form-field>
+
+          </div>
+        </td>
           <!-- <td>{{item.costPrice}}</td> -->
           <td>
             <mat-form-field class="w-100 custom-width" floatLabel="never">

@@ -2,3 +2,16 @@
     background-color: #F67280 !important;
     color: white !important;
 }
+
+.qty-field {
+  width: 70px;   /* control full box width */
+}
+
+.qty-field .mat-mdc-form-field-infix {
+  padding: 0 !important;
+  min-height: auto !important;
+}
+
+.qty-field .mat-mdc-form-field-subscript-wrapper {
+  display: none;   /* removes bottom extra space */
+}
