@@ -172,6 +172,7 @@ export class EmployeeProfileComponent implements OnInit {
     this.formFields[1].value = this.globalService.getUserId().toString();
     this.formFields[17].value = localStorage.getItem('moduleId');
     this.roleID = this.globalService.getRoleId();
+    this.globalService.setHeaderTitle('Employee Profile');
     this.getCompany();
     this.getDesignation();
     this.getBranch();

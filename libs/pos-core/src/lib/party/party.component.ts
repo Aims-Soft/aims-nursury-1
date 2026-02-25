@@ -164,6 +164,7 @@ export class PartyComponent implements OnInit {
     this.formFields[15].value = localStorage.getItem('moduleId');
     this.formFields[16].value = this.globalService.getBranchID();
     this.roleID = this.globalService.getRoleId();
+    this.globalService.setHeaderTitle('Party Profile');
     this.getCompany();
     this.getCity();
   }

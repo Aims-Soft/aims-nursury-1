@@ -84,7 +84,7 @@ export class UploadProductComponent implements OnInit {
   ngOnInit(): void {
     this.roleID = this.global.getRoleId();
     this.formFields[5].value = localStorage.getItem('moduleId');
-
+    this.global.setHeaderTitle('Upload Products');
     this.getUser();
     this.getCompany();
   }

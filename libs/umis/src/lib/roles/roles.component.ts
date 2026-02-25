@@ -114,6 +114,7 @@ export class RolesComponent implements OnInit {
     this.formFields[2].value = this.global.getUserId().toString();
 
     this.roleID = this.global.getRoleId();
+    this.global.setHeaderTitle('Application Role');
     this.getModules();
     this.getMenu();
     this.getRoleOption();

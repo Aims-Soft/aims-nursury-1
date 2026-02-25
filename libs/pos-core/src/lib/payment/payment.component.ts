@@ -145,6 +145,7 @@ export class PaymentComponent implements OnInit {
     this.formFields[2].value = '1';
 
     this.roleID = this.globalService.getRoleId();
+    this.globalService.setHeaderTitle('Payments & Receipts');
     this.getCompany();
     this.getParty();
     this.getChartOfAccount();
@@ -329,7 +330,7 @@ export class PaymentComponent implements OnInit {
       this.formFields[12].value = this.globalService.getBranchID();
     }
 
-    if (this.formFields[8].value == '' || this.formFields[8].value == '0' ) {
+    if (this.formFields[8].value == '' || this.formFields[8].value == '0') {
       this.formFields[8].value = '0';
     }
 

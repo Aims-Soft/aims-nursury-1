@@ -86,6 +86,7 @@ export class ChartOfAccountComponent implements OnInit {
     this.formFields[1].value = this.globalService.getUserId().toString();
     this.moduleId = localStorage.getItem('moduleId');
     this.roleID = this.globalService.getRoleId();
+    this.globalService.setHeaderTitle('Chart of Account');
     this.getCompany();
     this.getCOAType();
   }

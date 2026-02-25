@@ -115,6 +115,7 @@ export class PackageDetailsComponent implements OnInit {
     this.formFields[6].value = this.globalService.getCompanyID();
     this.formFields[7].value = this.globalService.getBranchID();
     this.formFields[8].value = localStorage.getItem('moduleId');
+    this.globalService.setHeaderTitle('Package');
 
     this.getPackageList();
     this.getProduct();

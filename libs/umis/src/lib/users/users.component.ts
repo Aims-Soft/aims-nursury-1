@@ -121,6 +121,7 @@ export class UsersComponent implements OnInit {
     this.global.setHeaderTitle('User Creation');
 
     this.roleID = this.global.getRoleId();
+    this.global.setHeaderTitle('User Profile');
     this.getRoles();
     this.getUser();
 
