@@ -49,6 +49,7 @@ export class PosDashboardComponent implements OnInit {
     this.moduleId = localStorage.getItem('moduleId');
 
     this.roleID = this.globalService.getRoleId();
+    this.globalService.setHeaderTitle('Dashboard');
 
     this.getCompany();
     if (this.roleID == 1 || this.roleID == 13) {

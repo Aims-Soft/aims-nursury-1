@@ -61,10 +61,10 @@ export class SaleComponent implements OnInit {
   percentage: number = 0;
   lblCustomerName: any = '';
   lblBusinessTypeID: any = '';
-  customerSearch :any;
-  startDate : any = new Date();
-  endDate : any = new Date();
-  totalInvoiceAmount : number = 0;
+  customerSearch: any;
+  startDate: any = new Date();
+  endDate: any = new Date();
+  totalInvoiceAmount: number = 0;
   checkStatus: boolean = false;
 
   pageFields: SaleInterface = {
@@ -268,7 +268,7 @@ export class SaleComponent implements OnInit {
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
     private valid: SharedHelpersFieldValidationsModule,
-    private datePipe : DatePipe
+    private datePipe: DatePipe
   ) {}
   // ngAfterViewInit(): void {
   //   $('#noUnderlineInput').parent().find('.mat-form-field-underline').hide();
@@ -285,12 +285,13 @@ export class SaleComponent implements OnInit {
     this.formFields[12].value = this.globalService.getBusinessID();
     this.formFields[13].value = this.globalService.getBranchID();
 
+    this.globalService.setHeaderTitle('Sales Page');
     this.roleID = this.globalService.getRoleId();
     this.getCompany();
     this.getProduct();
     this.getParty();
     this.getBank();
-    this.getInvoice(this.startDate,this.endDate);
+    this.getInvoice(this.startDate, this.endDate);
     this.getOrder();
   }
   // @HostListener('window:keydown', ['$event'])
@@ -307,7 +308,7 @@ export class SaleComponent implements OnInit {
 
   /////////////////
 
-products = [
+  products = [
     { name: '7up - 1.5 Ltr', code: '35780999111' },
     { name: 'Coca Cola - 1 Ltr', code: '12543678912' },
     // Add 50+ items here to test the scrolling
@@ -317,10 +318,8 @@ products = [
   cart = [
     { name: '7up - 1.5 Ltr', qty: 1, price: 180 },
     { name: '7up - 1.5 Ltr', qty: 1, price: 180 },
-    { name: '7up - 1.5 Ltr', qty: 1, price: 180 }
+    { name: '7up - 1.5 Ltr', qty: 1, price: 180 },
   ];
-
-
 
   setFocusOnInput() {
     if (this.txtFocusCode && this.txtFocusCode.nativeElement) {
@@ -336,17 +335,17 @@ products = [
     } else if (event.key === 'Shift') {
       event.preventDefault();
       this.setFocusOnCash();
-     } 
+    }
     //else if (event.key === 'F8') {
     //   this.openProductDropdown();
     // }
     else if (event.key === 'F8') {
-    event.preventDefault();
+      event.preventDefault();
 
-    setTimeout(() => {
-      this.searchProductInput.nativeElement.focus();
-    }, 0);
-  }
+      setTimeout(() => {
+        this.searchProductInput.nativeElement.focus();
+      }, 0);
+    }
   }
   setFocusOnCash() {
     if (this.txtCash && this.txtCash.nativeElement) {
@@ -842,23 +841,21 @@ products = [
           }
         }
 
-              if (found == true) {
+        if (found == true) {
+          if (this.productSaleTable.tableData[index].status == 'deleted') {
+            // Just restore
+            this.productSaleTable.tableData[index].status = '';
+          } else {
+            // Increase qty only if already active
+            this.productSaleTable.tableData[index].qty =
+              Number(this.productSaleTable.tableData[index].qty) + 1;
+          }
 
-              if (this.productSaleTable.tableData[index].status == 'deleted') {
-                // Just restore
-                this.productSaleTable.tableData[index].status = '';
-              } else {
-                // Increase qty only if already active
-                this.productSaleTable.tableData[index].qty =
-                  Number(this.productSaleTable.tableData[index].qty) + 1;
-              }
-
-              // Always recalculate total
-              this.productSaleTable.tableData[index].total =
-                Number(this.productSaleTable.tableData[index].salePrice) *
-                Number(this.productSaleTable.tableData[index].qty);
-            }
-        else {
+          // Always recalculate total
+          this.productSaleTable.tableData[index].total =
+            Number(this.productSaleTable.tableData[index].salePrice) *
+            Number(this.productSaleTable.tableData[index].qty);
+        } else {
           this.productSaleTable.tableData.push({
             barcode1: data[0].barcode1,
             barcode2: data[0].barcode2,
@@ -879,16 +876,16 @@ products = [
     }
     this.lblTotal = 0;
     for (var i = 0; i < this.productSaleTable.tableData.length; i++) {
-        if (this.productSaleTable.tableData[i].status != 'deleted') {
+      if (this.productSaleTable.tableData[i].status != 'deleted') {
         this.lblTotal += this.productSaleTable.tableData[i].total;
       }
       // this.lblTotal += this.productSaleTable.tableData[i].total;
     }
-//     if (this.formFields[7].value > 0) {
-//   this.formFields[8].value =
-//     Number(this.formFields[7].value) - Number(this.lblTotal);
-// }
-this.changeValue()
+    //     if (this.formFields[7].value > 0) {
+    //   this.formFields[8].value =
+    //     Number(this.formFields[7].value) - Number(this.lblTotal);
+    // }
+    this.changeValue();
   }
 
   totalBill() {
@@ -995,8 +992,12 @@ this.changeValue()
     }
 
     if (
-      (this.formFields[7].value == '' || this.formFields[7].value == null || this.formFields[7].value == '0') &&
-      (this.formFields[16].value == '' || this.formFields[16].value == null || this.formFields[16].value == '0')
+      (this.formFields[7].value == '' ||
+        this.formFields[7].value == null ||
+        this.formFields[7].value == '0') &&
+      (this.formFields[16].value == '' ||
+        this.formFields[16].value == null ||
+        this.formFields[16].value == '0')
     ) {
       this.valid.apiInfoResponse('enter cash');
       // this.formFields[8].value = 0 - this.lblTotal;
@@ -1047,8 +1048,6 @@ this.changeValue()
           // console.log(response);
           if (response.message == 'Success') {
             this.valid.apiInfoResponse('Record saved successfully');
-            
-
 
             this.printSale.tableData = prodTableData;
             this.printSale.lblInvoice = response.invoiceNo;
@@ -1063,13 +1062,11 @@ this.changeValue()
             setTimeout(() => this.globalService.printData(printSection), 200);
             this.resetBank();
             this.reset();
-            this.getInvoice(this.startDate,this.endDate);
+            this.getInvoice(this.startDate, this.endDate);
             this.getOrder();
             setTimeout(() => this._txtFocusCode.nativeElement.focus(), 1000);
 
             this.getProduct();
-            
-
           } else {
             this.valid.apiErrorResponse(response.toString());
           }
@@ -1459,23 +1456,16 @@ this.changeValue()
     $('#customerModal').modal('hide');
   }
 
-
-  getInvoiceOnClick(){
+  getInvoiceOnClick() {
     this.startDate = new Date();
     this.endDate = new Date();
 
-
-    this.getInvoice(this.startDate,this.endDate);
-
-
+    this.getInvoice(this.startDate, this.endDate);
   }
 
-  getInvoice(startDate:any,endDate:any) {
-
+  getInvoice(startDate: any, endDate: any) {
     var fromDate = this.datePipe.transform(startDate, 'yyyy-MM-dd');
     var toDate = this.datePipe.transform(endDate, 'yyyy-MM-dd');
-
-
 
     this.dataService
       .getHttp(
@@ -1490,7 +1480,7 @@ this.changeValue()
           '&startDate=' +
           fromDate +
           '&endDate=' +
-          toDate ,
+          toDate,
         ''
       )
       .subscribe(

@@ -121,6 +121,7 @@ export class OpeningBalanceComponent implements OnInit {
     // this.getProduct();
     this.moduleId = localStorage.getItem('moduleId');
     this.roleID = this.globalService.getRoleId();
+    this.globalService.setHeaderTitle('Opening Stock');
     this.getCompany();
     this.getCategory();
   }
