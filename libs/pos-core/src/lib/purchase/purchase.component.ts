@@ -41,10 +41,10 @@ export class PurchaseComponent implements OnInit {
   txtAdvanceTaxAmount: any = 0;
   txtSaleTax: any = 0;
   txtSaleTaxAmount: any = 0;
-  supplierSearch:any;
-  startDate : any = new Date();
-  endDate : any = new Date();
-  totalInvoiceAmount : number = 0;
+  supplierSearch: any;
+  startDate: any = new Date();
+  endDate: any = new Date();
+  totalInvoiceAmount: number = 0;
 
   pageFields: SaleInterface = {
     invoiceNo: '0', //0
@@ -195,7 +195,7 @@ export class PurchaseComponent implements OnInit {
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
     private valid: SharedHelpersFieldValidationsModule,
-    private datePipe : DatePipe
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -208,12 +208,13 @@ export class PurchaseComponent implements OnInit {
     // this.formFields[10].value = 1;
 
     this.roleID = this.globalService.getRoleId();
+    this.globalService.setHeaderTitle('Purchase');
+
     this.getCompany();
     this.getProduct();
     this.getParty();
     // this.getInvoice();
-    this.getInvoice(this.startDate,this.endDate);
-
+    this.getInvoice(this.startDate, this.endDate);
   }
 
   setFocusOnInput() {
@@ -300,8 +301,7 @@ export class PurchaseComponent implements OnInit {
       );
   }
 
-    getInvoice(startDate:any,endDate:any) {
-
+  getInvoice(startDate: any, endDate: any) {
     var fromDate = this.datePipe.transform(startDate, 'yyyy-MM-dd');
     var toDate = this.datePipe.transform(endDate, 'yyyy-MM-dd');
 
@@ -318,20 +318,19 @@ export class PurchaseComponent implements OnInit {
           '&startDate=' +
           fromDate +
           '&endDate=' +
-          toDate ,
+          toDate,
         ''
       )
       .subscribe(
         (response: any) => {
           this.invoiceList = response;
 
-        this.totalInvoiceAmount = 0;
+          this.totalInvoiceAmount = 0;
           // Sum the 'amount' column
-        this.totalInvoiceAmount = this.invoiceList.reduce(
-          (sum: number, invoice: any) => sum + Number(invoice.amount || 0),
-          0
-        );
-
+          this.totalInvoiceAmount = this.invoiceList.reduce(
+            (sum: number, invoice: any) => sum + Number(invoice.amount || 0),
+            0
+          );
         },
         (error: any) => {
           console.log(error);
@@ -644,10 +643,10 @@ export class PurchaseComponent implements OnInit {
     }
 
     this.formFields[8].value = -this.lblTotal;
-     this.changeValue();
+    this.changeValue();
 
-     this.cmbProduct = '';
-     this.searchProduct = '';
+    this.cmbProduct = '';
+    this.searchProduct = '';
   }
 
   changeValue() {
@@ -727,7 +726,7 @@ export class PurchaseComponent implements OnInit {
             // this.printSale.lblChange = this.formFields[8].value;
 
             // setTimeout(()=> this.globalService.printData(printSection), 200);
-            this.getInvoice(this.startDate,this.endDate);
+            this.getInvoice(this.startDate, this.endDate);
             this.reset();
           } else {
             this.valid.apiErrorResponse(response.toString());
@@ -740,15 +739,11 @@ export class PurchaseComponent implements OnInit {
       );
   }
 
-
-    getInvoiceOnClick(){
+  getInvoiceOnClick() {
     this.startDate = new Date();
     this.endDate = new Date();
 
-
-    this.getInvoice(this.startDate,this.endDate);
-
-
+    this.getInvoice(this.startDate, this.endDate);
   }
 
   checkPurchaseReturn() {

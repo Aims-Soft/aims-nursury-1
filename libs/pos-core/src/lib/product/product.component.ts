@@ -21,8 +21,8 @@ export class ProductComponent implements OnInit {
   cmbBarcode: any;
   cmbCategory: any;
   cmbSubCategory: any;
-  categorySearch : any;
-  subCategorySearch : any;
+  categorySearch: any;
+  subCategorySearch: any;
 
   pageFields: ProductInterface = {
     productID: '0', //0
@@ -346,6 +346,8 @@ export class ProductComponent implements OnInit {
     this.cmbBarcode = 1;
 
     this.roleID = this.globalService.getRoleId();
+    this.globalService.setHeaderTitle('Product');
+
     this.getCompany();
     // this.getBrand();
     this.getCategory();
