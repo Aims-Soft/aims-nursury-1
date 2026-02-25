@@ -144,7 +144,7 @@ export class BankComponent implements OnInit {
   ngOnInit(): void {
     this.formFields[14].value = localStorage.getItem('moduleId');
     this.formFields[1].value = this.globalService.getUserId().toString();
-
+    this.globalService.setHeaderTitle('Bank Info');
     this.roleID = this.globalService.getRoleId();
     this.getCompany();
   }

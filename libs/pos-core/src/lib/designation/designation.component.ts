@@ -85,6 +85,7 @@ export class DesignationComponent implements OnInit {
     this.formFields[5].value = localStorage.getItem('moduleId');
     this.formFields[6].value = this.globalService.getBranchID();
     this.roleID = this.globalService.getRoleId();
+    this.globalService.setHeaderTitle('Designation');
     this.getCompany();
   }
 

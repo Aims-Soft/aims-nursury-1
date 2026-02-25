@@ -58,6 +58,7 @@ export class CityComponent implements OnInit {
   ngOnInit(): void {
     this.formFields[1].value = this.globalService.getUserId().toString();
     this.formFields[3].value = localStorage.getItem('moduleId');
+    this.globalService.setHeaderTitle('City');
   }
 
   save() {
