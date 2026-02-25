@@ -34,6 +34,7 @@ export class PrintSaleComponent implements OnInit {
 
   currentUser!: UserInterface;
   lblGrandTotal: any = 0;
+  lblPayableAmountTotal: any = 0;
 
   constructor(
     private dataService: SharedServicesDataModule,
