@@ -138,6 +138,40 @@ button {
   font-weight: 800 !important;
 }
 
+/********************************************/
+/*************** fonts **********************/
+.font-sm-1 {
+  font-size: 0.8em !important;
+}
+.font-lg-1 {
+  font-size: 1.5em !important;
+}
+.font-lg-2 {
+  font-size: 1.3em !important;
+}
+.font-icon {
+  font-size: 1.3em !important;
+}
+.font-md-1 {
+  font-size: 1.3em;
+  font-weight: 300;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.font-md-2 {
+  font-size: 1em !important;
+}
+.fs-7 {
+  font-size: 0.8rem !important;
+}
+.fs-8 {
+  font-size: 0.9rem !important;
+}
+.fst-italic {
+  font-style: italic !important;
+}
+
+/*************** END ******************/
+
 .mt-n5 {
   margin-top: -1.2em;
 }
@@ -262,10 +296,10 @@ button {
 .resetBtn {
   height: 2em !important;
   // min-width: 8em !important;
-  padding: 0px 15px 0px !important;
+  padding: 5px 15px 0px 15px !important;
   background-color: var(--dark-grey) !important;
   color: white;
-  border-radius: 8px !important;
+  border-radius: 4px !important;
   border-color: transparent !important;
   font-size: 0.9em !important;
 }
@@ -278,13 +312,12 @@ button {
 .resetBtnZaki {
   position: fixed;
   right: 0;
-  height: 40px;
+  height: 2em !important;
   background-color: var(--bright-red) !important;
   color: white;
   border-radius: 0 !important;
 }
 .resetBtnZaki:hover {
-  height: 40px;
   background-color: #adb961 !important;
   color: white;
   border-radius: 0 !important;
@@ -292,20 +325,17 @@ button {
 }
 .saleReturnBtn {
   right: 0;
-  height: 2em !important;
-  background-color: var(--white) !important;
+  height: 2.3em !important;
+  // background-color: var(--white) !important;
   color: var(--dark-grey);
-  font-weight: bold;
-  border-radius: 8px !important;
-  border-color: transparent !important;
+  border-radius: 4px !important;
+  border-color: var(--dark-grey) !important;
   padding: 0px 15px 0px !important;
-  font-size: 0.9em !important;
+  font-size: 0.8em !important;
 }
 .saleReturnBtn:hover {
-  height: 2em !important;
-  background-color: #a7a7a7 !important;
+  background-color: var(--dark-grey) !important;
   color: var(--white);
-  font-weight: bold;
   transition: all 0.5s ease-in-out;
 }
 
@@ -1020,7 +1050,6 @@ button.mat-raised-button.uploadbtn {
 .bg-darktone1 {
   background-color: var(--footer-color) !important;
 }
-
 
 // /* Smaller buttons instead of mat-mini-fab */
 // .qty-btn-small {
