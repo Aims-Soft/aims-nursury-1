@@ -1417,7 +1417,7 @@
                 <td class="text-end">{{ item.totalamount | number }}</td>
                 <td class="text-center">
                   <span class="txtClrLightGreen cursorPointer ps-2 pe-2">
-                    <mat-icon (click)="getInvoiceDetail(item, '#print-data')"
+                    <mat-icon (click)="getInvoiceDetail(item.invoiceNo, '#print-data')"
                       >local_printshop</mat-icon
                     >
                   </span>

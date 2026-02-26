@@ -1049,17 +1049,23 @@ export class SaleComponent implements OnInit {
           if (response.message == 'Success') {
             this.valid.apiInfoResponse('Record saved successfully');
 
-            this.printSale.tableData = prodTableData;
-            this.printSale.lblInvoice = response.invoiceNo;
-            this.printSale.lblDate = date;
-            this.printSale.lblGTotal = this.lblTotal;
-            this.printSale.lblDiscount = this.formFields[6].value;
-            this.printSale.lblCash = this.lblCash;
-            this.printSale.lblBank = this.lblBankAmount;
-            this.printSale.lblSubTotal = this.lblTotal;
-            this.printSale.lblChange = this.formFields[8].value;
+            // this.printSale.tableData = prodTableData;
+            // this.printSale.lblInvoice = response.invoiceNo;
+            // this.printSale.lblDate = date;
+            // this.printSale.lblGTotal = this.lblTotal;
+            // this.printSale.lblDiscount = this.formFields[6].value;
+            // this.printSale.lblCash = this.lblCash;
+            // this.printSale.lblBank = this.lblBankAmount;
+            // this.printSale.lblSubTotal = this.lblTotal;
+            // this.printSale.lblChange = this.formFields[8].value;
+            // this.printSale.lblPayableAmountTotal = this.lblTotal - this.formFields[6].value;
 
-            setTimeout(() => this.globalService.printData(printSection), 200);
+            // setTimeout(() => this.globalService.printData(printSection), 200);
+
+            this.getInvoiceDetail(response.invoiceNo,printSection)
+
+
+
             this.resetBank();
             this.reset();
             this.getInvoice(this.startDate, this.endDate);
@@ -1546,7 +1552,7 @@ export class SaleComponent implements OnInit {
           '&moduleId=' +
           this.moduleId +
           '&invoiceNo=' +
-          item.invoiceNo,
+          item,
         ''
       )
       .subscribe(
