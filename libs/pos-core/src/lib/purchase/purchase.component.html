@@ -1,5 +1,157 @@
 <!-- Add / update -->
-<div class="bg-dark-light">
+<div class="container-fluid d-flex flex-column custom-vh">
+  <!-- button row-->
+  <div class="row pt-4">
+    <div class="col-md-6 d-flex flex-row">
+      <button
+        class="mat-elevation-z2 fs-7"
+        [ngClass]="{
+          resetBtnZaki:
+            formFields[12].value === 4 || formFields[13].value === 5,
+          resetBtn: formFields[12].value !== 4 || formFields[13].value !== 5
+        }"
+        matTooltip="Search By Code"
+      >
+        F4 Search
+      </button>
+      <div class="bg-white fs-7 px-2 pt-2">Search by Code</div>
+    </div>
+    <div class="col-md-6 text-end">
+      <button class="saleReturnBtn me-2" (click)="checkPurchaseReturn()">
+        Purchase Return
+      </button>
+      <button
+        class="me-2 saleReturnBtn"
+        data-bs-toggle="modal"
+        data-bs-target="#purchaseModal"
+        (click)="getInvoiceOnClick()"
+      >
+        Record
+      </button>
+      <button class="resetBtn me-2" (click)="reset()">Reset</button>
+      <button class="saveBtn" (click)="save()">Save</button>
+    </div>
+  </div>
+  <!-- body -->
+  <div class="d-flex flex-column h-100">
+    <div class="row" *ngIf="roleID === 1">
+      <div class="col-md-4">
+        <mat-form-field class="w-100">
+          <mat-label>Company</mat-label>
+          <mat-select
+            [(ngModel)]="formFields[11].value"
+            (ngModelChange)="getBusiness()"
+          >
+            <mat-option
+              *ngFor="let item of companyList"
+              [value]="item.companyID"
+              >{{ item.companyFullName }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="w-100">
+          <mat-label>Business</mat-label>
+          <mat-select
+            [(ngModel)]="formFields[12].value"
+            (ngModelChange)="getBranch()"
+          >
+            <mat-option
+              *ngFor="let item of businessList"
+              [value]="item.businessID"
+              >{{ item.businessFullName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="w-100">
+          <mat-label>Branch</mat-label>
+          <mat-select [(ngModel)]="formFields[13].value">
+            <mat-option
+              *ngFor="let item of businessList"
+              [value]="item.businessID"
+              >{{ item.businessFullName }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 myFormField">
+        <mat-form-field
+          class="w-100 density-compact myFormField"
+          appearance="outline"
+        >
+          <mat-label>Invoice Date</mat-label>
+          <input
+            matInput
+            [(ngModel)]="formFields[2].value"
+            [matDatepicker]="picker"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="w-100">
+          <input
+            matInput
+            [(ngModel)]="formFields[3].value"
+            placeholder="Ref Invoice No."
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="w-100">
+          <mat-label>Supplier Name</mat-label>
+          <mat-select [(ngModel)]="formFields[5].value">
+            <mat-option>
+              <ngx-mat-select-search
+                [(ngModel)]="supplierSearch"
+                name="search"
+                [placeholderLabel]="'Search...'"
+                [noEntriesFoundLabel]="'Not found'"
+              ></ngx-mat-select-search>
+            </mat-option>
+
+            <mat-option
+              *ngFor="
+                let item of partyList | search: 'partyName':supplierSearch
+              "
+              [value]="item.partyID"
+            >
+              <table class="table">
+                <td class="col-6">
+                  {{ item.partyName }}
+                </td>
+                <td class="col-6">
+                  {{ item.type }}
+                </td>
+              </table>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <input
+            matInput
+            [(ngModel)]="formFields[9].value"
+            placeholder="Remarks"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bg-dark-light" hidden>
   <div class="container-fluid">
     <div
       class="d-flex flex-column flex-lg-row flex-md-row flex-xl-row align-items-center pt-2 pb-2"
@@ -30,13 +182,13 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row" hidden>
   <div class="col-md-1">
     <button
       class="mt-2"
       [ngClass]="{
-        resetBtnZaki: formFields[12].value == 4 || formFields[13].value == 5,
-        resetBtn: formFields[12].value != 4 || formFields[13].value != 5
+        resetBtnZaki: formFields[12].value === 4 || formFields[13].value === 5,
+        resetBtn: formFields[12].value !== 4 || formFields[13].value !== 5
       }"
       mat-raised-button
       matTooltip="Search By Code"
@@ -79,7 +231,7 @@
   </div>
 
   <div class="col-md-10 overflow-hidden pb-3">
-    <div class="row" *ngIf="roleID == 1">
+    <div class="row" *ngIf="roleID === 1">
       <div class="col-md-4">
         <mat-form-field class="w-100">
           <mat-label>Company</mat-label>
@@ -152,17 +304,21 @@
         <mat-form-field class="w-100">
           <mat-label>Supplier Name</mat-label>
           <mat-select [(ngModel)]="formFields[5].value">
+            <mat-option>
+              <ngx-mat-select-search
+                [(ngModel)]="supplierSearch"
+                name="search"
+                [placeholderLabel]="'Search...'"
+                [noEntriesFoundLabel]="'Not found'"
+              ></ngx-mat-select-search>
+            </mat-option>
 
-                <mat-option>
-                <ngx-mat-select-search
-                  [(ngModel)]="supplierSearch"
-                  name="search"
-                  [placeholderLabel]="'Search...'"
-                  [noEntriesFoundLabel]="'Not found'"
-                ></ngx-mat-select-search>
-              </mat-option>
-
-            <mat-option *ngFor="let item of partyList | search: 'partyName':supplierSearch" [value]="item.partyID">
+            <mat-option
+              *ngFor="
+                let item of partyList | search: 'partyName':supplierSearch
+              "
+              [value]="item.partyID"
+            >
               <table class="table">
                 <td class="col-6">
                   {{ item.partyName }}
@@ -407,7 +563,7 @@
       <div class="modalbody bg-light">
         <div class="row">
           <!-- <div class="col-md-6 mt-3"><strong></strong></div> -->
-            <div class="col-md-2">
+          <div class="col-md-2">
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>Start Date</mat-label>
               <!-- [(ngModel)]="formFields[11].value" -->
@@ -502,13 +658,21 @@
                 </td>
               </tr>
             </tbody>
-          <tfoot class="stickyfooter bg-darktone1" *ngIf="invoiceList.length > 0">
-            <tr>
-              <td colspan="4" class="fw-bold text-center border-right-dark">Total</td>
-              <td class="text-end fw-bold">{{ totalInvoiceAmount | number }}</td>
-              <td></td> <!-- Empty cell for Action column -->
-            </tr>
-        </tfoot>
+            <tfoot
+              class="stickyfooter bg-darktone1"
+              *ngIf="invoiceList.length > 0"
+            >
+              <tr>
+                <td colspan="4" class="fw-bold text-center border-right-dark">
+                  Total
+                </td>
+                <td class="text-end fw-bold">
+                  {{ totalInvoiceAmount | number }}
+                </td>
+                <td></td>
+                <!-- Empty cell for Action column -->
+              </tr>
+            </tfoot>
           </table>
         </perfect-scrollbar>
       </div>
@@ -534,10 +698,11 @@
       </div>
       <div class="row mt-3">
         <div class="col-md-4">
-          <div class="ps-2">   <!-- padding start -->
-          <label class="fs-5">Invoice No: </label>
-          <label class="fs-5 fw-bold ms-3">{{ lblPInvoiceNo }}</label>
-        </div>
+          <div class="ps-2">
+            <!-- padding start -->
+            <label class="fs-5">Invoice No: </label>
+            <label class="fs-5 fw-bold ms-3">{{ lblPInvoiceNo }}</label>
+          </div>
         </div>
         <div class="col-md-8">
           <label class="fs-5">Invoice Date: </label>
@@ -546,10 +711,11 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <div class="ps-2">   <!-- padding start -->
-          <label class="fs-5">Party Name: </label>
-          <label class="fs-5 fw-bold ms-3">{{ lblPartyName }}</label>
-        </div>
+          <div class="ps-2">
+            <!-- padding start -->
+            <label class="fs-5">Party Name: </label>
+            <label class="fs-5 fw-bold ms-3">{{ lblPartyName }}</label>
+          </div>
         </div>
       </div>
       <div class="modalbody bg-light">

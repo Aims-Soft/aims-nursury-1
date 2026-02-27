@@ -302,14 +302,14 @@ button {
   font-size: 0.9em !important;
 }
 .resetBtn {
-  height: 2em !important;
+  height: 2.3em !important;
   // min-width: 8em !important;
   padding: 5px 15px 0px 15px !important;
   background-color: var(--dark-grey) !important;
   color: white;
   border-radius: 4px !important;
   border-color: transparent !important;
-  font-size: 0.9em !important;
+  font-size: 0.8em !important;
 }
 .resetBtn:hover {
   background-color: #888a7c !important;
@@ -379,13 +379,13 @@ button {
 
 .saveBtn {
   right: 0;
-  height: 2em !important;
+  height: 2.3em !important;
   padding: 0px 15px 0px !important;
   background-color: var(--light-green) !important;
   color: white;
-  border-radius: 8px !important;
+  border-radius: 4px !important;
   border-color: transparent !important;
-  font-size: 0.9em !important;
+  font-size: 0.8em !important;
 }
 .saveBtn:hover {
   background-color: #adb961 !important;
@@ -660,6 +660,10 @@ button.mat-raised-button.uploadbtn {
 }
 
 .myFormField .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0 !important;
+}
+
+.myFormField .mat-datepicker {
   margin: 0 !important;
 }
 
