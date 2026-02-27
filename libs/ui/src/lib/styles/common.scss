@@ -292,7 +292,15 @@ button {
 }
 
 /****************** buttons ***********************/
-
+.miniBtn {
+  height: 2em !important;
+  padding: 0 !important;
+  margin-top: 0.3em !important;
+  background-color: var(--light-green) !important;
+  color: var(--dark) !important;
+  border-color: transparent !important;
+  font-size: 0.9em !important;
+}
 .resetBtn {
   height: 2em !important;
   // min-width: 8em !important;
@@ -653,6 +661,15 @@ button.mat-raised-button.uploadbtn {
 
 .myFormField .mat-form-field-appearance-outline .mat-form-field-wrapper {
   margin: 0 !important;
+}
+
+.mini-input-height {
+  height: 2.5em !important;
+  font-size: 0.7em !important;
+}
+.mini-input-height:focus {
+  border-color: var(--light-green) !important; /* border color */
+  box-shadow: 0 0 0 0.25rem rgba(173, 191, 53, 0.25) !important; /* glow */
 }
 /*************** end Angular Material ************/
 

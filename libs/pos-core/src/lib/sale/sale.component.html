@@ -416,8 +416,7 @@
         </div>
         <div class="col-md-1">
           <button
-            mat-mini-fab
-            class="bg-dark text-white"
+            class="miniBtn"
             data-bs-toggle="modal"
             data-bs-target="#customerModal"
           >
@@ -443,7 +442,7 @@
         ></aims-pos-product-sale-table>
       </div>
       <!-- bottom -->
-      <div class="row">
+      <div class="row pb-5">
         <div class="col-md-12">
           <div class="row mt-2 justify-content-center">
             <div class="col-md-2">
@@ -1417,7 +1416,8 @@
                 <td class="text-end">{{ item.totalamount | number }}</td>
                 <td class="text-center">
                   <span class="txtClrLightGreen cursorPointer ps-2 pe-2">
-                    <mat-icon (click)="getInvoiceDetail(item.invoiceNo, '#print-data')"
+                    <mat-icon
+                      (click)="getInvoiceDetail(item.invoiceNo, '#print-data')"
                       >local_printshop</mat-icon
                     >
                   </span>

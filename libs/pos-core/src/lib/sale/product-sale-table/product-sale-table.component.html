@@ -45,8 +45,13 @@
 
       <td class="col-1 myFormField">
         <div class="d-flex justify-content-center">
-
-          <mat-form-field
+          <input
+            type="number"
+            class="form-control mini-input-height text-right"
+            [(ngModel)]="item.qty"
+            (ngModelChange)="totalBill(i, item.qty, item)"
+          />
+          <!-- <mat-form-field
             class="density-compact  qty-field"
             appearance="outline"
             floatLabel="never"
@@ -59,8 +64,7 @@
               (ngModelChange)="totalBill(i, item.qty, item)"
               matInput
             />
-          </mat-form-field>
-
+          </mat-form-field> -->
         </div>
       </td>
       <td class="col-2">{{ item.salePrice }}</td>
