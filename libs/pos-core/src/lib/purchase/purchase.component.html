@@ -669,7 +669,7 @@
 
 <!-- Modal -->
 <div
-  id="purchaseReturnModal"
+  id="purchaseReturnModalOld"
   class="modal fade"
   role="dialog"
   data-bs-backdrop="false"
@@ -696,7 +696,7 @@
           <button
             mat-button
             class="resetBtn ps-5 pe-5"
-            (click)="purchaseReturn()"
+            (click)="purchaseReturn(0)"
           >
             Save
           </button>
@@ -705,6 +705,82 @@
     </div>
   </div>
 </div>
+
+
+<!-- purchase Return Modal -->
+<div
+  id="purchaseReturnModal"
+  class="modal fade"
+  role="dialog"
+  data-bs-backdrop="false"
+>
+  <div class="modal-dialog modal-xl mat-elevation-z20">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-dark-grey">
+        <h4 class="modal-title align-self-center text-white">
+          Purchase Return
+        </h4>
+        <div class="cancelIcon cursorPointer" data-bs-dismiss="modal"></div>
+      </div>
+      <div class="modal-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-muted fst-italic small">Invoices are shown according to selected products</span>
+            <button  mat-button class="saveBtn" (click)="purchaseReturn(0)">
+              Save Without Invoice
+            </button>
+          </div>
+
+
+
+            <!-- Responsive table -->
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Invoice#</th>
+          <th scope="col">Date</th>
+          <th scope="col">Supplier</th>
+          <th scope="col">Invoice Type</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Loop with *ngFor in real app; static rows for demo -->
+        <tr *ngFor="let invoice of lastInvoices; index as i">
+          <td>{{ invoice.invoiceNo }}</td>
+          <td>{{ invoice.invoiceDate | date }}</td>
+          <td>{{ invoice.partyname }}</td>
+          <td>{{ invoice.invoiceType }}</td>
+          <td>Rs {{ invoice.amount | number }} /</td>
+       <td>
+  <div class="d-flex align-items-center">
+    
+    <div class="txtClrLightGreen cursorPointer ps-2 pe-2">
+      <mat-icon (click)="getInvoiceDetail(invoice)">
+        local_printshop
+      </mat-icon>
+    </div>
+
+    <div class="purchaseReturnIcon cursorPointer ps-2 pe-2 ms-2" matTooltip="save with Invoice" (click)="purchaseReturn(invoice.invoiceNo)">
+    </div>
+
+  </div>
+</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <div
   id="purchaseModal"

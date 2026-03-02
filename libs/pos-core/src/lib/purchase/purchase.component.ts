@@ -203,7 +203,7 @@ export class PurchaseComponent implements OnInit {
     this.formFields[1].value = this.globalService.getUserId().toString();
     this.formFields[14].value = localStorage.getItem('moduleId');
     var curDate = new Date();
-    this.formFields[2].value = curDate;
+    this.formFields[2].value = this.datePipe.transform(curDate,'yyyy-MM-dd');
 
     // this.formFields[10].value = 1;
 
@@ -355,7 +355,7 @@ export class PurchaseComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          console.log(response);
+          console.log(response,'purchase return');
 
           $('#purchaseDetailModal').modal('show');
           this.lblPInvoiceNo = response[0].invoiceNo;
@@ -747,6 +747,31 @@ export class PurchaseComponent implements OnInit {
     this.getInvoice(this.startDate, this.endDate);
   }
 
+
+    lastInvoices :any = []
+    
+    
+    getLastPurchases() {
+    const productIds = this.productPurchaseTable.tableData.map((x:any) => x.productID);
+    this.dataService
+      .getHttp(
+        'report-api/FMISReport/getLastPurchases?companyid=' +
+          this.globalService.getCompanyID() +
+          '&branchid=' +
+          this.globalService.getBranchID() + '&productIds=' + productIds,
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.lastInvoices = response;
+          // console.log(this.lastInvoices,'lastInvoices')
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
   checkPurchaseReturn() {
     if (this.productPurchaseTable.tableData.length == 0) {
       this.valid.apiInfoResponse('enter products');
@@ -754,13 +779,17 @@ export class PurchaseComponent implements OnInit {
     }
 
     $('#purchaseReturnModal').modal('show');
+
+    this.getLastPurchases();
+
+
   }
 
-  purchaseReturn() {
+  purchaseReturn(item:any) {
     this.dataService
       .getHttp(
         'core-api/Purchase/getPurchaseReturn?invoiceNo=' +
-          this.lblInvoiceNo +
+          item +
           '&userID=' +
           this.globalService.getUserId() +
           '&moduleId=' +
@@ -771,10 +800,11 @@ export class PurchaseComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          if (response.length == 0) {
-            this.valid.apiInfoResponse('no invoice found');
-            return;
-          } else {
+          // if (response.length == 0) {
+          //   this.valid.apiInfoResponse('no invoice found');
+          //   return;
+          // } else
+             {
             let result = this.productPurchaseTable.tableData.filter(
               (r1: { productID: any; qty: any }) =>
                 response.some(
@@ -786,8 +816,9 @@ export class PurchaseComponent implements OnInit {
             if (this.productPurchaseTable.tableData.length == result.length) {
               this.lblCash = this.formFields[7].value;
 
-              this.formFields[3].value = this.lblInvoiceNo;
-              this.formFields[4].value = new Date();
+              // this.formFields[3].value = this.lblInvoiceNo;
+              this.formFields[3].value = item;
+              this.formFields[4].value = this.datePipe.transform(new Date(),'yyyy-MM-dd');
 
               this.formFields[10].value = JSON.stringify(
                 this.productPurchaseTable.tableData
@@ -819,7 +850,7 @@ export class PurchaseComponent implements OnInit {
                   }
                 );
             } else {
-              this.valid.apiErrorResponse('product not found in sale invoice');
+              this.valid.apiErrorResponse('Product not found or return quantity exceeds the purchased quantity.');
               return;
             }
           }
@@ -830,11 +861,13 @@ export class PurchaseComponent implements OnInit {
       );
   }
 
+  
+
   reset() {
     this.formFields = this.valid.resetFormFields(this.formFields);
 
     this.formFields[0].value = '0';
-    this.formFields[2].value = new Date();
+    this.formFields[2].value = this.datePipe.transform(new Date(),'yyyy-MM-dd');
     this.formFields[3].value = '';
     this.formFields[4].value = '';
     this.formFields[5].value = '';
