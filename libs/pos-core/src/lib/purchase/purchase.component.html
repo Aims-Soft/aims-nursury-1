@@ -33,7 +33,7 @@
     </div>
   </div>
   <!-- body -->
-  <div class="d-flex flex-column h-100">
+  <div class="d-flex flex-column">
     <div class="row" *ngIf="roleID === 1">
       <div class="col-md-4">
         <mat-form-field class="w-100">
@@ -78,8 +78,8 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-4 myFormField">
+    <div class="row pt-4">
+      <div class="col-md-2 myFormField">
         <mat-form-field
           class="w-100 density-compact myFormField"
           appearance="outline"
@@ -97,8 +97,9 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="col-md-4">
-        <mat-form-field class="w-100">
+      <div class="col-md-2 myFormField">
+        <mat-form-field class="w-100 density-compact" appearance="outline">
+          <mat-label>Invoice No</mat-label>
           <input
             matInput
             [(ngModel)]="formFields[3].value"
@@ -106,8 +107,8 @@
           />
         </mat-form-field>
       </div>
-      <div class="col-md-4">
-        <mat-form-field class="w-100">
+      <div class="col-md-4 myFormField">
+        <mat-form-field class="w-100 density-compact" appearance="outline">
           <mat-label>Supplier Name</mat-label>
           <mat-select [(ngModel)]="formFields[5].value">
             <mat-option>
@@ -137,8 +138,11 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div class="col-md-4 pt-1">
+        <button class="saleReturnBtn me-2">Remarks</button>
+      </div>
     </div>
-    <div class="row">
+    <div class="row" hidden>
       <div class="col-md-12">
         <mat-form-field class="w-100">
           <input
@@ -149,8 +153,166 @@
         </mat-form-field>
       </div>
     </div>
+    <div class="row pt-2">
+      <div class="col-md-2 myFormField">
+        <mat-form-field class="w-100 density-compact" appearance="outline">
+          <input
+            matInput
+            placeholder="Search By Code"
+            [(ngModel)]="txtCode"
+            #txtFocusCode
+            (keyup)="pushProductByCode(txtCode, $event)"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 myFormField">
+        <mat-form-field class="w-100 density-compact" appearance="outline">
+          <mat-label>Search By Name</mat-label>
+          <mat-select
+            [(ngModel)]="cmbProduct"
+            (ngModelChange)="pushProduct(cmbProduct)"
+          >
+            <mat-option>
+              <ngx-mat-select-search
+                [(ngModel)]="searchProduct"
+                [noEntriesFoundLabel]="'Not found'"
+                placeholderLabel="Search..."
+                name="search"
+              >
+              </ngx-mat-select-search>
+            </mat-option>
+            <mat-option
+              *ngFor="
+                let item of productList | search: 'productName':searchProduct
+              "
+              [value]="item.productID"
+            >
+              {{ item.productName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row pt-2 flex-grow-1 scroll-verticle style-1">
+    <aims-pos-product-purchase-table
+      (eventEmitter)="totalBill()"
+    ></aims-pos-product-purchase-table>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <div
+        class="bg-light d-flex flex-column align-items-center mat-elevation-z5"
+      >
+        <label class="h2-sale-discount pt-3">DISCOUNT</label>
+        <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-2">
+          <input
+            matInput
+            class="blue-text"
+            [(ngModel)]="formFields[6].value"
+            (keyup)="changeValue()"
+            type="number"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div
+        class="bg-light d-flex flex-column align-items-center mat-elevation-z5"
+      >
+        <label class="h3-sale-cash pt-3">CASH</label>
+        <mat-form-field class="text-center h1-digit mt-n5 mb-n1 pb-1">
+          <input
+            matInput
+            class="blue-text"
+            [(ngModel)]="formFields[7].value"
+            (keyup)="changeValue()"
+            type="number"
+            #txtCash
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div
+        class="d-flex flex-column align-items-center mat-elevation-z5"
+        [ngClass]="{
+          'bg-red': formFields[12].value === 4 || formFields[13].value === 5,
+          '
+              bg-light':
+            formFields[12].value !== 4 || formFields[13].value !== 5
+        }"
+      >
+        <label class="h2-sale-discount pt-4">CHANGE</label>
+        <label class="h1-digit text-center mt-1 mb-2 pb-1">{{
+          formFields[8].value
+        }}</label>
+      </div>
+    </div>
+    <div class="col-md-6 text-center border-right-dark-bold mt-3 mb-3" hidden>
+      <div class="d-flex flex-column">
+        <div class="row">
+          <div class="offset-md-1 col-md-5 text-start">
+            <label class="h3-sale-cash pt-2">DISCOUNT</label>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field
+              class="text-center h1-digit-purchase mt-n2 mb-n2 pb-n2"
+            >
+              <input
+                matInput
+                class="blue-text mb-n05"
+                [(ngModel)]="formFields[6].value"
+                (keyup)="changeValue()"
+                type="number"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mb-n2">
+          <div class="offset-md-1 col-md-5 text-start">
+            <label class="h3-sale-cash me-4 pt-3">CASH</label>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field
+              class="text-center h1-digit-purchase mt-n5 mb-n1 pb-2"
+            >
+              <input
+                matInput
+                class="blue-text mb-n05"
+                [(ngModel)]="formFields[7].value"
+                (ngModelChange)="changeValue()"
+                type="number"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mb-n1">
+          <div class="offset-md-1 col-md-5 text-start">
+            <label class="h3-sale-cash pt-3">CHANGE</label>
+          </div>
+          <div class="col-md-6">
+            <label class="h1-digit text-center">{{
+              formFields[8].value
+            }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 align-self-center bg-light-green h-100">
+      <div
+        class="d-flex flex-row h-100 align-items-center justify-content-around"
+      >
+        <label class="h3-total me-5">TOTAL AMOUNT</label>
+        <label class="h2-digit text-center">Rs. {{ lblTotal }}</label>
+      </div>
+    </div>
   </div>
 </div>
+
+<!--- old code -->
 <div class="bg-dark-light" hidden>
   <div class="container-fluid">
     <div
