@@ -50,14 +50,14 @@ export class RoleCreationTableComponent implements OnInit {
     this.eventEmitterDelete.emit(item);
 
     var pageFields = {
-      new_role_id: '0',
+      roleID: '0',
       userID: '',
       spType: '',
     };
 
     var formFields: MyFormField[] = [
       {
-        value: pageFields.new_role_id,
+        value: pageFields.roleID,
         msg: '',
         type: 'hidden',
         required: false,

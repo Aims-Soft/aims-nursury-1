@@ -4,8 +4,8 @@ export class RoleInterface {
   userID = '';
   roleTitle = '';
   roleDescription = '';
-  companyID = '';
-  businessID = '';
-  branchID = '';
+  companyID = '0';
+  businessID = '0';
+  branchID = '0';
   json: any = [];
 }

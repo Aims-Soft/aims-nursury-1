@@ -4,6 +4,7 @@ import { SharedServicesDataModule } from '@aims-pos/shared/services/data';
 import { SharedServicesGlobalDataModule } from '@aims-pos/shared/services/global-data';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RoleCreationTableComponent } from './role-creation-table/role-creation-table.component';
+import { environment } from 'apps/aims-pos/src/environments/environment';
 
 declare var $: any;
 
@@ -17,13 +18,15 @@ export class RolesComponent implements OnInit {
 
   roleID: any = 0;
 
+  menuImg  = environment.productUrl + 'assets/ui/noImage.png'
+
   pageFields: RoleInterface = {
     roleID: '0', //0
     spType: '', //1
     userID: '', //2
-    companyID: '', //3
-    businessID: '', //4
-    branchID: '', //5
+    companyID: '0', //3
+    businessID: '0', //4
+    branchID: '0', //5
     roleTitle: '', //6
     roleDescription: '', //7
     json: [], //8
@@ -385,13 +388,13 @@ export class RolesComponent implements OnInit {
         .subscribe(
           (response: any) => {
             console.log(response);
-            if (response.message == 'Success') {
+            if (response?.message == 'Success') {
               this.valid.apiInfoResponse('Role updated successfully');
               this.roleTable.getRoles();
               this.getRoleOption();
               this.reset();
             } else {
-              this.valid.apiErrorResponse(response.message);
+               this.valid.apiErrorResponse(response?.message || 'Something went wrong');
             }
           },
           (error: any) => {
@@ -430,8 +433,8 @@ export class RolesComponent implements OnInit {
     this.menuList = [];
     this.formFields = this.valid.resetFormFields(this.formFields);
     this.formFields[0].value = '0';
-    this.formFields[3].value = '';
-    this.formFields[4].value = '';
+    // this.formFields[3].value = '0';
+    // this.formFields[4].value = '0';
     // this.formFields[5].value = '';
     this.getCompany();
     this.businessList = [];
@@ -444,14 +447,15 @@ export class RolesComponent implements OnInit {
     this.selectedModuleList = [];
     this.menuList = [];
 
-    this.getTotalRole(this.global.getRoleId());
+    // this.getTotalRole(this.global.getRoleId());
 
-    this.getBusiness();
+    // this.getBusiness();
+    this.getMenu();
 
     this.formFields = this.valid.resetFormFields(this.formFields);
 
-    this.formFields[3].value = item.companyID;
-    this.formFields[4].value = item.busniessID;
+    // this.formFields[3].value = item.companyID;
+    // this.formFields[4].value = item.busniessID;
     // this.formFields[5].value = item.branchID;
     this.formFields[6].value = item.roleTitle;
     this.formFields[7].value = item.roleDescription;
