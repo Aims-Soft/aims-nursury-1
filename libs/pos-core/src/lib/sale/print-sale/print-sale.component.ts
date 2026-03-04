@@ -3,6 +3,7 @@ import { SharedServicesAuthModule } from '@aims-pos/shared/services/auth';
 import { SharedServicesDataModule } from '@aims-pos/shared/services/data';
 import { SharedServicesGlobalDataModule } from '@aims-pos/shared/services/global-data';
 import { Component, OnInit, Input } from '@angular/core';
+import { environment } from 'apps/aims-pos/src/environments/environment';
 
 @Component({
   selector: 'aims-pos-print-sale',
@@ -59,8 +60,9 @@ export class PrintSaleComponent implements OnInit {
       .subscribe(
         (response: any) => {
           console.log(response);
-          this.imgUrl = `http://localhost:7060/assets/ui/company/${this.globalService.getCompanyID()}.svg`;
-
+          // this.imgUrl = `http://localhost:7060/assets/ui/company/${this.globalService.getCompanyID()}.svg`;
+          this.imgUrl = environment.imageSavedPath + 'company/' + response[0].companyEDoc;
+          
           this.lblBusinessName = response[0].businessFullName;
           this.lblContactNumber = response[0].mobileNo;
           this.lblContactNumber2 = response[0].phoneNo;
