@@ -22,6 +22,7 @@ export class ProductComponent implements OnInit {
   cmbCategory: any;
   cmbSubCategory: any;
   categorySearch: any;
+  sizeSearch: any;
   subCategorySearch: any;
 
   pageFields: ProductInterface = {
@@ -304,6 +305,7 @@ export class ProductComponent implements OnInit {
   businessList: any = [];
   branchList: any = [];
   brandList: any = [];
+  sizeList : any = []
   categoryList: any = [];
   subCategoryList: any = [];
   locationList: any = [];
@@ -353,6 +355,7 @@ export class ProductComponent implements OnInit {
     this.getCategory();
     // this.getLocation();
     // this.getUOM();
+    this.getSize();
   }
 
   getCompany() {
@@ -448,6 +451,26 @@ export class ProductComponent implements OnInit {
           this.categoryList = response;
           this.cmbCategory = response[0].categoryID;
           this.getSubCategory(response[0].categoryID);
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
+    getSize() {
+    this.dataService
+      .getHttp(
+        'core-api/Product/getSize?companyid=' +
+          this.globalService.getCompanyID() +
+          '&businessid=' +
+          this.globalService.getBusinessID(),
+        ''
+      )
+      .subscribe(
+        (response: any) => {
+          this.sizeList = response;
+          console.log(this.sizeList,'sizeList');
         },
         (error: any) => {
           console.log(error);
@@ -557,8 +580,10 @@ export class ProductComponent implements OnInit {
       this.formFields[26].value = '0';
     }
 
-    this.formFields[27].value = this.imageUpload.image;
-    this.formFields[29].value = this.imageUpload.imageExt;
+    // this.formFields[27].value = this.imageUpload.image;
+    // this.formFields[29].value = this.imageUpload.imageExt;
+     this.formFields[27].value = '';
+    this.formFields[29].value = '';
 
     if (
       this.formFields[27].value != undefined &&
@@ -646,6 +671,7 @@ export class ProductComponent implements OnInit {
     this.formFields[8].value = '';
     this.formFields[9].value = '';
     this.formFields[10].value = 'no';
+    this.formFields[12].value = '';
     this.formFields[19].value = 0;
     this.formFields[20].value = 0;
     this.formFields[21].value = 1;
@@ -688,7 +714,7 @@ export class ProductComponent implements OnInit {
     // this.formFields[10].value = item.quickSale;
 
     // this.formFields[11].value = item.colorID;
-    // this.formFields[12].value = item.sizeID;
+    this.formFields[12].value = item.sizeID;
     this.formFields[13].value = item.costPrice;
     this.formFields[14].value = item.salePrice;
     // this.formFields[15].value = item.retailPrice;
