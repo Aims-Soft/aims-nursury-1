@@ -194,6 +194,8 @@
               [(ngModel)]="searchProduct"
               autocomplete="off"
               #searchProductInput
+              (ngModelChange)="selectedIndex = -1"
+               (keydown)="handleKeyDown($event)"
             />
             <mat-icon matSuffix>search</mat-icon>
           </mat-form-field>
@@ -219,10 +221,11 @@
           <button
             *ngFor="
               let item of productList
-                | search: 'productName,salePrice,qty':searchProduct;
+                | search: 'productName,salePrice,qty':searchProduct; let i = index;
               trackBy: trackItem
             "
             class="list-group-item list-group-item-action border-0 px-3 py-2"
+            [class.active-product]="i === selectedIndex"
             (click)="pushProduct(item.productID)"
           >
             <div class="row w-100 align-items-start g-2">

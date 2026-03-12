@@ -485,6 +485,41 @@ export class SaleComponent implements OnInit {
         }
       );
   }
+
+
+selectedIndex = -1;
+  handleKeyDown(event: KeyboardEvent) {
+
+  const list = this.productList;
+
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+
+    if (this.selectedIndex < list.length - 1) {
+      this.selectedIndex++;
+    }
+  }
+
+  if (event.key === 'ArrowUp') {
+    event.preventDefault();
+
+    if (this.selectedIndex > 0) {
+      this.selectedIndex--;
+    }
+  }
+
+  if (event.key === 'Enter') {
+    event.preventDefault();
+
+    if (this.selectedIndex >= 0) {
+      const product = list[this.selectedIndex];
+      this.pushProduct(product.productID);
+    }
+  }
+}
+
+
+
   getProductOfPackage(packageID: any) {
     this.dataService
       .getHttp(
