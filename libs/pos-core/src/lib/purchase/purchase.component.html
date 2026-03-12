@@ -187,7 +187,7 @@
               "
               [value]="item.productID"
             >
-              {{ item.productName }}{{ item.sizeName ? ' - ' + item.sizeName : '' }}
+              {{ item.productName }} ({{item.categoryName}}){{ item.sizeName ? ' / ' + item.sizeName : '' }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -975,7 +975,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let item of invoiceDetailList">
-                <td class="">{{ item.productName }}</td>
+                <td class="">{{ item.productName }} ({{item.categoryName}}){{ item.sizeName ? ' / ' + item.sizeName : '' }}</td>
                 <td class="text-center">{{ item.qty | number }}</td>
                 <td class="text-end">{{ item.costPrice | number }}</td>
                 <td class="text-end">{{ item.salePrice | number }}</td>

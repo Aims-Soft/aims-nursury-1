@@ -15,7 +15,7 @@
       [ngClass]="{ changeTblClr: item.status === 'deleted' }"
     >
       <td class="text-center">{{ i + 1 }}</td>
-      <td class="col-6">{{ item.productName }}</td>
+      <td class="col-6">{{ item.productName }} ({{item.categoryName}}){{ item.sizeName ? ' / ' + item.sizeName : '' }}</td>
       <!-- <td class="col-1 myFormField">
          <div class="d-flex">
         <button mat-button class="qty-btn-small" (click)="updateQty(i, item, -1)">
