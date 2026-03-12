@@ -6,6 +6,7 @@ import { ProductTableComponent } from './product-table/product-table.component';
 import { MyFormField, ProductInterface } from '@aims-pos/shared/interface';
 import { ProductImageUploadingComponent } from './product-image-uploading/product-image-uploading.component';
 import { environment } from 'apps/aims-pos/src/environments/environment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'aims-pos-product',
@@ -24,6 +25,8 @@ export class ProductComponent implements OnInit {
   categorySearch: any;
   sizeSearch: any;
   subCategorySearch: any;
+  chkReset: boolean = true;
+
 
   pageFields: ProductInterface = {
     productID: '0', //0
@@ -280,13 +283,13 @@ export class ProductComponent implements OnInit {
     {
       value: this.pageFields.mfgDate,
       msg: '',
-      type: 'datePicker',
+      type: 'date',
       required: false,
     },
     {
       value: this.pageFields.expDate,
       msg: '',
-      type: 'datePicker',
+      type: 'date',
       required: false,
     },
     {
@@ -328,7 +331,8 @@ export class ProductComponent implements OnInit {
   constructor(
     private dataService: SharedServicesDataModule,
     private globalService: SharedServicesGlobalDataModule,
-    private valid: SharedHelpersFieldValidationsModule
+    private valid: SharedHelpersFieldValidationsModule,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -356,6 +360,9 @@ export class ProductComponent implements OnInit {
     // this.getLocation();
     // this.getUOM();
     this.getSize();
+
+    this.formFields[35].value = new Date();
+    this.formFields[36].value = new Date();
   }
 
   getCompany() {
@@ -597,12 +604,15 @@ export class ProductComponent implements OnInit {
       this.formFields[28].value = '';
     }
 
-    if (this.formFields[35].value == '') {
-      this.formFields[35].value = new Date();
-    }
-    if (this.formFields[36].value == '') {
-      this.formFields[36].value = new Date();
-    }
+    this.formFields[35].value =  this.datePipe.transform(this.formFields[35].value,'yyyy-MM-dd');
+    this.formFields[36].value =  this.datePipe.transform(this.formFields[36].value,'yyyy-MM-dd');
+    // if (this.formFields[35].value == '') {
+    //   this.formFields[35].value = new Date();
+    // }
+    // if (this.formFields[36].value == '') {
+    //   this.formFields[36].value = new Date();
+
+    // }
     // console.log(this.formFields);
     if (this.formFields[0].value == '0') {
       this.dataService
@@ -618,7 +628,10 @@ export class ProductComponent implements OnInit {
               this.valid.apiInfoResponse('Record saved successfully');
 
               this.productTable.getProduct();
-              this.reset();
+              if (this.chkReset) {
+                console.log(this.chkReset)
+                this.reset();
+              }
             } else {
               this.valid.apiErrorResponse(response.message.toString());
             }
@@ -645,7 +658,10 @@ export class ProductComponent implements OnInit {
               this.valid.apiInfoResponse('Record updated successfully');
 
               this.productTable.getProduct();
-              this.reset();
+              // if (this.chkReset) {
+
+                this.reset();
+              // }
             } else {
               this.valid.apiErrorResponse(response.message.toString());
             }
@@ -676,6 +692,8 @@ export class ProductComponent implements OnInit {
     this.formFields[20].value = 0;
     this.formFields[21].value = 1;
     this.formFields[22].value = '';
+    this.formFields[35].value = new Date();
+    this.formFields[36].value = new Date();
     this.getSubCategory(this.cmbCategory);
   }
 
