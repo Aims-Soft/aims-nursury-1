@@ -5,15 +5,16 @@
 export const environment = {
   production: false,
   envName: 'prod',
-  apiUrl: 'http://localhost:8500/',                         
+  // apiUrl: 'http://localhost:8500/',                         
   // http://localhost:8506
   // apiUrl: 'http://159.69.174.28:8500/',
-  // apiUrl: 'http://95.217.205.57:8500/',
+  apiUrl: 'http://95.217.205.57:8500/',
   // imageUrl: 'C:/inetpub/wwwroot/aims-pos/assets/ui/',
-  imageUrl: 'E:/projects/aims-pos/libs/ui/src/lib/assets/images/',
+  imageUrl: 'C:/inetpub/wwwroot/AimsNurseryProject/aims-pos/assets/ui/',
   // imageSavedPath: 'http://157.90.101.251:9000/assets/ui/',
   productUrl: 'http://95.217.205.57:7060/',
-  imageSavedPath: 'E:/projects/aims-pos/libs/ui/src/lib/assets/images/',
+  // imageSavedPath: 'C:/inetpub/wwwroot/AimsNurseryProject/aims-pos/assets/ui/',
+  imageSavedPath: 'http://95.217.205.57:7060/assets/ui/',
 };
 
 /*
