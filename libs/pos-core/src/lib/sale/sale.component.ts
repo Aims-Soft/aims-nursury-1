@@ -1550,7 +1550,7 @@ selectedIndex = -1;
           this.totalInvoiceAmount = 0;
           // Sum the 'amount' column
           this.totalInvoiceAmount = this.invoiceList.reduce(
-            (sum: number, invoice: any) => sum + Number(invoice.amount || 0),
+            (sum: number, invoice: any) => sum + Number(invoice.totalamount || 0),
             0
           );
         },
